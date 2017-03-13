@@ -5,7 +5,7 @@
     (no_connects 0)
     (area 157.424999 38.424999 193.075001 152.075001)
     (thickness 1.6)
-    (drawings 4)
+    (drawings 9)
     (tracks 142)
     (zones 0)
     (modules 22)
@@ -586,7 +586,7 @@
     (fp_text reference P1 (at 0 -2.33) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value CONN_01X05 (at 0 12.49) (layer F.Fab) hide
+    (fp_text value CONN_01X05 (at 2.5 6.87 90) (layer F.Fab) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_line (start -1.27 -1.27) (end -1.27 11.43) (layer F.Fab) (width 0.1))
@@ -627,7 +627,7 @@
     (fp_text reference P6 (at 0 -2.33) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value CONN_01X05 (at 0 12.49) (layer F.Fab) hide
+    (fp_text value CONN_01X05 (at 2.5 6.87 90) (layer F.Fab) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_line (start -1.27 -1.27) (end -1.27 11.43) (layer F.Fab) (width 0.1))
@@ -2080,6 +2080,21 @@
       (xy -0.167574 -1.583267) (xy 0.166313 -1.583267) (xy 0.194582 -1.42875)) (layer F.SilkS) (width 0.01))
   )
 
+  (gr_text v0.1 (at 191 89.5 90) (layer F.SilkS)
+    (effects (font (size 1.5 1.5) (thickness 0.3)))
+  )
+  (gr_text DO (at 159.5 142 270) (layer F.SilkS) (tstamp 58C6B729)
+    (effects (font (size 1.5 1.5) (thickness 0.3)))
+  )
+  (gr_text PH (at 159.5 128.25 270) (layer F.SilkS) (tstamp 58C6B721)
+    (effects (font (size 1.5 1.5) (thickness 0.3)))
+  )
+  (gr_text ORP (at 159.5 114.25 270) (layer F.SilkS) (tstamp 58C6B717)
+    (effects (font (size 1.5 1.5) (thickness 0.3)))
+  )
+  (gr_text EC (at 159.5 100.25 270) (layer F.SilkS)
+    (effects (font (size 1.5 1.5) (thickness 0.3)))
+  )
   (gr_line (start 193 38.5) (end 193 152) (layer Edge.Cuts) (width 0.15))
   (gr_line (start 157.5 38.5) (end 193 38.5) (layer Edge.Cuts) (width 0.15))
   (gr_line (start 157.5 152) (end 157.5 38.5) (layer Edge.Cuts) (width 0.15))
