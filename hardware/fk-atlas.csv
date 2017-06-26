@@ -1,0 +1,16 @@
+Refs,datasheet,footprint,spn1,spn2,value
+"C201, C203, C204, C301, C303, C304, C401, C403, C404, C501, C503, C504, C601, C603, C604",,Resistors_SMD:R_0603_HandSoldering,81-GRM39X104K50D,mouser,0.1uF
+"C202, C205, C206, C302, C305, C306, C402, C405, C406, C502, C505, C506, C602, C605, C606",,Resistors_SMD:R_0603_HandSoldering,810-C1608X7S0J106M,mouser,10uF
+D1,,Resistors_SMD:R_0603_HandSoldering,630-HSMR-C191-S0000,mouser,BLUE
+D2,,Resistors_SMD:R_0603_HandSoldering,859-LTST-C190KFKT,mouser,ORANGE
+D3,,Resistors_SMD:R_0603_HandSoldering,859-LTST-C191KGKT,mouser,GREEN
+J101,,Socket_Strips:Socket_Strip_Straight_1x06_Pitch2.54mm,,,CONN_01X06
+"J201, J301, J401, J501, J601",,conservify:BNC,523-31-5431,,CONN_01X02
+J5,,Socket_Strips:Socket_Strip_Straight_1x19_Pitch2.54mm,,,CONN_01X19
+P1,,Socket_Strips:Socket_Strip_Straight_1x05_Pitch2.54mm,,,CONN_01X05
+R1-R3,,Resistors_SMD:R_0603_HandSoldering,603-RC0603FR-071KL,mouser,1k
+"R201, R202, R204, R301, R302, R304, R401, R402, R404, R501, R502, R504, R601, R602, R604",,Resistors_SMD:R_0603_HandSoldering,603-RC0603FR-071K5L,mouser,1.5K
+"R4, R5, R203, R205, R303, R305, R403, R405, R503, R505, R603, R605",,Resistors_SMD:R_0603_HandSoldering,603-AF0603JR-074K7L,mouser,4.7K
+U1,,conservify:feather,,,FEATHER
+"U201, U301, U401, U501, U601",,SMD_Packages:SSOP-20,584-ADM3260ARSZ,,adm3260
+"U202, U302, U402, U502, U602",,conservify:atlas_sensor_board,,,ATLAS_SENSOR
