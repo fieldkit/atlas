@@ -1145,7 +1145,7 @@
     (fp_text reference U201 (at 0 -0.635) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value adm3620 (at 0 0.635) (layer F.Fab)
+    (fp_text value adm3260 (at 0 0.635) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_line (start 3.81 -1.778) (end -3.81 -1.778) (layer F.SilkS) (width 0.15))
@@ -2823,7 +2823,7 @@
     (fp_text reference U301 (at 0 -0.635) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value adm3620 (at 0 0.635) (layer F.Fab)
+    (fp_text value adm3260 (at 0 0.635) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_line (start 3.81 -1.778) (end -3.81 -1.778) (layer F.SilkS) (width 0.15))
@@ -2917,7 +2917,7 @@
     (fp_text reference U401 (at 0 -0.635) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value adm3620 (at 0 0.635) (layer F.Fab)
+    (fp_text value adm3260 (at 0 0.635) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_line (start 3.81 -1.778) (end -3.81 -1.778) (layer F.SilkS) (width 0.15))
@@ -3011,7 +3011,7 @@
     (fp_text reference U501 (at 0 -0.635) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value adm3620 (at 0 0.635) (layer F.Fab)
+    (fp_text value adm3260 (at 0 0.635) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_line (start 3.81 -1.778) (end -3.81 -1.778) (layer F.SilkS) (width 0.15))
@@ -3105,7 +3105,7 @@
     (fp_text reference U601 (at 0 -0.635) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value adm3620 (at 0 0.635) (layer F.Fab)
+    (fp_text value adm3260 (at 0 0.635) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_line (start 3.81 -1.778) (end -3.81 -1.778) (layer F.SilkS) (width 0.15))
