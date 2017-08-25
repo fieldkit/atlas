@@ -1,4 +1,4 @@
-update=3/13/2017 9:18:43 AM
+update=Fri 25 Aug 2017 11:52:06 AM PDT
 version=1
 last_client=kicad
 [pcbnew]
@@ -22,6 +22,9 @@ BoardOutlineThickness=0.100000000000
 ModuleOutlineThickness=0.150000000000
 [general]
 version=1
+[cvpcb]
+version=1
+NetIExt=net
 [eeschema]
 version=1
 LibDir=../../kicad
@@ -55,7 +58,4 @@ LibName26=opto
 LibName27=atmel
 LibName28=contrib
 LibName29=valves
-LibName30=C:/Life/conservify/kicad/conservify
-[cvpcb]
-version=1
-NetIExt=net
+LibName30=conservify
