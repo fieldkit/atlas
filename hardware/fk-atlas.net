@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source /home/jlewallen/conservify/fk-atlas/hardware/fk-atlas.sch)
-    (date "Fri 25 Aug 2017 02:24:53 PM PDT")
+    (date "Tue 26 Sep 2017 02:21:16 PM PDT")
     (tool "Eeschema 4.0.7-e1-6374~58~ubuntu16.04.1")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
@@ -459,7 +459,7 @@
       (tstamp 59A0A7BB))
     (comp (ref U201)
       (value adm3260)
-      (footprint SMD_Packages:SSOP-20)
+      (footprint conservify:SSOP20-53)
       (fields
         (field (name spn1) 584-ADM3260ARSZ))
       (libsource (lib conservify) (part adm3260))
@@ -580,7 +580,7 @@
       (tstamp 59A1BC7B))
     (comp (ref U301)
       (value adm3260)
-      (footprint SMD_Packages:SSOP-20)
+      (footprint conservify:SSOP20-53)
       (fields
         (field (name spn1) 584-ADM3260ARSZ))
       (libsource (lib conservify) (part adm3260))
@@ -701,7 +701,7 @@
       (tstamp 59A1BC7C))
     (comp (ref U401)
       (value adm3260)
-      (footprint SMD_Packages:SSOP-20)
+      (footprint conservify:SSOP20-53)
       (fields
         (field (name spn1) 584-ADM3260ARSZ))
       (libsource (lib conservify) (part adm3260))
@@ -822,7 +822,7 @@
       (tstamp 59A1BC7D))
     (comp (ref U501)
       (value adm3260)
-      (footprint SMD_Packages:SSOP-20)
+      (footprint conservify:SSOP20-53)
       (fields
         (field (name spn1) 584-ADM3260ARSZ))
       (libsource (lib conservify) (part adm3260))
@@ -943,7 +943,7 @@
       (tstamp 594D403D))
     (comp (ref U601)
       (value adm3260)
-      (footprint SMD_Packages:SSOP-20)
+      (footprint conservify:SSOP20-53)
       (fields
         (field (name spn1) 584-ADM3260ARSZ))
       (libsource (lib conservify) (part adm3260))
