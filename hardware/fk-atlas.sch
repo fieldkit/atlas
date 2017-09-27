@@ -999,13 +999,13 @@ $EndComp
 $Comp
 L GND #PWR036
 U 1 1 59A0A7F2
-P 6050 4700
-F 0 "#PWR036" H 6050 4450 50  0001 C CNN
-F 1 "GND" H 6050 4550 50  0001 C CNN
-F 2 "" H 6050 4700 60  0000 C CNN
-F 3 "" H 6050 4700 60  0000 C CNN
-	1    6050 4700
-	1    0    0    -1  
+P 5900 4100
+F 0 "#PWR036" H 5900 3850 50  0001 C CNN
+F 1 "GND" H 5900 3950 50  0001 C CNN
+F 2 "" H 5900 4100 60  0000 C CNN
+F 3 "" H 5900 4100 60  0000 C CNN
+	1    5900 4100
+	-1   0    0    1   
 $EndComp
 $Comp
 L RESISTOR R2
@@ -1297,11 +1297,11 @@ Text Label 9950 6350 0    50   ~ 0
 USB-
 Text Label 9950 6450 0    50   ~ 0
 USB+
-Text Label 6700 4200 0    50   ~ 0
+Text Label 6750 4600 0    50   ~ 0
 SWDIO
-Text Label 6700 4300 0    50   ~ 0
+Text Label 6750 4500 0    50   ~ 0
 SWCLK
-Text Label 6700 4600 0    50   ~ 0
+Text Label 6750 4200 0    50   ~ 0
 RST
 Text Label 4100 1650 0    50   ~ 0
 RST
@@ -1578,24 +1578,6 @@ Wire Wire Line
 Wire Wire Line
 	1050 3000 1050 2900
 Wire Wire Line
-	6050 4100 6050 4200
-Wire Wire Line
-	6050 4200 6150 4200
-Wire Wire Line
-	6150 4300 6050 4300
-Wire Wire Line
-	6050 4300 6050 4700
-Wire Wire Line
-	6150 4600 6050 4600
-Wire Wire Line
-	6150 4400 6050 4400
-Wire Wire Line
-	6650 4200 6950 4200
-Wire Wire Line
-	6950 4300 6650 4300
-Wire Wire Line
-	6950 4600 6650 4600
-Wire Wire Line
 	4750 1650 4850 1650
 Wire Wire Line
 	4850 1650 4850 2100
@@ -1700,15 +1682,10 @@ Connection ~ 4050 1650
 Connection ~ 900  2400
 Connection ~ 1200 2400
 Connection ~ 1050 2900
-Connection ~ 6050 4600
-Connection ~ 6050 4400
 Connection ~ 11050 6650
 Connection ~ 7500 6250
 Connection ~ 9950 7550
 Connection ~ 10050 6250
-NoConn ~ 6150 4500
-NoConn ~ 6650 4400
-NoConn ~ 6650 4500
 NoConn ~ 10950 6350
 NoConn ~ 10950 6450
 NoConn ~ 10950 6550
@@ -1829,13 +1806,13 @@ $EndComp
 $Comp
 L +3V3 #PWR050
 U 1 1 59A2074B
-P 6050 4100
-F 0 "#PWR050" H 6050 3950 50  0001 C CNN
-F 1 "+3V3" H 6050 4240 50  0000 C CNN
-F 2 "" H 6050 4100 50  0000 C CNN
-F 3 "" H 6050 4100 50  0000 C CNN
-	1    6050 4100
-	1    0    0    -1  
+P 5900 4600
+F 0 "#PWR050" H 5900 4450 50  0001 C CNN
+F 1 "+3V3" H 5900 4740 50  0000 C CNN
+F 2 "" H 5900 4600 50  0000 C CNN
+F 3 "" H 5900 4600 50  0000 C CNN
+	1    5900 4600
+	0    -1   -1   0   
 $EndComp
 $Comp
 L +3V3 #PWR051
@@ -1881,4 +1858,25 @@ F 3 "" H 9250 7450 50  0000 C CNN
 	1    9250 7450
 	1    0    0    -1  
 $EndComp
+Wire Wire Line
+	5900 4600 6150 4600
+Wire Wire Line
+	6150 4500 5900 4500
+Wire Wire Line
+	5900 4500 5900 4100
+Wire Wire Line
+	6150 4400 5900 4400
+Connection ~ 5900 4400
+Wire Wire Line
+	6150 4200 5900 4200
+Connection ~ 5900 4200
+NoConn ~ 6150 4300
+NoConn ~ 6650 4300
+NoConn ~ 6650 4400
+Wire Wire Line
+	6650 4200 7000 4200
+Wire Wire Line
+	7000 4500 6650 4500
+Wire Wire Line
+	7000 4600 6650 4600
 $EndSCHEMATC
