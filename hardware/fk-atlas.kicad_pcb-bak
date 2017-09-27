@@ -61,8 +61,8 @@
     (mod_edge_width 0.15)
     (mod_text_size 1 1)
     (mod_text_width 0.15)
-    (pad_size 1.524 1.524)
-    (pad_drill 0.762)
+    (pad_size 2.2 2.2)
+    (pad_drill 2.1)
     (pad_to_mask_clearance 0.2)
     (aux_axis_origin 0 0)
     (visible_elements 7FFFFF7F)
@@ -384,7 +384,7 @@
     (add_net VUSB)
   )
 
-  (module conservify:BNC (layer F.Cu) (tedit 595158FF) (tstamp 594D34F9)
+  (module conservify:BNC (layer F.Cu) (tedit 59CC0F65) (tstamp 594D34F9)
     (at 195.564 97.278 270)
     (path /594C282D/59A1BC7D)
     (fp_text reference J401 (at 0 1.27 270) (layer F.SilkS) hide
@@ -407,8 +407,8 @@
       (net 47 "Net-(J401-Pad1)"))
     (pad 2 thru_hole circle (at 0 5.08 270) (size 1.7272 1.7272) (drill 1.016) (layers *.Cu *.Mask)
       (net 48 "Net-(J401-Pad2)"))
-    (pad 3 thru_hole circle (at -5.08 0 270) (size 2 2) (drill 1.9) (layers *.Cu *.Mask))
-    (pad 4 thru_hole circle (at 5.08 0 270) (size 2 2) (drill 1.9) (layers *.Cu *.Mask))
+    (pad 3 thru_hole circle (at -5.08 0 270) (size 2.2 2.2) (drill 2.1) (layers *.Cu *.Mask))
+    (pad 4 thru_hole circle (at 5.08 0 270) (size 2.2 2.2) (drill 2.1) (layers *.Cu *.Mask))
   )
 
   (module Resistors_SMD:R_0603_HandSoldering (layer F.Cu) (tedit 594C3803) (tstamp 594C1558)
@@ -2713,7 +2713,7 @@
       (net 16 /isolated_atlas4/ISO_VCC))
   )
 
-  (module conservify:BNC (layer F.Cu) (tedit 59515904) (tstamp 594D4131)
+  (module conservify:BNC (layer F.Cu) (tedit 59CC0F40) (tstamp 594D4131)
     (at 195.5005 65.278 270)
     (path /594C282A/59A1BC7B)
     (fp_text reference J201 (at 0 1.27 270) (layer F.SilkS) hide
@@ -2736,11 +2736,11 @@
       (net 43 "Net-(J201-Pad1)"))
     (pad 2 thru_hole circle (at 0 5.08 270) (size 1.7272 1.7272) (drill 1.016) (layers *.Cu *.Mask)
       (net 44 "Net-(J201-Pad2)"))
-    (pad 3 thru_hole circle (at -5.08 0 270) (size 2 2) (drill 1.9) (layers *.Cu *.Mask))
-    (pad 4 thru_hole circle (at 5.08 0 270) (size 2 2) (drill 1.9) (layers *.Cu *.Mask))
+    (pad 3 thru_hole circle (at -5.08 0 270) (size 2.2 2.2) (drill 2.1) (layers *.Cu *.Mask))
+    (pad 4 thru_hole circle (at 5.08 0 270) (size 2.2 2.2) (drill 2.1) (layers *.Cu *.Mask))
   )
 
-  (module conservify:BNC (layer F.Cu) (tedit 59515901) (tstamp 594D4143)
+  (module conservify:BNC (layer F.Cu) (tedit 59CC0F55) (tstamp 594D4143)
     (at 195.564 81.28 270)
     (path /594C3094/59A1BC7C)
     (fp_text reference J301 (at 0 1.27 270) (layer F.SilkS) hide
@@ -2763,11 +2763,11 @@
       (net 45 "Net-(J301-Pad1)"))
     (pad 2 thru_hole circle (at 0 5.08 270) (size 1.7272 1.7272) (drill 1.016) (layers *.Cu *.Mask)
       (net 46 "Net-(J301-Pad2)"))
-    (pad 3 thru_hole circle (at -5.08 0 270) (size 2 2) (drill 1.9) (layers *.Cu *.Mask))
-    (pad 4 thru_hole circle (at 5.08 0 270) (size 2 2) (drill 1.9) (layers *.Cu *.Mask))
+    (pad 3 thru_hole circle (at -5.08 0 270) (size 2.2 2.2) (drill 2.1) (layers *.Cu *.Mask))
+    (pad 4 thru_hole circle (at 5.08 0 270) (size 2.2 2.2) (drill 2.1) (layers *.Cu *.Mask))
   )
 
-  (module conservify:BNC (layer F.Cu) (tedit 595158FC) (tstamp 594D4155)
+  (module conservify:BNC (layer F.Cu) (tedit 59CC0F71) (tstamp 594D4155)
     (at 195.564 113.284 270)
     (path /594C282C/594D403D)
     (fp_text reference J501 (at 0 1.27 270) (layer F.SilkS) hide
@@ -2790,11 +2790,11 @@
       (net 49 "Net-(J501-Pad1)"))
     (pad 2 thru_hole circle (at 0 5.08 270) (size 1.7272 1.7272) (drill 1.016) (layers *.Cu *.Mask)
       (net 50 "Net-(J501-Pad2)"))
-    (pad 3 thru_hole circle (at -5.08 0 270) (size 2 2) (drill 1.9) (layers *.Cu *.Mask))
-    (pad 4 thru_hole circle (at 5.08 0 270) (size 2 2) (drill 1.9) (layers *.Cu *.Mask))
+    (pad 3 thru_hole circle (at -5.08 0 270) (size 2.2 2.2) (drill 2.1) (layers *.Cu *.Mask))
+    (pad 4 thru_hole circle (at 5.08 0 270) (size 2.2 2.2) (drill 2.1) (layers *.Cu *.Mask))
   )
 
-  (module conservify:BNC (layer F.Cu) (tedit 595158FA) (tstamp 594D4167)
+  (module conservify:BNC (layer F.Cu) (tedit 59CC0F80) (tstamp 594D4167)
     (at 195.564 129.286 270)
     (path /594C282B/59A1BC7E)
     (fp_text reference J601 (at 0 1.27 270) (layer F.SilkS) hide
@@ -2817,8 +2817,8 @@
       (net 51 "Net-(J601-Pad1)"))
     (pad 2 thru_hole circle (at 0 5.08 270) (size 1.7272 1.7272) (drill 1.016) (layers *.Cu *.Mask)
       (net 52 "Net-(J601-Pad2)"))
-    (pad 3 thru_hole circle (at -5.08 0 270) (size 2 2) (drill 1.9) (layers *.Cu *.Mask))
-    (pad 4 thru_hole circle (at 5.08 0 270) (size 2 2) (drill 1.9) (layers *.Cu *.Mask))
+    (pad 3 thru_hole circle (at -5.08 0 270) (size 2.2 2.2) (drill 2.1) (layers *.Cu *.Mask))
+    (pad 4 thru_hole circle (at 5.08 0 270) (size 2.2 2.2) (drill 2.1) (layers *.Cu *.Mask))
   )
 
   (module Socket_Strips:Socket_Strip_Straight_1x06_Pitch2.54mm (layer F.Cu) (tedit 594DB0B2) (tstamp 594D746F)
