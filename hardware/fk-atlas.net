@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source /home/jlewallen/conservify/fk-atlas/hardware/fk-atlas.sch)
-    (date "Sat 30 Sep 2017 12:46:30 PM PDT")
+    (date "Sat 30 Sep 2017 01:28:00 PM PDT")
     (tool "Eeschema 4.0.7-e2-6376~58~ubuntu16.04.1")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
@@ -156,7 +156,7 @@
       (tstamp 59A0A793))
     (comp (ref C4)
       (value 18pF)
-      (footprint RocketScreamKicadLibrary:CAP-0603)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 581-06035A180J)
@@ -166,7 +166,7 @@
       (tstamp 59A0A794))
     (comp (ref C3)
       (value 18pF)
-      (footprint RocketScreamKicadLibrary:CAP-0603)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 581-06035A180J)
@@ -176,7 +176,7 @@
       (tstamp 59A0A795))
     (comp (ref C5)
       (value 100nF)
-      (footprint RocketScreamKicadLibrary:CAP-0603)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 81-GRM39X104K50D)
@@ -186,7 +186,7 @@
       (tstamp 59A0A797))
     (comp (ref C8)
       (value 100nF)
-      (footprint RocketScreamKicadLibrary:CAP-0603)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 81-GRM39X104K50D)
@@ -196,7 +196,7 @@
       (tstamp 59A0A798))
     (comp (ref C9)
       (value 100nF)
-      (footprint RocketScreamKicadLibrary:CAP-0603)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 81-GRM39X104K50D)
@@ -206,7 +206,7 @@
       (tstamp 59A0A799))
     (comp (ref C6)
       (value "1uF 10V X5R")
-      (footprint RocketScreamKicadLibrary:CAP-0603)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 581-0603YD105K)
@@ -226,7 +226,7 @@
       (tstamp 59A0A7A3))
     (comp (ref C7)
       (value 100nF)
-      (footprint RocketScreamKicadLibrary:CAP-0603)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 81-GRM39X104K50D)
@@ -236,7 +236,7 @@
       (tstamp 59A0A7A4))
     (comp (ref C11)
       (value "1uF 50V X5R")
-      (footprint RocketScreamKicadLibrary:CAP-0603)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 963-UMK107BJ105KA-T)
@@ -246,7 +246,7 @@
       (tstamp 59A0A7B4))
     (comp (ref C14)
       (value "1uF 10V X5R")
-      (footprint RocketScreamKicadLibrary:CAP-0603)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 581-0603YD105K)
@@ -256,7 +256,7 @@
       (tstamp 59A0A7C0))
     (comp (ref C15)
       (value "1uF 10V X5R")
-      (footprint RocketScreamKicadLibrary:CAP-0603)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 581-0603YD105K)
@@ -296,7 +296,7 @@
       (tstamp 59A0A7C9))
     (comp (ref R9)
       (value 330R)
-      (footprint RocketScreamKicadLibrary:RES-0603)
+      (footprint Resistors_SMD:R_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 603-RC0603FR-07330RL)
@@ -306,7 +306,7 @@
       (tstamp 59A0A7CC))
     (comp (ref C13)
       (value "4.7nF 25V X7R")
-      (footprint RocketScreamKicadLibrary:CAP-0603)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 603-AC603KRX7R8BB472)
@@ -316,7 +316,7 @@
       (tstamp 59A0A7D0))
     (comp (ref R10)
       (value 1M)
-      (footprint RocketScreamKicadLibrary:RES-0603)
+      (footprint Resistors_SMD:R_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 603-RC0603FR-071ML)
@@ -326,7 +326,7 @@
       (tstamp 59A0A7D1))
     (comp (ref R8)
       (value 100K)
-      (footprint RocketScreamKicadLibrary:RES-0603)
+      (footprint Resistors_SMD:R_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 603-RC0603FR-07100KL)
@@ -336,7 +336,7 @@
       (tstamp 59A0A7DC))
     (comp (ref R1)
       (value 10K)
-      (footprint RocketScreamKicadLibrary:RES-0603)
+      (footprint Resistors_SMD:R_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 603-RC0603FR-0710KL)
@@ -346,7 +346,7 @@
       (tstamp 59A0A7DE))
     (comp (ref C2)
       (value 100nF)
-      (footprint RocketScreamKicadLibrary:CAP-0603)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 81-GRM39X104K50D)
@@ -356,7 +356,7 @@
       (tstamp 59A0A7E2))
     (comp (ref C1)
       (value "4.7uF 10V X5R")
-      (footprint RocketScreamKicadLibrary:CAP-0603)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 581-0603ZD475MAT2A)
@@ -376,7 +376,7 @@
       (tstamp 59A0A7F0))
     (comp (ref R2)
       (value 330R)
-      (footprint RocketScreamKicadLibrary:RES-0603)
+      (footprint Resistors_SMD:R_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 603-RC0603FR-07330RL)
@@ -386,7 +386,7 @@
       (tstamp 59A0A7F3))
     (comp (ref C10)
       (value "4.7uF 10V X5R")
-      (footprint RocketScreamKicadLibrary:CAP-0603)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 581-0603ZD475MAT2A)
@@ -406,7 +406,7 @@
       (tstamp 59A0A7F7))
     (comp (ref D1)
       (value Orange)
-      (footprint RocketScreamKicadLibrary:LED-0603)
+      (footprint LEDs:LED_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 859-LTST-C190KFKT)
@@ -416,7 +416,7 @@
       (tstamp 59A0A82A))
     (comp (ref R3)
       (value 2K2)
-      (footprint RocketScreamKicadLibrary:RES-0603)
+      (footprint Resistors_SMD:R_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 603-RC0603FR-072K2L)
@@ -436,7 +436,7 @@
       (tstamp 59A0A82C))
     (comp (ref D2)
       (value Yellow)
-      (footprint RocketScreamKicadLibrary:LED-0603)
+      (footprint LEDs:LED_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 859-LTST-C190KSKT)
@@ -446,7 +446,7 @@
       (tstamp 59A0A82F))
     (comp (ref R6)
       (value 2K2)
-      (footprint RocketScreamKicadLibrary:RES-0603)
+      (footprint Resistors_SMD:R_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 603-RC0603FR-072K2L)
@@ -466,7 +466,7 @@
       (tstamp 59A0A831))
     (comp (ref D3)
       (value Blue)
-      (footprint RocketScreamKicadLibrary:LED-0603)
+      (footprint LEDs:LED_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 859-LTST-C191TBKT)
@@ -476,7 +476,7 @@
       (tstamp 59A0A833))
     (comp (ref R7)
       (value 2K2)
-      (footprint RocketScreamKicadLibrary:RES-0603)
+      (footprint Resistors_SMD:R_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 603-RC0603FR-072K2L)
@@ -496,7 +496,7 @@
       (tstamp 59A0A835))
     (comp (ref C12)
       (value "4.7uF 10V X5R")
-      (footprint RocketScreamKicadLibrary:CAP-0603)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 581-0603ZD475MAT2A)
@@ -506,7 +506,7 @@
       (tstamp 59A0A7BB))
     (comp (ref D4)
       (value Orange)
-      (footprint RocketScreamKicadLibrary:LED-0603)
+      (footprint LEDs:LED_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 859-LTST-C190KFKT)
@@ -516,7 +516,7 @@
       (tstamp 59CC3FBF))
     (comp (ref R11)
       (value 2K2)
-      (footprint RocketScreamKicadLibrary:RES-0603)
+      (footprint Resistors_SMD:R_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 603-RC0603FR-072K2L)
@@ -545,7 +545,7 @@
       (tstamp 5948D478))
     (comp (ref C203)
       (value 0.1uF)
-      (footprint Resistors_SMD:R_0603_HandSoldering)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 81-GRM39X104K50D)
@@ -555,7 +555,7 @@
       (tstamp 594C2CF3))
     (comp (ref C204)
       (value 0.1uF)
-      (footprint Resistors_SMD:R_0603_HandSoldering)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 81-GRM39X104K50D)
@@ -565,7 +565,7 @@
       (tstamp 5948D57F))
     (comp (ref C205)
       (value 10uF)
-      (footprint Resistors_SMD:R_0603_HandSoldering)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 810-C1608X7S0J106M)
@@ -575,7 +575,7 @@
       (tstamp 594C2CFE))
     (comp (ref C206)
       (value 10uF)
-      (footprint Resistors_SMD:R_0603_HandSoldering)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 810-C1608X7S0J106M)
@@ -585,7 +585,7 @@
       (tstamp 594C2D01))
     (comp (ref C201)
       (value 0.1uF)
-      (footprint Resistors_SMD:R_0603_HandSoldering)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 81-GRM39X104K50D)
@@ -595,7 +595,7 @@
       (tstamp 594C2D06))
     (comp (ref C202)
       (value 10uF)
-      (footprint Resistors_SMD:R_0603_HandSoldering)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 810-C1608X7S0J106M)
@@ -681,7 +681,7 @@
       (tstamp 594C2CF2))
     (comp (ref C303)
       (value 0.1uF)
-      (footprint Resistors_SMD:R_0603_HandSoldering)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 81-GRM39X104K50D)
@@ -691,7 +691,7 @@
       (tstamp 594C2CF6))
     (comp (ref C304)
       (value 0.1uF)
-      (footprint Resistors_SMD:R_0603_HandSoldering)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 81-GRM39X104K50D)
@@ -701,7 +701,7 @@
       (tstamp 594C2CF7))
     (comp (ref C305)
       (value 10uF)
-      (footprint Resistors_SMD:R_0603_HandSoldering)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 810-C1608X7S0J106M)
@@ -711,7 +711,7 @@
       (tstamp 5948D5A8))
     (comp (ref C306)
       (value 10uF)
-      (footprint Resistors_SMD:R_0603_HandSoldering)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 810-C1608X7S0J106M)
@@ -721,7 +721,7 @@
       (tstamp 594C2D02))
     (comp (ref C301)
       (value 0.1uF)
-      (footprint Resistors_SMD:R_0603_HandSoldering)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 81-GRM39X104K50D)
@@ -731,7 +731,7 @@
       (tstamp 594C2D04))
     (comp (ref C302)
       (value 10uF)
-      (footprint Resistors_SMD:R_0603_HandSoldering)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 810-C1608X7S0J106M)
@@ -817,7 +817,7 @@
       (tstamp 594C2CF1))
     (comp (ref C403)
       (value 0.1uF)
-      (footprint Resistors_SMD:R_0603_HandSoldering)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 81-GRM39X104K50D)
@@ -827,7 +827,7 @@
       (tstamp 594C2CF4))
     (comp (ref C404)
       (value 0.1uF)
-      (footprint Resistors_SMD:R_0603_HandSoldering)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 81-GRM39X104K50D)
@@ -837,7 +837,7 @@
       (tstamp 594C2CF8))
     (comp (ref C405)
       (value 10uF)
-      (footprint Resistors_SMD:R_0603_HandSoldering)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 810-C1608X7S0J106M)
@@ -847,7 +847,7 @@
       (tstamp 594C2CFB))
     (comp (ref C406)
       (value 10uF)
-      (footprint Resistors_SMD:R_0603_HandSoldering)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 810-C1608X7S0J106M)
@@ -857,7 +857,7 @@
       (tstamp 594C2CFF))
     (comp (ref C401)
       (value 0.1uF)
-      (footprint Resistors_SMD:R_0603_HandSoldering)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 81-GRM39X104K50D)
@@ -867,7 +867,7 @@
       (tstamp 594C2D03))
     (comp (ref C402)
       (value 10uF)
-      (footprint Resistors_SMD:R_0603_HandSoldering)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 810-C1608X7S0J106M)
@@ -953,7 +953,7 @@
       (tstamp 594C2CF0))
     (comp (ref C503)
       (value 0.1uF)
-      (footprint Resistors_SMD:R_0603_HandSoldering)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 81-GRM39X104K50D)
@@ -963,7 +963,7 @@
       (tstamp 594C2CF5))
     (comp (ref C504)
       (value 0.1uF)
-      (footprint Resistors_SMD:R_0603_HandSoldering)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 81-GRM39X104K50D)
@@ -973,7 +973,7 @@
       (tstamp 594C2CF9))
     (comp (ref C505)
       (value 10uF)
-      (footprint Resistors_SMD:R_0603_HandSoldering)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 810-C1608X7S0J106M)
@@ -983,7 +983,7 @@
       (tstamp 594C2CFC))
     (comp (ref C506)
       (value 10uF)
-      (footprint Resistors_SMD:R_0603_HandSoldering)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 810-C1608X7S0J106M)
@@ -993,7 +993,7 @@
       (tstamp 594C2D00))
     (comp (ref C501)
       (value 0.1uF)
-      (footprint Resistors_SMD:R_0603_HandSoldering)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 81-GRM39X104K50D)
@@ -1003,7 +1003,7 @@
       (tstamp 5948D5F5))
     (comp (ref C502)
       (value 10uF)
-      (footprint Resistors_SMD:R_0603_HandSoldering)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 810-C1608X7S0J106M)
@@ -1089,7 +1089,7 @@
       (tstamp 594C2CEF))
     (comp (ref C603)
       (value 0.1uF)
-      (footprint Resistors_SMD:R_0603_HandSoldering)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 81-GRM39X104K50D)
@@ -1099,7 +1099,7 @@
       (tstamp 5948D4BD))
     (comp (ref C604)
       (value 0.1uF)
-      (footprint Resistors_SMD:R_0603_HandSoldering)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 81-GRM39X104K50D)
@@ -1109,7 +1109,7 @@
       (tstamp 594C2CFA))
     (comp (ref C605)
       (value 10uF)
-      (footprint Resistors_SMD:R_0603_HandSoldering)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 810-C1608X7S0J106M)
@@ -1119,7 +1119,7 @@
       (tstamp 594C2CFD))
     (comp (ref C606)
       (value 10uF)
-      (footprint Resistors_SMD:R_0603_HandSoldering)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 810-C1608X7S0J106M)
@@ -1129,7 +1129,7 @@
       (tstamp 5948D5D0))
     (comp (ref C601)
       (value 0.1uF)
-      (footprint Resistors_SMD:R_0603_HandSoldering)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 81-GRM39X104K50D)
@@ -1139,7 +1139,7 @@
       (tstamp 594C2D05))
     (comp (ref C602)
       (value 10uF)
-      (footprint Resistors_SMD:R_0603_HandSoldering)
+      (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
         (field (name spn1) 810-C1608X7S0J106M)
@@ -1558,12 +1558,12 @@
         (pin (num 19) (name SCL1) (type input))
         (pin (num 20) (name GNDISO) (type input)))))
   (libraries
+    (library (logical device)
+      (uri /usr/share/kicad/library/device.lib))
     (library (logical fk-atlas-cache)
       (uri /home/jlewallen/conservify/fk-atlas/hardware/fk-atlas-cache.lib))
     (library (logical conservify)
-      (uri /home/jlewallen/conservify/kicad/conservify.lib))
-    (library (logical device)
-      (uri /usr/share/kicad/library/device.lib)))
+      (uri /home/jlewallen/conservify/kicad/conservify.lib)))
   (nets
     (net (code 1) (name /A4)
       (node (ref Q2) (pin 1))
