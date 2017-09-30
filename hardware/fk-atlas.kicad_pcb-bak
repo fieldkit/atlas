@@ -1,9 +1,9 @@
-(kicad_pcb (version 4) (host pcbnew 4.0.7-e1-6374~58~ubuntu16.04.1)
+(kicad_pcb (version 4) (host pcbnew 4.0.7-e2-6376~58~ubuntu16.04.1)
 
   (general
     (links 308)
-    (no_connects 0)
-    (area 108.780783 55.6561 223.731401 139.4574)
+    (no_connects 117)
+    (area 111.176999 57.328999 203.529001 137.743001)
     (thickness 1.6)
     (drawings 10)
     (tracks 924)
@@ -1042,7 +1042,7 @@
     (fp_text reference U202 (at 1.27 0.5) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value ATLAS_SENSOR (at 1.27 -2.54) (layer F.Fab) hide
+    (fp_text value ATLAS_EC (at 1.27 -2.54) (layer F.Fab) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_line (start -8.89 6.35) (end -8.89 -6.35) (layer F.SilkS) (width 0.15))
@@ -2653,7 +2653,7 @@
     (fp_text reference U302 (at 1.27 0.5) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value ATLAS_SENSOR (at 1.27 -2.54) (layer F.Fab) hide
+    (fp_text value ATLAS_RTD_TEMP (at 1.27 -2.54) (layer F.Fab) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_line (start -8.89 6.35) (end -8.89 -6.35) (layer F.SilkS) (width 0.15))
@@ -2680,7 +2680,7 @@
     (fp_text reference U402 (at 1.27 0.5) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value ATLAS_SENSOR (at 1.27 -2.54) (layer F.Fab) hide
+    (fp_text value ATLAS_PH (at 1.27 -2.54) (layer F.Fab) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_line (start -8.89 6.35) (end -8.89 -6.35) (layer F.SilkS) (width 0.15))
@@ -2707,7 +2707,7 @@
     (fp_text reference U502 (at 1.27 0.5) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value ATLAS_SENSOR (at 1.27 -2.54) (layer F.Fab) hide
+    (fp_text value ATLAS_DO (at 1.27 -2.54) (layer F.Fab) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_line (start -8.89 6.35) (end -8.89 -6.35) (layer F.SilkS) (width 0.15))
@@ -2734,7 +2734,7 @@
     (fp_text reference U602 (at 1.27 0.5) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value ATLAS_SENSOR (at 1.27 -2.54) (layer F.Fab) hide
+    (fp_text value ATLAS_ORP (at 1.27 -2.54) (layer F.Fab) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_line (start -8.89 6.35) (end -8.89 -6.35) (layer F.SilkS) (width 0.15))
@@ -4743,7 +4743,7 @@
     (fp_text reference U201 (at 0 -0.635) (layer F.Fab) hide
       (effects (font (size 0.762 0.762) (thickness 0.127)))
     )
-    (fp_text value adm3260 (at 0 0.635) (layer F.Fab) hide
+    (fp_text value ADM3260 (at 0 0.635) (layer F.Fab) hide
       (effects (font (size 0.762 0.762) (thickness 0.127)))
     )
     (fp_line (start -3.6 -0.7) (end -3 -0.7) (layer F.Fab) (width 0.15))
@@ -4810,7 +4810,7 @@
     (fp_text reference U301 (at 0 -0.635) (layer F.Fab) hide
       (effects (font (size 0.762 0.762) (thickness 0.127)))
     )
-    (fp_text value adm3260 (at 0 0.635) (layer F.Fab) hide
+    (fp_text value ADM3260 (at 0 0.635) (layer F.Fab) hide
       (effects (font (size 0.762 0.762) (thickness 0.127)))
     )
     (fp_line (start -3.6 -0.7) (end -3 -0.7) (layer F.Fab) (width 0.15))
@@ -4877,7 +4877,7 @@
     (fp_text reference U401 (at 0 -0.635) (layer F.Fab) hide
       (effects (font (size 0.762 0.762) (thickness 0.127)))
     )
-    (fp_text value adm3260 (at 0 0.635) (layer F.Fab) hide
+    (fp_text value ADM3260 (at 0 0.635) (layer F.Fab) hide
       (effects (font (size 0.762 0.762) (thickness 0.127)))
     )
     (fp_line (start -3.6 -0.7) (end -3 -0.7) (layer F.Fab) (width 0.15))
@@ -4944,7 +4944,7 @@
     (fp_text reference U501 (at 0 -0.635) (layer F.Fab) hide
       (effects (font (size 0.762 0.762) (thickness 0.127)))
     )
-    (fp_text value adm3260 (at 0 0.635) (layer F.Fab) hide
+    (fp_text value ADM3260 (at 0 0.635) (layer F.Fab) hide
       (effects (font (size 0.762 0.762) (thickness 0.127)))
     )
     (fp_line (start -3.6 -0.7) (end -3 -0.7) (layer F.Fab) (width 0.15))
@@ -5011,7 +5011,7 @@
     (fp_text reference U601 (at 0 -0.635) (layer F.Fab) hide
       (effects (font (size 0.762 0.762) (thickness 0.127)))
     )
-    (fp_text value adm3260 (at 0 0.635) (layer F.Fab) hide
+    (fp_text value ADM3260 (at 0 0.635) (layer F.Fab) hide
       (effects (font (size 0.762 0.762) (thickness 0.127)))
     )
     (fp_line (start -3.6 -0.7) (end -3 -0.7) (layer F.Fab) (width 0.15))
