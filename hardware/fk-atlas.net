@@ -1,8 +1,8 @@
 (export (version D)
   (design
     (source /home/jlewallen/conservify/fk-atlas/hardware/fk-atlas.sch)
-    (date "Sat 30 Sep 2017 01:28:00 PM PDT")
-    (tool "Eeschema 4.0.7-e2-6376~58~ubuntu16.04.1")
+    (date "Mon 02 Oct 2017 09:50:23 AM PDT")
+    (tool "Eeschema 4.0.7-e1-6374~58~ubuntu16.04.1")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
         (title fk-core)
@@ -83,7 +83,7 @@
       (footprint Socket_Strips:Socket_Strip_Straight_1x05_Pitch2.54mm)
       (fields
         (field (name price) 0))
-      (libsource (lib conservify) (part CONN_01X05))
+      (libsource (lib conn) (part CONN_01X05))
       (sheetpath (names /) (tstamps /))
       (tstamp 58C6A512))
     (comp (ref R4)
@@ -111,7 +111,7 @@
       (footprint Socket_Strips:Socket_Strip_Straight_1x06_Pitch2.54mm)
       (fields
         (field (name price) 0))
-      (libsource (lib fk-atlas-cache) (part CONN_01X06))
+      (libsource (lib conn) (part CONN_01X06))
       (sheetpath (names /) (tstamps /))
       (tstamp 59515A5A))
     (comp (ref U3)
@@ -568,7 +568,7 @@
       (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
-        (field (name spn1) 810-C1608X7S0J106M)
+        (field (name spn1) 81-GRM188R60J106ME47)
         (field (name spn2) mouser))
       (libsource (lib device) (part C))
       (sheetpath (names /isolated_atlas0/) (tstamps /594C282A/))
@@ -578,7 +578,7 @@
       (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
-        (field (name spn1) 810-C1608X7S0J106M)
+        (field (name spn1) 81-GRM188R60J106ME47)
         (field (name spn2) mouser))
       (libsource (lib device) (part C))
       (sheetpath (names /isolated_atlas0/) (tstamps /594C282A/))
@@ -598,7 +598,7 @@
       (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
-        (field (name spn1) 810-C1608X7S0J106M)
+        (field (name spn1) 81-GRM188R60J106ME47)
         (field (name spn2) mouser))
       (libsource (lib device) (part C))
       (sheetpath (names /isolated_atlas0/) (tstamps /594C282A/))
@@ -667,9 +667,15 @@
       (fields
         (field (name price) 0)
         (field (name spn1) 523-31-5431))
-      (libsource (lib fk-atlas-cache) (part CONN_01X02))
+      (libsource (lib conn) (part CONN_01X02))
       (sheetpath (names /isolated_atlas0/) (tstamps /594C282A/))
       (tstamp 59A1BC7B))
+    (comp (ref P2)
+      (value ATLAS_EC_PROBE)
+      (footprint Oddities:Dummy_Empty)
+      (libsource (lib conservify) (part WATER_PROBE))
+      (sheetpath (names /isolated_atlas0/) (tstamps /594C282A/))
+      (tstamp 59D297CD))
     (comp (ref U301)
       (value ADM3260)
       (footprint conservify:SSOP20-53)
@@ -704,7 +710,7 @@
       (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
-        (field (name spn1) 810-C1608X7S0J106M)
+        (field (name spn1) 81-GRM188R60J106ME47)
         (field (name spn2) mouser))
       (libsource (lib device) (part C))
       (sheetpath (names /isolated_atlas1/) (tstamps /594C3094/))
@@ -714,7 +720,7 @@
       (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
-        (field (name spn1) 810-C1608X7S0J106M)
+        (field (name spn1) 81-GRM188R60J106ME47)
         (field (name spn2) mouser))
       (libsource (lib device) (part C))
       (sheetpath (names /isolated_atlas1/) (tstamps /594C3094/))
@@ -734,7 +740,7 @@
       (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
-        (field (name spn1) 810-C1608X7S0J106M)
+        (field (name spn1) 81-GRM188R60J106ME47)
         (field (name spn2) mouser))
       (libsource (lib device) (part C))
       (sheetpath (names /isolated_atlas1/) (tstamps /594C3094/))
@@ -790,7 +796,7 @@
       (sheetpath (names /isolated_atlas1/) (tstamps /594C3094/))
       (tstamp 5948E4EE))
     (comp (ref U302)
-      (value ATLAS_RTD_TEMP)
+      (value ATLAS_RTD)
       (footprint conservify:atlas_sensor_board)
       (fields
         (field (name price) 0))
@@ -803,9 +809,15 @@
       (fields
         (field (name price) 0)
         (field (name spn1) 523-31-5431))
-      (libsource (lib fk-atlas-cache) (part CONN_01X02))
+      (libsource (lib conn) (part CONN_01X02))
       (sheetpath (names /isolated_atlas1/) (tstamps /594C3094/))
       (tstamp 59A1BC7C))
+    (comp (ref P3)
+      (value ATLAS_RTD_PROBE)
+      (footprint Oddities:Dummy_Empty)
+      (libsource (lib conservify) (part WATER_PROBE))
+      (sheetpath (names /isolated_atlas1/) (tstamps /594C3094/))
+      (tstamp 59D29DF5))
     (comp (ref U401)
       (value ADM3260)
       (footprint conservify:SSOP20-53)
@@ -840,7 +852,7 @@
       (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
-        (field (name spn1) 810-C1608X7S0J106M)
+        (field (name spn1) 81-GRM188R60J106ME47)
         (field (name spn2) mouser))
       (libsource (lib device) (part C))
       (sheetpath (names /isolated_atlas2/) (tstamps /594C282D/))
@@ -850,7 +862,7 @@
       (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
-        (field (name spn1) 810-C1608X7S0J106M)
+        (field (name spn1) 81-GRM188R60J106ME47)
         (field (name spn2) mouser))
       (libsource (lib device) (part C))
       (sheetpath (names /isolated_atlas2/) (tstamps /594C282D/))
@@ -870,7 +882,7 @@
       (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
-        (field (name spn1) 810-C1608X7S0J106M)
+        (field (name spn1) 81-GRM188R60J106ME47)
         (field (name spn2) mouser))
       (libsource (lib device) (part C))
       (sheetpath (names /isolated_atlas2/) (tstamps /594C282D/))
@@ -939,9 +951,15 @@
       (fields
         (field (name price) 0)
         (field (name spn1) 523-31-5431))
-      (libsource (lib fk-atlas-cache) (part CONN_01X02))
+      (libsource (lib conn) (part CONN_01X02))
       (sheetpath (names /isolated_atlas2/) (tstamps /594C282D/))
       (tstamp 59A1BC7D))
+    (comp (ref P4)
+      (value ATLAS_PH_PROBE)
+      (footprint Oddities:Dummy_Empty)
+      (libsource (lib conservify) (part WATER_PROBE))
+      (sheetpath (names /isolated_atlas2/) (tstamps /594C282D/))
+      (tstamp 59D2A29B))
     (comp (ref U501)
       (value ADM3260)
       (footprint conservify:SSOP20-53)
@@ -976,7 +994,7 @@
       (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
-        (field (name spn1) 810-C1608X7S0J106M)
+        (field (name spn1) 81-GRM188R60J106ME47)
         (field (name spn2) mouser))
       (libsource (lib device) (part C))
       (sheetpath (names /isolated_atlas3/) (tstamps /594C282C/))
@@ -986,7 +1004,7 @@
       (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
-        (field (name spn1) 810-C1608X7S0J106M)
+        (field (name spn1) 81-GRM188R60J106ME47)
         (field (name spn2) mouser))
       (libsource (lib device) (part C))
       (sheetpath (names /isolated_atlas3/) (tstamps /594C282C/))
@@ -1006,7 +1024,7 @@
       (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
-        (field (name spn1) 810-C1608X7S0J106M)
+        (field (name spn1) 81-GRM188R60J106ME47)
         (field (name spn2) mouser))
       (libsource (lib device) (part C))
       (sheetpath (names /isolated_atlas3/) (tstamps /594C282C/))
@@ -1075,9 +1093,15 @@
       (fields
         (field (name price) 0)
         (field (name spn1) 523-31-5431))
-      (libsource (lib fk-atlas-cache) (part CONN_01X02))
+      (libsource (lib conn) (part CONN_01X02))
       (sheetpath (names /isolated_atlas3/) (tstamps /594C282C/))
       (tstamp 594D403D))
+    (comp (ref P5)
+      (value ATLAS_DO_PROBE)
+      (footprint Oddities:Dummy_Empty)
+      (libsource (lib conservify) (part WATER_PROBE))
+      (sheetpath (names /isolated_atlas3/) (tstamps /594C282C/))
+      (tstamp 59D2A6F4))
     (comp (ref U601)
       (value ADM3260)
       (footprint conservify:SSOP20-53)
@@ -1112,7 +1136,7 @@
       (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
-        (field (name spn1) 810-C1608X7S0J106M)
+        (field (name spn1) 81-GRM188R60J106ME47)
         (field (name spn2) mouser))
       (libsource (lib device) (part C))
       (sheetpath (names /isolated_atlas4/) (tstamps /594C282B/))
@@ -1122,7 +1146,7 @@
       (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
-        (field (name spn1) 810-C1608X7S0J106M)
+        (field (name spn1) 81-GRM188R60J106ME47)
         (field (name spn2) mouser))
       (libsource (lib device) (part C))
       (sheetpath (names /isolated_atlas4/) (tstamps /594C282B/))
@@ -1142,7 +1166,7 @@
       (footprint Capacitors_SMD:C_0603_HandSoldering)
       (fields
         (field (name price) 0)
-        (field (name spn1) 810-C1608X7S0J106M)
+        (field (name spn1) 81-GRM188R60J106ME47)
         (field (name spn2) mouser))
       (libsource (lib device) (part C))
       (sheetpath (names /isolated_atlas4/) (tstamps /594C282B/))
@@ -1211,9 +1235,15 @@
       (fields
         (field (name price) 0)
         (field (name spn1) 523-31-5431))
-      (libsource (lib fk-atlas-cache) (part CONN_01X02))
+      (libsource (lib conn) (part CONN_01X02))
       (sheetpath (names /isolated_atlas4/) (tstamps /594C282B/))
-      (tstamp 59A1BC7E)))
+      (tstamp 59A1BC7E))
+    (comp (ref P6)
+      (value ATLAS_ORP_PROBE)
+      (footprint Oddities:Dummy_Empty)
+      (libsource (lib conservify) (part WATER_PROBE))
+      (sheetpath (names /isolated_atlas4/) (tstamps /594C282B/))
+      (tstamp 59D2AB5D)))
   (libparts
     (libpart (lib conservify) (part ATLAS_SENSOR)
       (fields
@@ -1326,7 +1356,8 @@
         (pin (num 8) (name ~) (type passive))
         (pin (num 9) (name ~) (type passive))
         (pin (num 10) (name ~) (type passive))))
-    (libpart (lib fk-atlas-cache) (part CONN_01X02)
+    (libpart (lib conn) (part CONN_01X02)
+      (description "Connector, single row, 01x02, pin header")
       (footprints
         (fp Pin_Header_Straight_1X*)
         (fp Pin_Header_Angled_1X*)
@@ -1338,14 +1369,15 @@
       (pins
         (pin (num 1) (name P1) (type passive))
         (pin (num 2) (name P2) (type passive))))
-    (libpart (lib conservify) (part CONN_01X05)
+    (libpart (lib conn) (part CONN_01X05)
+      (description "Connector, single row, 01x05, pin header")
       (footprints
-        (fp Pin_Header_Straight_1X05)
-        (fp Pin_Header_Angled_1X05)
-        (fp Socket_Strip_Straight_1X05)
-        (fp Socket_Strip_Angled_1X05))
+        (fp Pin_Header_Straight_1X*)
+        (fp Pin_Header_Angled_1X*)
+        (fp Socket_Strip_Straight_1X*)
+        (fp Socket_Strip_Angled_1X*))
       (fields
-        (field (name Reference) P)
+        (field (name Reference) J)
         (field (name Value) CONN_01X05))
       (pins
         (pin (num 1) (name P1) (type passive))
@@ -1353,7 +1385,8 @@
         (pin (num 3) (name P3) (type passive))
         (pin (num 4) (name P4) (type passive))
         (pin (num 5) (name P5) (type passive))))
-    (libpart (lib fk-atlas-cache) (part CONN_01X06)
+    (libpart (lib conn) (part CONN_01X06)
+      (description "Connector, single row, 01x06, pin header")
       (footprints
         (fp Pin_Header_Straight_1X*)
         (fp Pin_Header_Angled_1X*)
@@ -1532,6 +1565,10 @@
       (pins
         (pin (num 1) (name ~) (type passive))
         (pin (num 2) (name ~) (type passive))))
+    (libpart (lib conservify) (part WATER_PROBE)
+      (fields
+        (field (name Reference) P)
+        (field (name Value) WATER_PROBE)))
     (libpart (lib conservify) (part adm3260)
       (fields
         (field (name Reference) U)
@@ -1560,6 +1597,8 @@
   (libraries
     (library (logical device)
       (uri /usr/share/kicad/library/device.lib))
+    (library (logical conn)
+      (uri /usr/share/kicad/library/conn.lib))
     (library (logical fk-atlas-cache)
       (uri /home/jlewallen/conservify/fk-atlas/hardware/fk-atlas-cache.lib))
     (library (logical conservify)
