@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source /home/jlewallen/conservify/fk-atlas/hardware/fk-atlas.sch)
-    (date "Thu 05 Oct 2017 04:50:53 PM PDT")
+    (date "Fri 06 Oct 2017 01:53:34 PM PDT")
     (tool "Eeschema 4.0.7-e1-6374~58~ubuntu16.04.1")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
@@ -1597,12 +1597,12 @@
   (libraries
     (library (logical conn)
       (uri /usr/share/kicad/library/conn.lib))
-    (library (logical device)
-      (uri /usr/share/kicad/library/device.lib))
     (library (logical fk-atlas-cache)
       (uri /home/jlewallen/conservify/fk-atlas/hardware/fk-atlas-cache.lib))
     (library (logical conservify)
-      (uri /home/jlewallen/conservify/kicad/conservify.lib)))
+      (uri /home/jlewallen/conservify/kicad/conservify.lib))
+    (library (logical device)
+      (uri /usr/share/kicad/library/device.lib)))
   (nets
     (net (code 1) (name /A4)
       (node (ref Q2) (pin 1))
