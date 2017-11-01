@@ -1,9 +1,9 @@
-(kicad_pcb (version 4) (host pcbnew 4.0.7-e1-6374~58~ubuntu16.04.1)
+(kicad_pcb (version 4) (host pcbnew 4.0.7-e2-6376~58~ubuntu16.04.1)
 
   (general
     (links 338)
-    (no_connects 104)
-    (area 108.780783 55.8221 223.731401 139.4574)
+    (no_connects 0)
+    (area 106.559933 55.8221 223.731401 139.4574)
     (thickness 1.6)
     (drawings 15)
     (tracks 1107)
@@ -32,7 +32,7 @@
     (45 Margin user)
     (46 B.CrtYd user)
     (47 F.CrtYd user)
-    (48 B.Fab user hide)
+    (48 B.Fab user)
     (49 F.Fab user)
   )
 
@@ -2135,7 +2135,7 @@
     (fp_text reference D5 (at 0 -2.54 90) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value PRTR5V0U2X (at 0 2.54 90) (layer F.Fab)
+    (fp_text value PRTR5V0U2X (at 2.6518 2.3782 90) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_line (start 1.7 -1.6) (end -1.7 -1.6) (layer F.CrtYd) (width 0.05))
@@ -2163,7 +2163,7 @@
     (fp_text reference F1 (at 0 -1.778 180) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value MF-PSMF050X-2 (at -0.9144 -1.7145 180) (layer F.Fab)
+    (fp_text value MF-PSMF050X-2 (at -3.2004 -1.7145 180) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_line (start 1.85 -1) (end 1.85 1) (layer F.CrtYd) (width 0.05))
@@ -2315,7 +2315,7 @@
     (fp_text reference L2 (at 0 -1.9) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value BKP1005TS121-T (at 6.5024 0.0508) (layer F.Fab)
+    (fp_text value BKP1005TS121-T (at 4.8514 0.0508) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_line (start 1.65 -0.75) (end -1.65 -0.75) (layer F.CrtYd) (width 0.05))
@@ -2346,7 +2346,7 @@
     (fp_text reference Q1 (at 0 -2.794) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value 2N7002LT1G (at -0.0254 2.7559) (layer F.Fab)
+    (fp_text value 2N7002LT1G (at -6.7564 0.0254) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_line (start -1.75 -1.95) (end -1.75 1.95) (layer F.CrtYd) (width 0.05))
@@ -2380,7 +2380,7 @@
     (fp_text reference Q2 (at 0 -2.794) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value 2N7002LT1G (at 0 2.794) (layer F.Fab)
+    (fp_text value 2N7002LT1G (at -6.7564 0.0254) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_line (start -1.75 -1.95) (end -1.75 1.95) (layer F.CrtYd) (width 0.05))
@@ -2414,7 +2414,7 @@
     (fp_text reference Q3 (at 0 -2.794) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value 2N7002LT1G (at 0 2.794) (layer F.Fab)
+    (fp_text value 2N7002LT1G (at -6.6269 -0.0635) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_line (start -1.75 -1.95) (end -1.75 1.95) (layer F.CrtYd) (width 0.05))
@@ -2847,7 +2847,7 @@
     (fp_text reference C5 (at 0 -1.25 90) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value 100nF (at 4.1148 0.0254 90) (layer F.Fab)
+    (fp_text value 100nF (at 4.2418 0.0254 90) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_text user %R (at 0 -1.25 90) (layer F.Fab) hide
@@ -2883,7 +2883,7 @@
     (fp_text reference C6 (at 0 -1.25 90) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value "1uF 10V X5R" (at 0.4318 0.0254 90) (layer F.Fab)
+    (fp_text value "1uF 10V X5R" (at 6.7818 0.0254 90) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_text user %R (at 0 -1.25 90) (layer F.Fab) hide
@@ -2991,7 +2991,7 @@
     (fp_text reference C9 (at 0 -1.25 270) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value 100nF (at 0 1.5 270) (layer F.Fab)
+    (fp_text value 100nF (at 0 -1.4478 270) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_text user %R (at 0 -1.25 270) (layer F.Fab) hide
@@ -3027,7 +3027,7 @@
     (fp_text reference C10 (at 0 -1.25 180) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value "4.7uF 10V X5R" (at 0 1.5 180) (layer F.Fab)
+    (fp_text value "4.7uF 10V X5R" (at 7.4676 -0.127 180) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_text user %R (at 0 -1.25 180) (layer F.Fab) hide
@@ -3099,7 +3099,7 @@
     (fp_text reference C12 (at 0 -1.25 180) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value "4.7uF 10V X5R" (at 0 1.5 180) (layer F.Fab)
+    (fp_text value "4.7uF 10V X5R" (at 7.5946 0.0508 180) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_text user %R (at 0 -1.25 180) (layer F.Fab) hide
@@ -3171,7 +3171,7 @@
     (fp_text reference C14 (at 0 -1.25 180) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value "1uF 10V X5R" (at 0 1.5 180) (layer F.Fab)
+    (fp_text value "1uF 10V X5R" (at 7.3406 -0.0508 180) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_text user %R (at 0 -1.25 180) (layer F.Fab) hide
@@ -3207,7 +3207,7 @@
     (fp_text reference C15 (at 0 -1.25) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value "1uF 10V X5R" (at 0 1.5) (layer F.Fab)
+    (fp_text value "1uF 10V X5R" (at 6.731 0) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_text user %R (at 0 -1.25) (layer F.Fab) hide
@@ -4401,7 +4401,7 @@
     (fp_text reference D4 (at 0 -1.45) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value Orange (at 0 1.55) (layer F.Fab)
+    (fp_text value Orange (at 0.046799 -1.397799) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_line (start -1.8 -0.55) (end -1.8 0.55) (layer F.SilkS) (width 0.12))
