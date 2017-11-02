@@ -95,40 +95,6 @@ F4 "VCC" I L 14150 4800 60
 F5 "GND" I L 14150 4900 60 
 $EndSheet
 $Comp
-L FEATHER U1
-U 1 1 5887CF41
-P 1750 5650
-F 0 "U1" H 1350 4200 60  0000 C CNN
-F 1 "FEATHER" H 1750 5650 60  0000 C CNN
-F 2 "conservify:feather" H 1750 5650 60  0001 C CNN
-F 3 "" H 1750 5650 60  0001 C CNN
-F 4 "0" H 1350 4300 50  0001 C CNN "price"
-	1    1750 5650
-	1    0    0    -1  
-$EndComp
-$Comp
-L GND #PWR01
-U 1 1 5887FCB1
-P 750 5700
-F 0 "#PWR01" H 750 5450 50  0001 C CNN
-F 1 "GND" H 750 5550 50  0000 C CNN
-F 2 "" H 750 5700 50  0000 C CNN
-F 3 "" H 750 5700 50  0000 C CNN
-	1    750  5700
-	0    1    1    0   
-$EndComp
-$Comp
-L +3V3 #PWR02
-U 1 1 58880076
-P 700 5500
-F 0 "#PWR02" H 700 5350 50  0001 C CNN
-F 1 "+3V3" H 700 5640 50  0000 C CNN
-F 2 "" H 700 5500 50  0000 C CNN
-F 3 "" H 700 5500 50  0000 C CNN
-	1    700  5500
-	1    0    0    -1  
-$EndComp
-$Comp
 L CONN_01X05 P1
 U 1 1 58C6A512
 P 4550 5850
@@ -310,29 +276,6 @@ F 2 "" H 3200 6400 50  0000 C CNN
 F 3 "" H 3200 6400 50  0000 C CNN
 	1    3200 6400
 	1    0    0    -1  
-$EndComp
-$Comp
-L CONN_01X06 J101
-U 1 1 59515A5A
-P 2200 8100
-F 0 "J101" H 2200 8450 50  0000 C CNN
-F 1 "CONN_01X06" V 2300 8100 50  0000 C CNN
-F 2 "Socket_Strips:Socket_Strip_Straight_1x06_Pitch2.54mm" H 2200 8100 50  0001 C CNN
-F 3 "" H 2200 8100 50  0001 C CNN
-F 4 "0" H 2200 8550 50  0001 C CNN "price"
-	1    2200 8100
-	-1   0    0    1   
-$EndComp
-$Comp
-L GND #PWR016
-U 1 1 595177BD
-P 2600 8250
-F 0 "#PWR016" H 2600 8000 50  0001 C CNN
-F 1 "GND" H 2600 8100 50  0000 C CNN
-F 2 "" H 2600 8250 50  0000 C CNN
-F 3 "" H 2600 8250 50  0000 C CNN
-	1    2600 8250
-	0    -1   -1   0   
 $EndComp
 $Comp
 L MCP1700T-XXX2E U3
@@ -538,17 +481,6 @@ F 1 "GND" H 6350 2000 50  0001 C CNN
 F 2 "" H 6350 2150 60  0000 C CNN
 F 3 "" H 6350 2150 60  0000 C CNN
 	1    6350 2150
-	1    0    0    -1  
-$EndComp
-$Comp
-L 3V3 #PWR023
-U 1 1 59A0A7A2
-P 6350 2500
-F 0 "#PWR023" H 6350 2350 50  0001 C CNN
-F 1 "3V3" H 6350 2640 50  0000 C CNN
-F 2 "" H 6350 2500 60  0000 C CNN
-F 3 "" H 6350 2500 60  0000 C CNN
-	1    6350 2500
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -1390,10 +1322,6 @@ Text Label 13750 5200 0    60   ~ 0
 SCL
 Text Label 13750 5100 0    60   ~ 0
 SDA
-Text Label 2650 8150 0    60   ~ 0
-VIN
-Text Label 2700 6000 0    60   ~ 0
-VIN
 Text Label 2550 2300 0    50   ~ 0
 A0
 Text Label 2550 2500 0    50   ~ 0
@@ -1520,20 +1448,8 @@ Text Label 7000 6950 2    50   ~ 0
 A4
 Text Label 7000 7750 2    50   ~ 0
 A5
-Text Label 900  6100 2    50   ~ 0
-A3
-Text Label 900  6200 2    50   ~ 0
-A4
-Text Label 900  6300 2    50   ~ 0
-A5
 Text Label 7000 8850 2    50   ~ 0
 D13
-Wire Wire Line
-	750  5700 1050 5700
-Wire Wire Line
-	2400 6000 2850 6000
-Wire Wire Line
-	700  5500 1050 5500
 Wire Wire Line
 	2400 6800 3200 6800
 Wire Wire Line
@@ -1594,10 +1510,6 @@ Wire Wire Line
 	3500 6600 3500 6500
 Wire Wire Line
 	3500 6500 3200 6500
-Wire Wire Line
-	2400 8250 2600 8250
-Wire Wire Line
-	2400 8150 2800 8150
 Wire Wire Line
 	2850 2300 2550 2300
 Wire Wire Line
@@ -1913,12 +1825,6 @@ Wire Wire Line
 Wire Wire Line
 	8700 2250 11350 2250
 Wire Wire Line
-	800  6100 1050 6100
-Wire Wire Line
-	800  6200 1050 6200
-Wire Wire Line
-	800  6300 1050 6300
-Wire Wire Line
 	9100 2350 9100 2250
 Wire Wire Line
 	5900 4600 6150 4600
@@ -1972,31 +1878,22 @@ Connection ~ 10050 6250
 Connection ~ 10800 2250
 Connection ~ 5900 4400
 Connection ~ 5900 4200
-NoConn ~ 2400 5900
-NoConn ~ 2400 5800
-NoConn ~ 1050 5600
-NoConn ~ 1050 5400
-NoConn ~ 1050 6900
-NoConn ~ 2400 6100
-NoConn ~ 2400 6500
 NoConn ~ 4350 5850
-NoConn ~ 2400 6700
-NoConn ~ 2400 6600
-NoConn ~ 2400 6400
-NoConn ~ 2400 6200
-NoConn ~ 2400 6300
-NoConn ~ 1050 6800
-NoConn ~ 1050 6700
-NoConn ~ 1050 6600
-NoConn ~ 1050 6500
-NoConn ~ 1050 6400
 NoConn ~ 10950 6350
 NoConn ~ 10950 6450
 NoConn ~ 10950 6550
-NoConn ~ 1050 6000
-NoConn ~ 1050 5900
-NoConn ~ 1050 5800
 NoConn ~ 6150 4300
 NoConn ~ 6650 4300
 NoConn ~ 6650 4400
+$Comp
+L +3V3 #PWR?
+U 1 1 59FB8104
+P 6350 2500
+F 0 "#PWR?" H 6350 2350 50  0001 C CNN
+F 1 "+3V3" H 6350 2640 50  0000 C CNN
+F 2 "" H 6350 2500 50  0000 C CNN
+F 3 "" H 6350 2500 50  0000 C CNN
+	1    6350 2500
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC

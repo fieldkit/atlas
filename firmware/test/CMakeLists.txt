@@ -18,4 +18,4 @@ set(LIBRARIES
 
 include_directories(../../)
 
-arduino(atlas-test "${SOURCE_FILES}" "${LIBRARIES}")
+arduino(fk-aatlas-test "${SOURCE_FILES}" "${LIBRARIES}")
