@@ -3,42 +3,53 @@
 
 const uint8_t ATLAS_SENSOR_EC_DEFAULT_ADDRESS = 0x64;
 const uint8_t ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS = 0x66;
-const uint8_t ATLAS_SENSOR_PH_DEFAULT_ADDRESS = 0x65;
+const uint8_t ATLAS_SENSOR_PH_DEFAULT_ADDRESS = 0x63;
 const uint8_t ATLAS_SENSOR_DO_DEFAULT_ADDRESS = 0x61;
 const uint8_t ATLAS_SENSOR_ORP_DEFAULT_ADDRESS = 0x62;
+
+const uint8_t ATLAS_RESPONSE_CODE_NO_DATA = 0xff;
+const uint8_t ATLAS_RESPONSE_CODE_NOT_READY = 0xfe;
+const uint8_t ATLAS_RESPONSE_CODE_ERROR = 0x2;
+const uint8_t ATLAS_RESPONSE_CODE_SUCCESS = 0x1;
 
 class AtlasScientificBoard {
 private:
     uint8_t address;
 
 private:
-    uint8_t readResponse(const char *str, char *buffer, size_t length, uint32_t read_delay = 300) {
+    uint8_t readResponse(const char *str, char *buffer, size_t length, uint32_t read_delay = 200) {
         Wire.beginTransmission(address);
         Wire.write(str);
         Wire.endTransmission();
 
         delay(read_delay);
 
-        Wire.requestFrom((uint8_t)address, length, (uint8_t)1);
+        while (true) {
+            Wire.requestFrom((uint8_t)address, 1 + length, (uint8_t)1);
 
-        uint8_t code = Wire.read();
-        uint8_t i = 0;
-
-        while (Wire.available()) {
-            uint8_t c = Wire.read();
-            if (buffer != nullptr && i < length - 1) {
-                buffer[i++] = c;
+            uint8_t code = Wire.read();
+            if (code == ATLAS_RESPONSE_CODE_NOT_READY) {
+                delay(100);
+                continue;
             }
-            if (c == 0) {
-                Wire.endTransmission();
-                break;
-            }
-        }
-        if (buffer != nullptr) {
-            buffer[i] = 0;
-        }
 
-        return code;
+            uint8_t i = 0;
+            while (Wire.available()) {
+                uint8_t c = Wire.read();
+                if (buffer != nullptr && i < length - 1) {
+                    buffer[i++] = c;
+                }
+                if (c == 0) {
+                    Wire.endTransmission();
+                    break;
+                }
+            }
+            if (buffer != nullptr) {
+                buffer[i] = 0;
+            }
+
+            return code;
+        }
     }
 
 public:
@@ -46,9 +57,19 @@ public:
         this->address = address;
     }
 
+    bool find() {
+        uint8_t value = readResponse("FIND", nullptr, 0);
+        return value == 0x1;
+    }
+
+    bool ledsOn() {
+        uint8_t value = readResponse("L,1", nullptr, 0);
+        return value == 0x1;
+    }
+
     bool begin() {
         char buffer[20];
-        uint8_t value = readResponse("i", buffer, sizeof(buffer));
+        uint8_t value = readResponse("I", buffer, sizeof(buffer));
         return value != 0xff;
     }
 };
@@ -57,56 +78,48 @@ class Check {
 public:
     void setup() {
         Wire.begin();
+
+        //  TODO: Investigate. I would see hangs if I used a slower speed.
+        Wire.setClock(400000);
+    }
+
+    void test(uint8_t address, const char *name) {
+        AtlasScientificBoard sensor(address);
+        Serial.print("test: ");
+        Serial.print(name);
+        if (!sensor.begin()) {
+            Serial.println(" FAILED");
+            return;
+        }
+        else {
+            Serial.println(" PASSED");
+        }
+
+        if (!sensor.ledsOn()) {
+            Serial.println("test: LEDS FAILED");
+        }
+
+        sensor.find();
     }
 
     void ec() {
-        AtlasScientificBoard sensor(ATLAS_SENSOR_EC_DEFAULT_ADDRESS);
-        if (!sensor.begin()) {
-            Serial.println("test: EC FAILED");
-        }
-        else {
-            Serial.println("test: EC PASSED");
-        }
+        test(ATLAS_SENSOR_EC_DEFAULT_ADDRESS, "EC");
     }
 
     void temp() {
-        AtlasScientificBoard sensor(ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS);
-        if (!sensor.begin()) {
-            Serial.println("test: TEMP FAILED");
-        }
-        else {
-            Serial.println("test: TEMP PASSED");
-        }
+        test(ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS, "TEMP");
     }
 
     void ph() {
-        AtlasScientificBoard sensor(ATLAS_SENSOR_PH_DEFAULT_ADDRESS);
-        if (!sensor.begin()) {
-            Serial.println("test: PH FAILED");
-        }
-        else {
-            Serial.println("test: PH PASSED");
-        }
+        test(ATLAS_SENSOR_PH_DEFAULT_ADDRESS, "PH");
     }
 
     void dissolvedOxygen() {
-        AtlasScientificBoard sensor(ATLAS_SENSOR_DO_DEFAULT_ADDRESS);
-        if (!sensor.begin()) {
-            Serial.println("test: DO FAILED");
-        }
-        else {
-            Serial.println("test: DO PASSED");
-        }
+        test(ATLAS_SENSOR_DO_DEFAULT_ADDRESS, "DO");
     }
 
     void orp() {
-        AtlasScientificBoard sensor(ATLAS_SENSOR_ORP_DEFAULT_ADDRESS);
-        if (!sensor.begin()) {
-            Serial.println("test: ORP FAILED");
-        }
-        else {
-            Serial.println("test: ORP PASSED");
-        }
+        test(ATLAS_SENSOR_ORP_DEFAULT_ADDRESS, "ORP");
     }
 
 };
@@ -122,7 +135,12 @@ void setup() {
     pinMode(A4, OUTPUT);
     pinMode(A5, OUTPUT);
 
-    while (!Serial && millis() < 2 * 1000) {
+    digitalWrite(13, HIGH);
+    digitalWrite(A3, HIGH);
+    digitalWrite(A4, HIGH);
+    digitalWrite(A5, HIGH);
+
+    while (!Serial /*&& millis() < 2 * 1000*/) {
         delay(100);
     }
 
