@@ -95,18 +95,6 @@ F4 "VCC" I L 14150 4800 60
 F5 "GND" I L 14150 4900 60 
 $EndSheet
 $Comp
-L CONN_01X05 P1
-U 1 1 58C6A512
-P 4550 5850
-F 0 "P1" H 4550 6150 50  0000 C CNN
-F 1 "CONN_01X05" V 4650 5850 50  0000 C CNN
-F 2 "Socket_Strips:Socket_Strip_Straight_1x05_Pitch2.54mm" H 4550 5850 50  0001 C CNN
-F 3 "" H 4550 5850 50  0000 C CNN
-F 4 "0" H 4550 6250 50  0001 C CNN "price"
-	1    4550 5850
-	1    0    0    -1  
-$EndComp
-$Comp
 L +3V3 #PWR01
 U 1 1 58C6A9D6
 P 4100 5750
@@ -1931,4 +1919,23 @@ Text Label 2000 3700 0    50   ~ 0
 SDA2
 Text Label 2000 3800 0    50   ~ 0
 SCL2
+$Comp
+L Conn_01x07 J4
+U 1 1 5A0F83DC
+P 4550 5950
+F 0 "J4" H 4550 6350 50  0000 C CNN
+F 1 "Conn_01x07" H 4550 5550 50  0000 C CNN
+F 2 "Socket_Strips:Socket_Strip_Straight_1x07_Pitch2.54mm" H 4550 5950 50  0001 C CNN
+F 3 "" H 4550 5950 50  0001 C CNN
+	1    4550 5950
+	1    0    0    -1  
+$EndComp
+Text Label 4050 6250 0    50   ~ 0
+SDA2
+Text Label 4050 6150 0    50   ~ 0
+SCL2
+Wire Wire Line
+	4050 6150 4350 6150
+Wire Wire Line
+	4050 6250 4350 6250
 $EndSCHEMATC
