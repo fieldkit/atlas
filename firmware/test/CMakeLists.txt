@@ -1,5 +1,5 @@
 set(SOURCE_FILES
-  test.ino
+  test.cpp
 )
 
 set(LIBRARIES
