@@ -7,10 +7,6 @@ bool Sensor::isAvailable() {
     return available;
 }
 
-bool Sensor::hasReadingReady() {
-    return readingReady;
-}
-
 bool Sensor::setup() {
     reader.setup();
     available = true;
@@ -24,6 +20,10 @@ bool Sensor::tick() {
 
 void Sensor::beginTakeReading() {
     reader.beginReading();
+}
+
+bool Sensor::hasReadingReady() {
+    return readingReady;
 }
 
 bool SensorModule::setup() {

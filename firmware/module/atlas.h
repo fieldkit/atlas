@@ -14,17 +14,20 @@ const uint8_t ATLAS_RESPONSE_CODE_SUCCESS = 0x1;
 enum class AtlasReaderState {
     Start,
     Blink,
+    LedsOn,
     Sleep,
     Sleeping,
     Idle,
     Reading,
-    WaitingOnReading,
+    WaitingOnReply,
+    WaitingOnStatus,
     Done
 };
 
 class AtlasReader : public SensorReader {
 private:
     AtlasReaderState state { AtlasReaderState::Start };
+    AtlasReaderState postReplyState { AtlasReaderState::Idle };
     uint32_t nextReadAt { 0 };
     uint8_t readings { 0 };
     TwoWire *bus { nullptr };
@@ -38,15 +41,15 @@ public:
     bool hasReading() override;
 
 private:
-    bool info();
-    bool ledsOff();
-    bool find();
-    bool ledsOn();
+    void info();
+    void ledsOff();
+    void find();
+    void ledsOn();
     void sleep();
     void read();
 
 public:
-    uint8_t sendCommand(const char *str, char *buffer = nullptr, size_t length = 0, uint32_t readDelay = 300, bool sync = true);
+    uint8_t sendCommand(const char *str, uint32_t readDelay = 300);
     uint8_t readReply(char *buffer, size_t length);
 
 };

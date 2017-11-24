@@ -23,8 +23,8 @@ public:
     bool setup();
     bool tick();
     bool isAvailable();
-    bool hasReadingReady();
     void beginTakeReading();
+    bool hasReadingReady();
 };
 
 enum class SensorModuleState {

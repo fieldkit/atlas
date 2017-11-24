@@ -13,43 +13,57 @@ bool AtlasReader::tick() {
     switch (state) {
     case AtlasReaderState::Start: {
         info();
-        state = AtlasReaderState::Blink;
+        state = AtlasReaderState::WaitingOnReply;
+        postReplyState = AtlasReaderState::LedsOn;
+        break;
+    }
+    case AtlasReaderState::LedsOn: {
+        ledsOn();
+        state = AtlasReaderState::WaitingOnStatus;
+        postReplyState = AtlasReaderState::Blink;
         break;
     }
     case AtlasReaderState::Blink: {
-        ledsOn();
         find();
-        state = AtlasReaderState::Sleep;
+        state = AtlasReaderState::WaitingOnStatus;
+        postReplyState = AtlasReaderState::Sleep;
         break;
     }
     case AtlasReaderState::Sleep: {
         sleep();
-        state = AtlasReaderState::Idle;
+        state = AtlasReaderState::Sleeping;
         break;
     }
-    case AtlasReaderState::Sleeping:
+    case AtlasReaderState::Sleeping: {
+        break;
+    }
     case AtlasReaderState::Idle: {
         break;
     }
     case AtlasReaderState::Reading: {
-        read();
-        state = AtlasReaderState::WaitingOnReading;
         break;
     }
-    case AtlasReaderState::WaitingOnReading: {
+    case AtlasReaderState::WaitingOnStatus: {
+        if (nextReadAt > millis()) {
+            break;
+        }
+        if (readReply(nullptr, 0) == ATLAS_RESPONSE_CODE_NOT_READY) {
+            nextReadAt = millis() + 100;
+            break;
+        }
+        state = postReplyState;
+        break;
+    }
+    case AtlasReaderState::WaitingOnReply: {
         if (nextReadAt > millis()) {
             break;
         }
         char buffer[20];
-        if (readReply(buffer, sizeof(buffer)) != ATLAS_RESPONSE_CODE_NOT_READY) {
-            if (readings < 20) {
-                readings++;
-                state = AtlasReaderState::Reading;
-            }
-            else {
-                state = AtlasReaderState::Done;
-            }
+        if (readReply(buffer, sizeof(buffer)) == ATLAS_RESPONSE_CODE_NOT_READY) {
+            nextReadAt = millis() + 100;
+            break;
         }
+        state = postReplyState;
         break;
     }
     case AtlasReaderState::Done: {
@@ -60,8 +74,8 @@ bool AtlasReader::tick() {
 }
 
 bool AtlasReader::beginReading() {
-    state = AtlasReaderState::Reading;
-    readings = 0;
+    // state = AtlasReaderState::Reading;
+    // readings = 0;
     return true;
 }
 
@@ -69,56 +83,39 @@ bool AtlasReader::hasReading() {
     return false;
 }
 
-bool AtlasReader::info() {
-    char buffer[20];
-    uint8_t value = sendCommand("I", buffer, sizeof(buffer));
-    return value == ATLAS_RESPONSE_CODE_SUCCESS;
+void AtlasReader::info() {
+    sendCommand("I");
 }
 
-bool AtlasReader::ledsOff() {
-    return sendCommand("L,0") == ATLAS_RESPONSE_CODE_SUCCESS;
+void AtlasReader::ledsOff() {
+    sendCommand("L,0");
 }
 
-bool AtlasReader::find() {
-    return sendCommand("FIND") == ATLAS_RESPONSE_CODE_SUCCESS;
+void AtlasReader::find() {
+    sendCommand("FIND");
 }
 
-bool AtlasReader::ledsOn() {
-    return sendCommand("L,1") == ATLAS_RESPONSE_CODE_SUCCESS;
+void AtlasReader::ledsOn() {
+    sendCommand("L,1");
 }
 
 void AtlasReader::sleep() {
-    sendCommand("SLEEP", nullptr, 0, 0, false);
+    sendCommand("SLEEP");
 }
 
 void AtlasReader::read() {
-    sendCommand("R", nullptr, 0, 1000, false);
+    sendCommand("R");
 }
 
-uint8_t AtlasReader::sendCommand(const char *str, char *buffer, size_t length, uint32_t readDelay, bool sync) {
-    fkprintf("Command(%s, %x, %d, %d, %d)\r\n", str, buffer, length, readDelay, sync);
+uint8_t AtlasReader::sendCommand(const char *str, uint32_t readDelay) {
+    fkprintf("Command(%s, %d)\r\n", str, readDelay);
 
     bus->beginTransmission(address);
     bus->write(str);
     bus->endTransmission();
 
-    if (!sync ) {
-        nextReadAt  = millis() + readDelay;
-        return ATLAS_RESPONSE_CODE_NOT_READY;
-    }
-    else {
-        delay(readDelay);
-    }
-
-    while (true) {
-        uint8_t code = readReply(buffer, length);
-        if (code == ATLAS_RESPONSE_CODE_NOT_READY) {
-            delay(100);
-        }
-        else {
-            return code;
-        }
-    }
+    nextReadAt  = millis() + readDelay;
+    return ATLAS_RESPONSE_CODE_NOT_READY;
 }
 
 uint8_t AtlasReader::readReply(char *buffer, size_t length) {
@@ -140,9 +137,13 @@ uint8_t AtlasReader::readReply(char *buffer, size_t length) {
             break;
         }
     }
+
     if (buffer != nullptr) {
         buffer[i] = 0;
-        fkprintf("Done '%s' (%d)\r\n", buffer, i);
+        // Sometimes that first byte we read a \0 from the device.
+        if (strlen(buffer) > 0) {
+            fkprintf("Done '%s' (%d)\r\n", buffer, strlen(buffer));
+        }
     }
 
     return code;
