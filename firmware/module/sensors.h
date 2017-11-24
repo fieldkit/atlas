@@ -1,6 +1,8 @@
 #ifndef SENSORS_H_INCLUDED
 #define SENSORS_H_INCLUDED
 
+#include <Arduino.h>
+
 class SensorReader {
 public:
     virtual bool setup() = 0;
@@ -16,31 +18,13 @@ private:
     bool readingReady;
 
 public:
-    Sensor(SensorReader &reader) : reader(reader) {
-    }
+    Sensor(SensorReader &reader);
 
-    bool isAvailable() {
-        return available;
-    }
-
-    bool hasReadingReady() {
-        return readingReady;
-    }
-
-    bool setup() {
-        reader.setup();
-        available = true;
-        return true;
-    }
-
-    bool tick() {
-        reader.tick();
-        return true;
-    }
-
-    void beginTakeReading() {
-        reader.beginReading();
-    }
+    bool setup();
+    bool tick();
+    bool isAvailable();
+    bool hasReadingReady();
+    void beginTakeReading();
 };
 
 enum class SensorModuleState {
@@ -59,39 +43,12 @@ public:
     SensorModule(Sensor (&sensors)[N]) : sensors(sensors), numberOfSensors(N) {
     }
 
-    bool setup() {
-        for (auto i = 0; i < numberOfSensors; ++i) {
-            sensors[i].setup();
-        }
-        return true;
-    }
+    bool setup();
+    bool tick();
+    bool isBusy();
+    void beginTakeReading();
+    bool hasReadingReady();
 
-    bool tick() {
-        for (auto i = 0; i < numberOfSensors; ++i) {
-            sensors[i].tick();
-        }
-        return true;
-    }
-
-    bool isBusy() {
-        return state == SensorModuleState::Busy;
-    }
-
-    void beginTakeReading() {
-        for (auto i = 0; i < numberOfSensors; ++i) {
-            sensors[i].beginTakeReading();
-        }
-        state = SensorModuleState::Busy;
-    }
-
-    bool hasReadingReady() {
-        for (auto i = 0; i < numberOfSensors; ++i) {
-            if (!sensors[i].hasReadingReady()) {
-                return false;
-            }
-        }
-        return true;
-    }
 };
 
 #endif
