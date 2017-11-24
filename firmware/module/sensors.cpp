@@ -23,7 +23,11 @@ void Sensor::beginTakeReading() {
 }
 
 bool Sensor::hasReadingReady() {
-    return readingReady;
+    return false;
+}
+
+bool Sensor::isIdle() {
+    return reader.isIdle();
 }
 
 bool SensorModule::setup() {
@@ -41,14 +45,22 @@ bool SensorModule::tick() {
 }
 
 bool SensorModule::isBusy() {
-    return state == SensorModuleState::Busy;
+    return !isIdle();
+}
+
+bool SensorModule::isIdle() {
+    for (auto i = 0; i < numberOfSensors; ++i) {
+        if (!sensors[i].isIdle()) {
+            return false;
+        }
+    }
+    return true;
 }
 
 void SensorModule::beginTakeReading() {
     for (auto i = 0; i < numberOfSensors; ++i) {
         sensors[i].beginTakeReading();
     }
-    state = SensorModuleState::Busy;
 }
 
 bool SensorModule::hasReadingReady() {

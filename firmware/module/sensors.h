@@ -9,13 +9,13 @@ public:
     virtual bool tick() = 0;
     virtual bool beginReading() = 0;
     virtual bool hasReading() = 0;
+    virtual bool isIdle() = 0;
 };
 
 class Sensor {
 private:
     SensorReader &reader;
     bool available;
-    bool readingReady;
 
 public:
     Sensor(SensorReader &reader);
@@ -23,20 +23,15 @@ public:
     bool setup();
     bool tick();
     bool isAvailable();
+    bool isIdle();
     void beginTakeReading();
     bool hasReadingReady();
-};
-
-enum class SensorModuleState {
-    Idle,
-    Busy
 };
 
 class SensorModule {
 private:
     Sensor *sensors { nullptr };
     const size_t numberOfSensors { 0 };
-    SensorModuleState state { SensorModuleState::Idle };
 
 public:
     template<size_t N>
@@ -46,6 +41,7 @@ public:
     bool setup();
     bool tick();
     bool isBusy();
+    bool isIdle();
     void beginTakeReading();
     bool hasReadingReady();
 

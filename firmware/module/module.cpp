@@ -59,6 +59,11 @@ bool begun = false;
 void loop() {
     module.tick();
 
+    if (module.isIdle()) {
+        fkprintf("Idle\r\n");
+        delay(1000);
+    }
+
     if (millis() > 4000 && !module.isBusy()) {
         if (!begun) {
             fkprintf("Begin Taking Reading...\r\n");

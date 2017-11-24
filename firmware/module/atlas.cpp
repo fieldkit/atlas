@@ -10,6 +10,10 @@ bool AtlasReader::setup() {
 }
 
 bool AtlasReader::tick() {
+    if (nextCheckAt > 0 && nextCheckAt > millis()) {
+        return false;
+    }
+
     switch (state) {
     case AtlasReaderState::Start: {
         info();
@@ -19,19 +23,52 @@ bool AtlasReader::tick() {
     }
     case AtlasReaderState::LedsOn: {
         ledsOn();
-        state = AtlasReaderState::WaitingOnStatus;
+        state = AtlasReaderState::WaitingOnEmptyReply;
+        postReplyState = AtlasReaderState::Status;
+        break;
+    }
+    case AtlasReaderState::Status: {
+        sendCommand("STATUS");
+        state = AtlasReaderState::WaitingOnReply;
         postReplyState = AtlasReaderState::Blink;
         break;
     }
     case AtlasReaderState::Blink: {
         find();
-        state = AtlasReaderState::WaitingOnStatus;
+        state = AtlasReaderState::WaitingOnEmptyReply;
+
+        // Sleep is annoying because some of the modules seem to awaken from
+        // sleep if we're talking to other modules. So this works best if we
+        // issue SLEEP to all of them at once w/o needing to talk to the others
+        // concurrently.
+        // Also, the RTD sensor seems to just awake from sleep randomly.
         postReplyState = AtlasReaderState::Sleep;
+        nextCheckAt = millis() + 1000;
         break;
     }
     case AtlasReaderState::Sleep: {
         sleep();
         state = AtlasReaderState::Sleeping;
+        break;
+    }
+    case AtlasReaderState::Reading: {
+        break;
+    }
+    case AtlasReaderState::WaitingOnEmptyReply: {
+        if (readReply(nullptr, 0) == ATLAS_RESPONSE_CODE_NOT_READY) {
+            nextCheckAt = millis() + ATLAS_DEFAULT_DELAY_NOT_READY;
+            break;
+        }
+        state = postReplyState;
+        break;
+    }
+    case AtlasReaderState::WaitingOnReply: {
+        char buffer[20];
+        if (readReply(buffer, sizeof(buffer)) == ATLAS_RESPONSE_CODE_NOT_READY) {
+            nextCheckAt = millis() + ATLAS_DEFAULT_DELAY_NOT_READY;
+            break;
+        }
+        state = postReplyState;
         break;
     }
     case AtlasReaderState::Sleeping: {
@@ -40,47 +77,20 @@ bool AtlasReader::tick() {
     case AtlasReaderState::Idle: {
         break;
     }
-    case AtlasReaderState::Reading: {
-        break;
-    }
-    case AtlasReaderState::WaitingOnStatus: {
-        if (nextReadAt > millis()) {
-            break;
-        }
-        if (readReply(nullptr, 0) == ATLAS_RESPONSE_CODE_NOT_READY) {
-            nextReadAt = millis() + 100;
-            break;
-        }
-        state = postReplyState;
-        break;
-    }
-    case AtlasReaderState::WaitingOnReply: {
-        if (nextReadAt > millis()) {
-            break;
-        }
-        char buffer[20];
-        if (readReply(buffer, sizeof(buffer)) == ATLAS_RESPONSE_CODE_NOT_READY) {
-            nextReadAt = millis() + 100;
-            break;
-        }
-        state = postReplyState;
-        break;
-    }
-    case AtlasReaderState::Done: {
-        break;
-    }
     }
     return true;
 }
 
 bool AtlasReader::beginReading() {
-    // state = AtlasReaderState::Reading;
-    // readings = 0;
     return true;
 }
 
 bool AtlasReader::hasReading() {
     return false;
+}
+
+bool AtlasReader::isIdle() {
+    return state == AtlasReaderState::Idle || state == AtlasReaderState::Sleeping;
 }
 
 void AtlasReader::info() {
@@ -108,13 +118,13 @@ void AtlasReader::read() {
 }
 
 uint8_t AtlasReader::sendCommand(const char *str, uint32_t readDelay) {
-    fkprintf("Command(%s, %d)\r\n", str, readDelay);
+    fkprintf("Atlas(%x)(%s, %d)\r\n", address, str, readDelay);
 
     bus->beginTransmission(address);
     bus->write(str);
     bus->endTransmission();
 
-    nextReadAt  = millis() + readDelay;
+    nextCheckAt  = millis() + readDelay;
     return ATLAS_RESPONSE_CODE_NOT_READY;
 }
 
@@ -140,9 +150,8 @@ uint8_t AtlasReader::readReply(char *buffer, size_t length) {
 
     if (buffer != nullptr) {
         buffer[i] = 0;
-        // Sometimes that first byte we read a \0 from the device.
         if (strlen(buffer) > 0) {
-            fkprintf("Done '%s' (%d)\r\n", buffer, strlen(buffer));
+            fkprintf("Done(%x) '%s' (%d)\r\n", address, buffer, strlen(buffer));
         }
     }
 
