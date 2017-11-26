@@ -10,8 +10,12 @@ bool AtlasReader::setup() {
 }
 
 bool AtlasReader::tick() {
-    if (nextCheckAt > 0 && nextCheckAt > millis()) {
-        return false;
+    if (nextCheckAt > 0) {
+        if (nextCheckAt > millis()) {
+            return false;
+        }
+
+        nextCheckAt = 0;
     }
 
     switch (state) {
@@ -104,17 +108,26 @@ AtlasResponseCode AtlasReader::sendCommand(const char *str, uint32_t readDelay) 
     return AtlasResponseCode::NotReady;
 }
 
-AtlasResponseCode AtlasReader::readReply(char *buffer, size_t length) {
-    bus->requestFrom((uint8_t)address, 1 + length, (uint8_t)1);
+static AtlasSensorType getSensorType(const char *buffer) {
+    if (strstr(buffer, "RTD") != nullptr)  return AtlasSensorType::Temp;
+    if (strstr(buffer, "pH") != nullptr)  return AtlasSensorType::Ph;
+    if (strstr(buffer, "DO") != nullptr)  return AtlasSensorType::Do;
+    if (strstr(buffer, "ORP") != nullptr)  return AtlasSensorType::Orp;
+    if (strstr(buffer, "EC") != nullptr)  return AtlasSensorType::Ec;
+    return AtlasSensorType::Unknown;
+}
 
-    AtlasResponseCode code = static_cast<AtlasResponseCode>(bus->read());
+AtlasResponseCode AtlasReader::readReply(char *buffer, size_t length) {
+    bus->requestFrom(address, 1 + length, (uint8_t)1);
+
+    auto code = static_cast<AtlasResponseCode>(bus->read());
     if (code == AtlasResponseCode::NotReady) {
         return AtlasResponseCode::NotReady;
     }
 
-    uint8_t i = 0;
+    size_t i = 0;
     while (bus->available()) {
-        uint8_t c = bus->read();
+        auto c = bus->read();
         if (buffer != nullptr && i < length - 1) {
             buffer[i++] = c;
         }
@@ -127,6 +140,10 @@ AtlasResponseCode AtlasReader::readReply(char *buffer, size_t length) {
     if (buffer != nullptr) {
         buffer[i] = 0;
         fkprintln("Atlas(0x%x) -> ('%s')", address, buffer, strlen(buffer));
+
+        if (type == AtlasSensorType::Unknown) {
+            type = getSensorType(buffer);
+        }
     }
 
     return code;

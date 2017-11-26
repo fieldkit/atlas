@@ -30,14 +30,23 @@ enum class AtlasReaderState {
     WaitingOnEmptyReply
 };
 
+enum class AtlasSensorType {
+    Unknown,
+    Ph,
+    Ec,
+    Orp,
+    Do,
+    Temp
+};
+
 class AtlasReader : public SensorReader {
 private:
     TwoWire *bus { nullptr };
     uint8_t address { 0 };
+    AtlasSensorType type { AtlasSensorType::Unknown };
     AtlasReaderState state { AtlasReaderState::Start };
     AtlasReaderState postReplyState { AtlasReaderState::Idle };
     uint32_t nextCheckAt { 0 };
-    uint8_t readings { 0 };
 
 public:
     AtlasReader(TwoWire *theBus, uint8_t theAddress);
