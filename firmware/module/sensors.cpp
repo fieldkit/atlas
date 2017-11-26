@@ -31,14 +31,14 @@ bool Sensor::isIdle() {
 }
 
 bool SensorModule::setup() {
-    for (auto i = 0; i < numberOfSensors; ++i) {
+    for (size_t i = 0; i < numberOfSensors; ++i) {
         sensors[i].setup();
     }
     return true;
 }
 
 bool SensorModule::tick() {
-    for (auto i = 0; i < numberOfSensors; ++i) {
+    for (size_t i = 0; i < numberOfSensors; ++i) {
         sensors[i].tick();
     }
     return true;
@@ -49,7 +49,7 @@ bool SensorModule::isBusy() {
 }
 
 bool SensorModule::isIdle() {
-    for (auto i = 0; i < numberOfSensors; ++i) {
+    for (size_t i = 0; i < numberOfSensors; ++i) {
         if (!sensors[i].isIdle()) {
             return false;
         }
@@ -58,13 +58,13 @@ bool SensorModule::isIdle() {
 }
 
 void SensorModule::beginTakeReading() {
-    for (auto i = 0; i < numberOfSensors; ++i) {
+    for (size_t i = 0; i < numberOfSensors; ++i) {
         sensors[i].beginTakeReading();
     }
 }
 
 bool SensorModule::hasReadingReady() {
-    for (auto i = 0; i < numberOfSensors; ++i) {
+    for (size_t i = 0; i < numberOfSensors; ++i) {
         if (!sensors[i].hasReadingReady()) {
             return false;
         }
