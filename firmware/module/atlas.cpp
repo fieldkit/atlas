@@ -16,13 +16,13 @@ bool AtlasReader::tick() {
 
     switch (state) {
     case AtlasReaderState::Start: {
-        info();
+        sendCommand("I");
         state = AtlasReaderState::WaitingOnReply;
         postReplyState = AtlasReaderState::LedsOn;
         break;
     }
     case AtlasReaderState::LedsOn: {
-        ledsOn();
+        sendCommand("L,1");
         state = AtlasReaderState::WaitingOnEmptyReply;
         postReplyState = AtlasReaderState::Status;
         break;
@@ -34,7 +34,7 @@ bool AtlasReader::tick() {
         break;
     }
     case AtlasReaderState::Blink: {
-        find();
+        sendCommand("FIND");
         state = AtlasReaderState::WaitingOnEmptyReply;
 
         // Sleep is annoying because some of the modules seem to awaken from
@@ -43,11 +43,11 @@ bool AtlasReader::tick() {
         // concurrently.
         // Also, the RTD sensor seems to just awake from sleep randomly.
         postReplyState = AtlasReaderState::Sleep;
-        nextCheckAt = millis() + 1000;
+        nextCheckAt = millis() + ATLAS_DEFAULT_DELAY_SLEEP;
         break;
     }
     case AtlasReaderState::Sleep: {
-        sleep();
+        sendCommand("SLEEP");
         state = AtlasReaderState::Sleeping;
         break;
     }
@@ -85,36 +85,12 @@ bool AtlasReader::beginReading() {
     return true;
 }
 
-bool AtlasReader::hasReading() {
+bool AtlasReader::hasReading() const {
     return false;
 }
 
-bool AtlasReader::isIdle() {
+bool AtlasReader::isIdle() const {
     return state == AtlasReaderState::Idle || state == AtlasReaderState::Sleeping;
-}
-
-void AtlasReader::info() {
-    sendCommand("I");
-}
-
-void AtlasReader::ledsOff() {
-    sendCommand("L,0");
-}
-
-void AtlasReader::find() {
-    sendCommand("FIND");
-}
-
-void AtlasReader::ledsOn() {
-    sendCommand("L,1");
-}
-
-void AtlasReader::sleep() {
-    sendCommand("SLEEP");
-}
-
-void AtlasReader::read() {
-    sendCommand("R");
 }
 
 uint8_t AtlasReader::sendCommand(const char *str, uint32_t readDelay) {
@@ -150,9 +126,7 @@ uint8_t AtlasReader::readReply(char *buffer, size_t length) {
 
     if (buffer != nullptr) {
         buffer[i] = 0;
-        if (strlen(buffer) > 0) {
-            fkprintf("Done(%x) '%s' (%d)\r\n", address, buffer, strlen(buffer));
-        }
+        fkprintf("Done(%x) '%s' (%d)\r\n", address, buffer, strlen(buffer));
     }
 
     return code;

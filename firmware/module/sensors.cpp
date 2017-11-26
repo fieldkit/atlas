@@ -3,7 +3,7 @@
 Sensor::Sensor(SensorReader &reader) : reader(reader) {
 }
 
-bool Sensor::isAvailable() {
+bool Sensor::isAvailable() const {
     return available;
 }
 
@@ -22,11 +22,11 @@ void Sensor::beginTakeReading() {
     reader.beginReading();
 }
 
-bool Sensor::hasReadingReady() {
+bool Sensor::hasReadingReady() const {
     return false;
 }
 
-bool Sensor::isIdle() {
+bool Sensor::isIdle() const {
     return reader.isIdle();
 }
 
@@ -44,11 +44,11 @@ bool SensorModule::tick() {
     return true;
 }
 
-bool SensorModule::isBusy() {
+bool SensorModule::isBusy() const {
     return !isIdle();
 }
 
-bool SensorModule::isIdle() {
+bool SensorModule::isIdle() const {
     for (size_t i = 0; i < numberOfSensors; ++i) {
         if (!sensors[i].isIdle()) {
             return false;
@@ -63,7 +63,7 @@ void SensorModule::beginTakeReading() {
     }
 }
 
-bool SensorModule::hasReadingReady() {
+bool SensorModule::hasReadingReady() const {
     for (size_t i = 0; i < numberOfSensors; ++i) {
         if (!sensors[i].hasReadingReady()) {
             return false;

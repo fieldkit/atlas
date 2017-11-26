@@ -8,8 +8,8 @@ public:
     virtual bool setup() = 0;
     virtual bool tick() = 0;
     virtual bool beginReading() = 0;
-    virtual bool hasReading() = 0;
-    virtual bool isIdle() = 0;
+    virtual bool hasReading() const = 0;
+    virtual bool isIdle() const = 0;
 };
 
 class Sensor {
@@ -22,10 +22,11 @@ public:
 
     bool setup();
     bool tick();
-    bool isAvailable();
-    bool isIdle();
     void beginTakeReading();
-    bool hasReadingReady();
+
+    bool isAvailable() const;
+    bool isIdle() const;
+    bool hasReadingReady() const;
 };
 
 class SensorModule {
@@ -40,10 +41,11 @@ public:
 
     bool setup();
     bool tick();
-    bool isBusy();
-    bool isIdle();
     void beginTakeReading();
-    bool hasReadingReady();
+
+    bool isBusy() const;
+    bool isIdle() const;
+    bool hasReadingReady() const;
 
 };
 

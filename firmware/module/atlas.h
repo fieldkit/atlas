@@ -13,6 +13,7 @@ const uint8_t ATLAS_RESPONSE_CODE_SUCCESS = 0x1;
 
 const uint32_t ATLAS_DEFAULT_DELAY_COMMAND = 300;
 const uint32_t ATLAS_DEFAULT_DELAY_NOT_READY = 100;
+const uint32_t ATLAS_DEFAULT_DELAY_SLEEP = 1000;
 
 enum class AtlasReaderState {
     Start,
@@ -41,8 +42,8 @@ public:
     bool setup() override;
     bool tick() override;
     bool beginReading() override;
-    bool hasReading() override;
-    bool isIdle() override;
+    bool hasReading() const override;
+    bool isIdle() const override;
 
 private:
     void info();
