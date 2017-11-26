@@ -11,8 +11,8 @@ const uint8_t ATLAS_RESPONSE_CODE_NOT_READY = 0xfe;
 const uint8_t ATLAS_RESPONSE_CODE_ERROR = 0x2;
 const uint8_t ATLAS_RESPONSE_CODE_SUCCESS = 0x1;
 
-const uint8_t ATLAS_DEFAULT_DELAY_COMMAND = 300;
-const uint8_t ATLAS_DEFAULT_DELAY_NOT_READY = 100;
+const uint32_t ATLAS_DEFAULT_DELAY_COMMAND = 300;
+const uint32_t ATLAS_DEFAULT_DELAY_NOT_READY = 100;
 
 enum class AtlasReaderState {
     Start,
