@@ -6,10 +6,12 @@
 
 #include "sensors.h"
 
-const uint8_t ATLAS_RESPONSE_CODE_NO_DATA = 0xff;
-const uint8_t ATLAS_RESPONSE_CODE_NOT_READY = 0xfe;
-const uint8_t ATLAS_RESPONSE_CODE_ERROR = 0x2;
-const uint8_t ATLAS_RESPONSE_CODE_SUCCESS = 0x1;
+enum class AtlasResponseCode : uint8_t {
+    NoData = 0xff,
+    NotReady = 0xfe,
+    Error = 0x2,
+    Success = 0x1,
+};
 
 const uint32_t ATLAS_DEFAULT_DELAY_COMMAND = 300;
 const uint32_t ATLAS_DEFAULT_DELAY_NOT_READY = 100;
@@ -53,8 +55,8 @@ private:
     void sleep();
     void read();
 
-    uint8_t sendCommand(const char *str, uint32_t readDelay = ATLAS_DEFAULT_DELAY_COMMAND);
-    uint8_t readReply(char *buffer, size_t length);
+    AtlasResponseCode sendCommand(const char *str, uint32_t readDelay = ATLAS_DEFAULT_DELAY_COMMAND);
+    AtlasResponseCode readReply(char *buffer, size_t length);
 
 };
 

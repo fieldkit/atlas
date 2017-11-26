@@ -55,7 +55,7 @@ bool AtlasReader::tick() {
         break;
     }
     case AtlasReaderState::WaitingOnEmptyReply: {
-        if (readReply(nullptr, 0) == ATLAS_RESPONSE_CODE_NOT_READY) {
+        if (readReply(nullptr, 0) == AtlasResponseCode::NotReady) {
             nextCheckAt = millis() + ATLAS_DEFAULT_DELAY_NOT_READY;
             break;
         }
@@ -64,7 +64,7 @@ bool AtlasReader::tick() {
     }
     case AtlasReaderState::WaitingOnReply: {
         char buffer[20];
-        if (readReply(buffer, sizeof(buffer)) == ATLAS_RESPONSE_CODE_NOT_READY) {
+        if (readReply(buffer, sizeof(buffer)) == AtlasResponseCode::NotReady) {
             nextCheckAt = millis() + ATLAS_DEFAULT_DELAY_NOT_READY;
             break;
         }
@@ -93,23 +93,23 @@ bool AtlasReader::isIdle() const {
     return state == AtlasReaderState::Idle || state == AtlasReaderState::Sleeping;
 }
 
-uint8_t AtlasReader::sendCommand(const char *str, uint32_t readDelay) {
-    fkprintf("Atlas(%x)(%s, %d)\r\n", address, str, readDelay);
+AtlasResponseCode AtlasReader::sendCommand(const char *str, uint32_t readDelay) {
+    fkprintln("Atlas(0x%x) <- ('%s', %d))", address, str, readDelay);
 
     bus->beginTransmission(address);
     bus->write(str);
     bus->endTransmission();
 
     nextCheckAt  = millis() + readDelay;
-    return ATLAS_RESPONSE_CODE_NOT_READY;
+    return AtlasResponseCode::NotReady;
 }
 
-uint8_t AtlasReader::readReply(char *buffer, size_t length) {
+AtlasResponseCode AtlasReader::readReply(char *buffer, size_t length) {
     bus->requestFrom((uint8_t)address, 1 + length, (uint8_t)1);
 
-    uint8_t code = bus->read();
-    if (code == ATLAS_RESPONSE_CODE_NOT_READY) {
-        return ATLAS_RESPONSE_CODE_NOT_READY;
+    AtlasResponseCode code = static_cast<AtlasResponseCode>(bus->read());
+    if (code == AtlasResponseCode::NotReady) {
+        return AtlasResponseCode::NotReady;
     }
 
     uint8_t i = 0;
@@ -126,7 +126,7 @@ uint8_t AtlasReader::readReply(char *buffer, size_t length) {
 
     if (buffer != nullptr) {
         buffer[i] = 0;
-        fkprintf("Done(%x) '%s' (%d)\r\n", address, buffer, strlen(buffer));
+        fkprintln("Atlas(0x%x) -> ('%s')", address, buffer, strlen(buffer));
     }
 
     return code;
