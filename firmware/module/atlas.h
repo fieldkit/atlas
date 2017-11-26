@@ -48,13 +48,6 @@ public:
     bool isIdle() const override;
 
 private:
-    void info();
-    void ledsOff();
-    void find();
-    void ledsOn();
-    void sleep();
-    void read();
-
     AtlasResponseCode sendCommand(const char *str, uint32_t readDelay = ATLAS_DEFAULT_DELAY_COMMAND);
     AtlasResponseCode readReply(char *buffer, size_t length);
 
