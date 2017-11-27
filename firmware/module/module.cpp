@@ -54,8 +54,13 @@ void loop() {
     module.tick();
 
     if (module.numberOfReadingsReady() > 0) {
+        // Order: Ec1,2,3,4,Temp,pH,Do,ORP
         float values[module.numberOfReadingsReady()];
-        module.readAll(values);
+        size_t size = module.readAll(values);
+        for (size_t i = 0; i < size; ++i) {
+            fkprintf("%f ", values[i]);
+        }
+        fkprintln("");
     }
     if (module.isIdle()) {
         delay(10000);
