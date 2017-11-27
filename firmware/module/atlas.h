@@ -14,8 +14,10 @@ enum class AtlasResponseCode : uint8_t {
 };
 
 const uint32_t ATLAS_DEFAULT_DELAY_COMMAND = 300;
+const uint32_t ATLAS_DEFAULT_DELAY_COMMAND_READ = 1000;
 const uint32_t ATLAS_DEFAULT_DELAY_NOT_READY = 100;
 const uint32_t ATLAS_DEFAULT_DELAY_SLEEP = 1000;
+const size_t ATLAS_MAXIMUM_COMMAND_LENGTH = 20;
 
 enum class AtlasReaderState {
     Start,
@@ -25,7 +27,7 @@ enum class AtlasReaderState {
     Sleep,
     Sleeping,
     Idle,
-    Reading,
+    TakeReading,
     WaitingOnReply,
     WaitingOnEmptyReply
 };

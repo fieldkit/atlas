@@ -18,7 +18,7 @@ bool Sensor::tick() {
     return true;
 }
 
-void Sensor::beginTakeReading() {
+void Sensor::beginReading() {
     reader.beginReading();
 }
 
@@ -57,9 +57,9 @@ bool SensorModule::isIdle() const {
     return true;
 }
 
-void SensorModule::beginTakeReading() {
+void SensorModule::beginReading() {
     for (size_t i = 0; i < numberOfSensors; ++i) {
-        sensors[i].beginTakeReading();
+        sensors[i].beginReading();
     }
 }
 

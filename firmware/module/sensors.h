@@ -22,7 +22,7 @@ public:
 
     bool setup();
     bool tick();
-    void beginTakeReading();
+    void beginReading();
 
     bool isAvailable() const;
     bool isIdle() const;
@@ -41,7 +41,7 @@ public:
 
     bool setup();
     bool tick();
-    void beginTakeReading();
+    void beginReading();
 
     bool isBusy() const;
     bool isIdle() const;

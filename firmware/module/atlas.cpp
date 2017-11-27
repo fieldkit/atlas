@@ -55,7 +55,10 @@ bool AtlasReader::tick() {
         state = AtlasReaderState::Sleeping;
         break;
     }
-    case AtlasReaderState::Reading: {
+    case AtlasReaderState::TakeReading: {
+        sendCommand("R", ATLAS_DEFAULT_DELAY_COMMAND_READ);
+        state = AtlasReaderState::WaitingOnReply;
+        postReplyState = AtlasReaderState::Sleep;
         break;
     }
     case AtlasReaderState::WaitingOnEmptyReply: {
@@ -67,7 +70,7 @@ bool AtlasReader::tick() {
         break;
     }
     case AtlasReaderState::WaitingOnReply: {
-        char buffer[20];
+        char buffer[ATLAS_MAXIMUM_COMMAND_LENGTH];
         if (readReply(buffer, sizeof(buffer)) == AtlasResponseCode::NotReady) {
             nextCheckAt = millis() + ATLAS_DEFAULT_DELAY_NOT_READY;
             break;
@@ -86,6 +89,7 @@ bool AtlasReader::tick() {
 }
 
 bool AtlasReader::beginReading() {
+    state = AtlasReaderState::TakeReading;
     return true;
 }
 

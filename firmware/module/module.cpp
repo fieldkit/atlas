@@ -60,8 +60,8 @@ void loop() {
     module.tick();
 
     if (module.isIdle()) {
-        fkprintf(".");
-        delay(1000);
+        delay(10000);
+        module.beginReading();
     }
 
     delay(10);
