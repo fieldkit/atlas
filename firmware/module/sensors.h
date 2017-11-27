@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 
-class SensorReader {
+class Sensor {
 public:
     virtual bool setup() = 0;
     virtual bool tick() = 0;
@@ -13,32 +13,14 @@ public:
     virtual size_t readAll(float *values) = 0;
 };
 
-class Sensor {
-private:
-    SensorReader &reader;
-    bool available;
-
-public:
-    Sensor(SensorReader &reader);
-
-    bool setup();
-    bool tick();
-    void beginReading();
-    size_t readAll(float *values);
-
-    bool isAvailable() const;
-    bool isIdle() const;
-    size_t numberOfReadingsReady() const;
-};
-
 class SensorModule {
 private:
-    Sensor *sensors { nullptr };
+    Sensor **sensors { nullptr };
     const size_t numberOfSensors { 0 };
 
 public:
     template<size_t N>
-    SensorModule(Sensor (&sensors)[N]) : sensors(sensors), numberOfSensors(N) {
+    SensorModule(Sensor *(&sensors)[N]) : sensors(sensors), numberOfSensors(N) {
     }
 
     bool setup();

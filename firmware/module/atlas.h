@@ -43,7 +43,7 @@ enum class AtlasSensorType {
     Temp
 };
 
-class AtlasReader : public SensorReader {
+class AtlasReader : public Sensor {
 private:
     TwoWire *bus { nullptr };
     uint8_t address { 0 };

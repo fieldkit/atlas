@@ -25,13 +25,7 @@ AtlasReader ph(&Wire, ATLAS_SENSOR_PH_DEFAULT_ADDRESS);
 AtlasReader dissolvedOxygen(&Wire, ATLAS_SENSOR_DO_DEFAULT_ADDRESS);
 AtlasReader orp(&Wire, ATLAS_SENSOR_ORP_DEFAULT_ADDRESS);
 
-Sensor sensors[] = {
-    Sensor(ec),
-    Sensor(ph),
-    Sensor(dissolvedOxygen),
-    Sensor(orp),
-    Sensor(temp), // Sleep seems to work better with this at the end.
-};
+Sensor *sensors[] = { &ec, &ph, &dissolvedOxygen, &orp, &temp };
 
 FkLeds leds;
 
