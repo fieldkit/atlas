@@ -40,7 +40,7 @@ void setup() {
 
     Wire.begin();
 
-    //  TODO: Investigate. I would see hangs if I used a slower speed.
+    // TODO: Investigate. I would see hangs if I used a slower speed.
     Wire.setClock(400000);
 
     while (!Serial) {
@@ -68,4 +68,23 @@ void loop() {
     }
 
     delay(10);
+}
+
+
+namespace std {
+
+    void __throw_bad_alloc() {
+        Serial.println("Out of memory");
+        while (true) {
+            // Forever
+        }
+    }
+
+    void __throw_bad_function_call() {
+        Serial.println("Bad function call");
+        while (true) {
+            // Forever
+        }
+    }
+
 }

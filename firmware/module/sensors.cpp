@@ -8,8 +8,18 @@ bool SensorModule::setup() {
 }
 
 bool SensorModule::tick() {
+    auto allWaiting = true;
+    TickSlice slices[numberOfSensors];
     for (size_t i = 0; i < numberOfSensors; ++i) {
-        sensors[i]->tick();
+        slices[i] = sensors[i]->tick();
+        if (!slices[i].waitingOnSiblings) {
+            allWaiting = false;
+        }
+    }
+    if (allWaiting) {
+        for (size_t i = 0; i < numberOfSensors; ++i) {
+            slices[i].free();
+        }
     }
     return true;
 }

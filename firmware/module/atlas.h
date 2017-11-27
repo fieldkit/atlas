@@ -16,7 +16,7 @@ enum class AtlasResponseCode : uint8_t {
 const uint32_t ATLAS_DEFAULT_DELAY_COMMAND = 300;
 const uint32_t ATLAS_DEFAULT_DELAY_COMMAND_READ = 1000;
 const uint32_t ATLAS_DEFAULT_DELAY_NOT_READY = 100;
-const uint32_t ATLAS_DEFAULT_DELAY_SLEEP = 1000;
+
 const size_t ATLAS_MAXIMUM_COMMAND_LENGTH = 20;
 const size_t ATLAS_MAXIMUM_NUMBER_OF_VALUES = 4;
 
@@ -25,6 +25,7 @@ enum class AtlasReaderState {
     Status,
     Blink,
     LedsOn,
+    WantSleep,
     Sleep,
     Sleeping,
     Idle,
@@ -57,11 +58,12 @@ private:
 public:
     AtlasReader(TwoWire *theBus, uint8_t theAddress);
     bool setup() override;
-    bool tick() override;
+    TickSlice tick() override;
     bool beginReading() override;
     size_t readAll(float *values) override;
     size_t numberOfReadingsReady() const override;
     bool isIdle() const override;
+    void sleep();
 
 private:
     AtlasResponseCode sendCommand(const char *str, uint32_t readDelay = ATLAS_DEFAULT_DELAY_COMMAND);

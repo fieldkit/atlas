@@ -9,10 +9,23 @@ bool AtlasReader::setup() {
     return true;
 }
 
-bool AtlasReader::tick() {
+void AtlasReader::sleep() {
+    switch (state) {
+    case AtlasReaderState::WantSleep: {
+        state = AtlasReaderState::Sleep;
+        break;
+    }
+    default: {
+        state = AtlasReaderState::WantSleep;
+        break;
+    }
+    }
+}
+
+TickSlice AtlasReader::tick() {
     if (nextCheckAt > 0) {
         if (nextCheckAt > millis()) {
-            return false;
+            return TickSlice{};
         }
 
         nextCheckAt = 0;
@@ -40,15 +53,14 @@ bool AtlasReader::tick() {
     case AtlasReaderState::Blink: {
         sendCommand("FIND");
         state = AtlasReaderState::WaitingOnEmptyReply;
-        postReplyState = AtlasReaderState::Sleep;
-
-        // Sleep is annoying because some of the modules seem to awaken from
-        // sleep if we're talking to other modules. So this works best if we
-        // issue SLEEP to all of them at once w/o needing to talk to the others
-        // concurrently.
-        // Also, the RTD sensor seems to just awake from sleep randomly.
-        nextCheckAt = millis() + ATLAS_DEFAULT_DELAY_SLEEP;
+        postReplyState = AtlasReaderState::WantSleep;
         break;
+    }
+    case AtlasReaderState::WantSleep: {
+        return TickSlice{ [&]() {
+                sleep();
+            }
+        };
     }
     case AtlasReaderState::Sleep: {
         sendCommand("SLEEP");
@@ -89,7 +101,7 @@ bool AtlasReader::tick() {
         break;
     }
     }
-    return true;
+    return TickSlice{};
 }
 
 bool AtlasReader::beginReading() {

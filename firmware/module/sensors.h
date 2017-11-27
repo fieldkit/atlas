@@ -2,11 +2,29 @@
 #define SENSORS_H_INCLUDED
 
 #include <Arduino.h>
+#undef min
+#undef max
+#include <functional>
+
+struct TickSlice {
+    bool waitingOnSiblings { false };
+    std::function<void()> onFree;
+
+    TickSlice() {
+    }
+
+    TickSlice(std::function<void()> f) : waitingOnSiblings(true), onFree(f) {
+    }
+
+    void free() {
+        onFree();
+    }
+};
 
 class Sensor {
 public:
     virtual bool setup() = 0;
-    virtual bool tick() = 0;
+    virtual TickSlice tick() = 0;
     virtual bool beginReading() = 0;
     virtual size_t numberOfReadingsReady() const = 0;
     virtual bool isIdle() const = 0;
