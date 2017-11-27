@@ -8,8 +8,9 @@ public:
     virtual bool setup() = 0;
     virtual bool tick() = 0;
     virtual bool beginReading() = 0;
-    virtual bool hasReading() const = 0;
+    virtual size_t numberOfReadingsReady() const = 0;
     virtual bool isIdle() const = 0;
+    virtual size_t readAll(float *values) = 0;
 };
 
 class Sensor {
@@ -23,10 +24,11 @@ public:
     bool setup();
     bool tick();
     void beginReading();
+    size_t readAll(float *values);
 
     bool isAvailable() const;
     bool isIdle() const;
-    bool hasReadingReady() const;
+    size_t numberOfReadingsReady() const;
 };
 
 class SensorModule {
@@ -42,11 +44,11 @@ public:
     bool setup();
     bool tick();
     void beginReading();
+    size_t readAll(float *values);
 
     bool isBusy() const;
     bool isIdle() const;
-    bool hasReadingReady() const;
-
+    size_t numberOfReadingsReady() const;
 };
 
 #endif

@@ -18,6 +18,7 @@ const uint32_t ATLAS_DEFAULT_DELAY_COMMAND_READ = 1000;
 const uint32_t ATLAS_DEFAULT_DELAY_NOT_READY = 100;
 const uint32_t ATLAS_DEFAULT_DELAY_SLEEP = 1000;
 const size_t ATLAS_MAXIMUM_COMMAND_LENGTH = 20;
+const size_t ATLAS_MAXIMUM_NUMBER_OF_VALUES = 4;
 
 enum class AtlasReaderState {
     Start,
@@ -27,6 +28,7 @@ enum class AtlasReaderState {
     Sleep,
     Sleeping,
     Idle,
+    ParseReading,
     TakeReading,
     WaitingOnReply,
     WaitingOnEmptyReply
@@ -49,13 +51,16 @@ private:
     AtlasReaderState state { AtlasReaderState::Start };
     AtlasReaderState postReplyState { AtlasReaderState::Idle };
     uint32_t nextCheckAt { 0 };
+    float values[ATLAS_MAXIMUM_NUMBER_OF_VALUES];
+    size_t numberOfValues { 0 };
 
 public:
     AtlasReader(TwoWire *theBus, uint8_t theAddress);
     bool setup() override;
     bool tick() override;
     bool beginReading() override;
-    bool hasReading() const override;
+    size_t readAll(float *values) override;
+    size_t numberOfReadingsReady() const override;
     bool isIdle() const override;
 
 private:

@@ -22,12 +22,16 @@ void Sensor::beginReading() {
     reader.beginReading();
 }
 
-bool Sensor::hasReadingReady() const {
-    return false;
+size_t Sensor::numberOfReadingsReady() const {
+    return reader.numberOfReadingsReady();
 }
 
 bool Sensor::isIdle() const {
     return reader.isIdle();
+}
+
+size_t Sensor::readAll(float *values) {
+    return reader.readAll(values);
 }
 
 bool SensorModule::setup() {
@@ -63,11 +67,24 @@ void SensorModule::beginReading() {
     }
 }
 
-bool SensorModule::hasReadingReady() const {
+size_t SensorModule::numberOfReadingsReady() const {
+    size_t total = 0;
     for (size_t i = 0; i < numberOfSensors; ++i) {
-        if (!sensors[i].hasReadingReady()) {
-            return false;
+        size_t number = sensors[i].numberOfReadingsReady();
+        if (number == 0) {
+            return 0;
         }
+        total += number;
     }
-    return true;
+    return total;
+}
+
+size_t SensorModule::readAll(float *values) {
+    size_t total = 0;
+    for (size_t i = 0; i < numberOfSensors; ++i) {
+        size_t number = sensors[i].readAll(values);
+        values += number;
+        total += number;
+    }
+    return total;
 }

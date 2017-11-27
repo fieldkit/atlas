@@ -59,6 +59,10 @@ void setup() {
 void loop() {
     module.tick();
 
+    if (module.numberOfReadingsReady() > 0) {
+        float values[module.numberOfReadingsReady()];
+        module.readAll(values);
+    }
     if (module.isIdle()) {
         delay(10000);
         module.beginReading();

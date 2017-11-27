@@ -40,13 +40,13 @@ bool AtlasReader::tick() {
     case AtlasReaderState::Blink: {
         sendCommand("FIND");
         state = AtlasReaderState::WaitingOnEmptyReply;
+        postReplyState = AtlasReaderState::Sleep;
 
         // Sleep is annoying because some of the modules seem to awaken from
         // sleep if we're talking to other modules. So this works best if we
         // issue SLEEP to all of them at once w/o needing to talk to the others
         // concurrently.
         // Also, the RTD sensor seems to just awake from sleep randomly.
-        postReplyState = AtlasReaderState::Sleep;
         nextCheckAt = millis() + ATLAS_DEFAULT_DELAY_SLEEP;
         break;
     }
@@ -58,7 +58,11 @@ bool AtlasReader::tick() {
     case AtlasReaderState::TakeReading: {
         sendCommand("R", ATLAS_DEFAULT_DELAY_COMMAND_READ);
         state = AtlasReaderState::WaitingOnReply;
-        postReplyState = AtlasReaderState::Sleep;
+        postReplyState = AtlasReaderState::ParseReading;
+        break;
+    }
+    case AtlasReaderState::ParseReading: {
+        state = AtlasReaderState::Sleep;
         break;
     }
     case AtlasReaderState::WaitingOnEmptyReply: {
@@ -93,8 +97,8 @@ bool AtlasReader::beginReading() {
     return true;
 }
 
-bool AtlasReader::hasReading() const {
-    return false;
+size_t AtlasReader::numberOfReadingsReady() const {
+    return numberOfValues;
 }
 
 bool AtlasReader::isIdle() const {
@@ -148,7 +152,41 @@ AtlasResponseCode AtlasReader::readReply(char *buffer, size_t length) {
         if (type == AtlasSensorType::Unknown) {
             type = getSensorType(buffer);
         }
+
+        if (postReplyState == AtlasReaderState::ParseReading) {
+            String line = buffer;
+            int16_t position = 0;
+
+            numberOfValues = 0;
+
+            while (position < (int16_t)line.length()) {
+                int16_t index = line.indexOf(',', position);
+                if (index < 0) {
+                    index = line.length();
+                }
+                if (numberOfValues < ATLAS_MAXIMUM_NUMBER_OF_VALUES)  {
+                    if (index > position) {
+                        String part = line.substring(position, index);
+                        values[numberOfValues++] = part.toFloat();
+                        position = index + 1;
+                    }
+                }
+                else {
+                    fkprintln("Error: Too many values");
+                    break;
+                }
+            }
+        }
     }
 
     return code;
+}
+
+size_t AtlasReader::readAll(float *values) {
+    for (size_t i = 0; i < numberOfValues; ++i) {
+        *values++ = this->values[i];
+    }
+    size_t number = numberOfValues;
+    numberOfValues = 0;
+    return number;
 }
