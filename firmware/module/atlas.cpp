@@ -22,6 +22,19 @@ void AtlasReader::sleep() {
     }
 }
 
+bool AtlasReader::beginReading() {
+    state = AtlasReaderState::TakeReading;
+    return true;
+}
+
+size_t AtlasReader::numberOfReadingsReady() const {
+    return numberOfValues;
+}
+
+bool AtlasReader::isIdle() const {
+    return state == AtlasReaderState::Idle || state == AtlasReaderState::Sleeping;
+}
+
 TickSlice AtlasReader::tick() {
     if (nextCheckAt > 0) {
         if (nextCheckAt > millis()) {
@@ -102,19 +115,6 @@ TickSlice AtlasReader::tick() {
     }
     }
     return TickSlice{};
-}
-
-bool AtlasReader::beginReading() {
-    state = AtlasReaderState::TakeReading;
-    return true;
-}
-
-size_t AtlasReader::numberOfReadingsReady() const {
-    return numberOfValues;
-}
-
-bool AtlasReader::isIdle() const {
-    return state == AtlasReaderState::Idle || state == AtlasReaderState::Sleeping;
 }
 
 AtlasResponseCode AtlasReader::sendCommand(const char *str, uint32_t readDelay) {
