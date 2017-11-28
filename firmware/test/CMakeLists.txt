@@ -1,5 +1,5 @@
 set(SOURCE_FILES
-  test.cpp
+  main.cpp
 )
 
 set(LIBRARIES
