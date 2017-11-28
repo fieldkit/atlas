@@ -1,8 +1,8 @@
 set(SOURCE_FILES
   module.cpp
   atlas.cpp
-  logging.cpp
   sensors.cpp
+  exceptions.cpp
 )
 
 set(LIBRARIES

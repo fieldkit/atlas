@@ -1,5 +1,5 @@
 #include "atlas.h"
-#include "logging.h"
+#include "debug.h"
 
 AtlasReader::AtlasReader(TwoWire *theBus, uint8_t theAddress)
     : bus(theBus), address(theAddress) {
@@ -118,7 +118,7 @@ bool AtlasReader::isIdle() const {
 }
 
 AtlasResponseCode AtlasReader::sendCommand(const char *str, uint32_t readDelay) {
-    fkprintln("Atlas(0x%x) <- ('%s', %d))", address, str, readDelay);
+    debugfln("Atlas(0x%x) <- ('%s', %d))", address, str, readDelay);
 
     bus->beginTransmission(address);
     bus->write(str);
@@ -159,7 +159,7 @@ AtlasResponseCode AtlasReader::readReply(char *buffer, size_t length) {
 
     if (buffer != nullptr) {
         buffer[i] = 0;
-        fkprintln("Atlas(0x%x) -> ('%s')", address, buffer, strlen(buffer));
+        debugfln("Atlas(0x%x) -> ('%s')", address, buffer, strlen(buffer));
 
         if (type == AtlasSensorType::Unknown) {
             type = getSensorType(buffer);
@@ -184,7 +184,7 @@ AtlasResponseCode AtlasReader::readReply(char *buffer, size_t length) {
                     }
                 }
                 else {
-                    fkprintln("Error: Too many values");
+                    debugfln("Error: Too many values");
                     break;
                 }
             }

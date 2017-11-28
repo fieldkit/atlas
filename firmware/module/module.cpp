@@ -7,13 +7,17 @@
 #include <Arduino.h>
 #include <Wire.h>
 
-#include "logging.h"
 #include "leds.h"
 #include "atlas.h"
 #include "fk-module.h"
 #include "debug.h"
 
+void moduleMain();
+
 using WireAddress = uint8_t;
+using PinNumber = uint8_t;
+
+const PinNumber LED_PIN = 13;
 
 const WireAddress ATLAS_SENSOR_EC_DEFAULT_ADDRESS = 0x64;
 const WireAddress ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS = 0x66;
@@ -50,6 +54,11 @@ void setup() {
     }
 
     module.setup();
+
+    // Never happens, just wanna link the module code in.
+    if (module.numberOfReadingsReady() == 100) {
+        moduleMain();
+    }
 }
 
 void loop() {
@@ -60,9 +69,9 @@ void loop() {
         float values[module.numberOfReadingsReady()];
         size_t size = module.readAll(values);
         for (size_t i = 0; i < size; ++i) {
-            fkprintf("%f ", values[i]);
+            debugf("%f ", values[i]);
         }
-        fkprintln("");
+        debugfln("");
     }
     if (module.isIdle()) {
         delay(10000);
@@ -71,8 +80,6 @@ void loop() {
 
     delay(10);
 }
-
-const uint8_t LED_PIN = 13;
 
 uint8_t dummy_reading(fk_module_t *fkm, fk_pool_t *fkp) {
     fk_module_readings_t *readings = (fk_module_readings_t *)fk_pool_malloc(fkp, sizeof(fk_module_readings_t));
@@ -104,24 +111,49 @@ void moduleMain() {
     fk_module_sensor_metadata_t sensors[] = {
         {
             .id = 0,
-            .name = "Depth",
-            .unitOfMeasure = "m",
+            .name = "Ec",
+            .unitOfMeasure = "µS/cm",
         },
         {
             .id = 1,
-            .name = "Temperature",
-            .unitOfMeasure = "°C",
+            .name = "TDS",
+            .unitOfMeasure = "°ppm",
         },
         {
             .id = 2,
-            .name = "Conductivity",
-            .unitOfMeasure = "µS/cm",
-        }
+            .name = "Salinity",
+            .unitOfMeasure = "",
+        },
+        {
+            .id = 3,
+            .name = "SG",
+            .unitOfMeasure = "",
+        },
+        {
+            .id = 4,
+            .name = "Temp",
+            .unitOfMeasure = "C",
+        },
+        {
+            .id = 5,
+            .name = "pH",
+            .unitOfMeasure = "",
+        },
+        {
+            .id = 6,
+            .name = "DO",
+            .unitOfMeasure = "mg/L",
+        },
+        {
+            .id = 7,
+            .name = "ORP",
+            .unitOfMeasure = "mV",
+        },
     };
 
     fk_module_t module = {
         .address = 8,
-        .name = "NOAA-CTD",
+        .name = "Atlas",
         .number_of_sensors = sizeof(sensors) / sizeof(fk_module_sensor_metadata_t),
         .sensors = sensors,
         .begin_reading = dummy_reading,
@@ -142,22 +174,4 @@ void moduleMain() {
 
         delay(10);
     }
-}
-
-namespace std {
-
-    void __throw_bad_alloc() {
-        Serial.println("Out of memory");
-        while (true) {
-            // Forever
-        }
-    }
-
-    void __throw_bad_function_call() {
-        Serial.println("Bad function call");
-        while (true) {
-            // Forever
-        }
-    }
-
 }
