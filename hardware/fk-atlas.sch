@@ -29,7 +29,6 @@ LIBS:atmel
 LIBS:contrib
 LIBS:valves
 LIBS:conservify
-LIBS:RocketScreamKicadLibrary
 LIBS:fk-atlas-cache
 EELAYER 25 0
 EELAYER END
@@ -2040,5 +2039,5 @@ Wire Wire Line
 Wire Wire Line
 	2050 9350 2350 9350
 Text Label 2050 9350 0    50   ~ 0
-D4
+D5
 $EndSCHEMATC

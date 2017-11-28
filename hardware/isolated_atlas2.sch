@@ -29,7 +29,6 @@ LIBS:atmel
 LIBS:contrib
 LIBS:valves
 LIBS:conservify
-LIBS:RocketScreamKicadLibrary
 LIBS:fk-atlas-cache
 EELAYER 25 0
 EELAYER END
