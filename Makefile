@@ -8,7 +8,8 @@ cmake: gitdeps
 	cd $(BUILD) && cmake ../
 
 gitdeps:
-	simple-deps
+	simple-deps --config firmware/module/arduino-libraries
+	simple-deps --config firmware/test/arduino-libraries
 
 clean:
 	rm -rf $(BUILD) gitdeps
