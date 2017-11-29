@@ -32,56 +32,10 @@ AtlasReader dissolvedOxygen(&Wire, ATLAS_SENSOR_DO_DEFAULT_ADDRESS);
 AtlasReader orp(&Wire, ATLAS_SENSOR_ORP_DEFAULT_ADDRESS);
 
 Sensor *sensors[] = { &ec, &ph, &dissolvedOxygen, &orp, &temp };
-
+SensorModule sensorModule(sensors);
 FkLeds leds;
 
-SensorModule module(sensors);
-
-void setup() {
-    leds.setup();
-
-    leds.on();
-
-    Serial.begin(115200);
-
-    Wire.begin();
-
-    // TODO: Investigate. I would see hangs if I used a slower speed.
-    Wire.setClock(400000);
-
-    while (!Serial) {
-        delay(250);
-    }
-
-    module.setup();
-
-    // Never happens, just wanna link the module code in.
-    if (module.numberOfReadingsReady() == 100) {
-        moduleMain();
-    }
-}
-
-void loop() {
-    module.tick();
-
-    if (module.numberOfReadingsReady() > 0) {
-        // Order: Ec1,2,3,4,Temp,pH,Do,ORP
-        float values[module.numberOfReadingsReady()];
-        size_t size = module.readAll(values);
-        for (size_t i = 0; i < size; ++i) {
-            debugf("%f ", values[i]);
-        }
-        debugfln("");
-    }
-    if (module.isIdle()) {
-        delay(10000);
-        module.beginReading();
-    }
-
-    delay(10);
-}
-
-uint8_t dummy_reading(fk_module_t *fkm, fk_pool_t *fkp) {
+uint8_t yield_reading(fk_module_t *fkm, fk_pool_t *fkp) {
     fk_module_readings_t *readings = (fk_module_readings_t *)fk_pool_malloc(fkp, sizeof(fk_module_readings_t));
     APR_RING_INIT(readings, fk_module_reading_t, link);
 
@@ -98,15 +52,19 @@ uint8_t dummy_reading(fk_module_t *fkm, fk_pool_t *fkp) {
     return true;
 }
 
-void moduleMain() {
-    digitalWrite(LED_PIN, LOW);
+void setup() {
+    leds.setup();
 
-    debugfln("dummy: ready, checking (free = %d)...", fk_free_memory());
+    Serial.begin(115200);
+
+    while (!Serial) {
+        delay(250);
+    }
+
+    sensorModule.setup();
 
     fk_pool_t *scan_pool = nullptr;
     fk_pool_create(&scan_pool, 512, nullptr);
-
-    debugfln("dummy: acting as slave");
 
     fk_module_sensor_metadata_t sensors[] = {
         {
@@ -156,7 +114,7 @@ void moduleMain() {
         .name = "Atlas",
         .number_of_sensors = sizeof(sensors) / sizeof(fk_module_sensor_metadata_t),
         .sensors = sensors,
-        .begin_reading = dummy_reading,
+        .begin_reading = yield_reading,
         .state = fk_module_state_t::START,
         .reply_pool = nullptr,
         .readings_pool = nullptr,
@@ -165,13 +123,45 @@ void moduleMain() {
     };
 
     if (!fk_module_start(&module, nullptr)) {
-        debugfln("dummy: error creating module");
+        debugfln("error creating module");
         return;
     }
+
+    Wire.begin();
+
+    // TODO: Investigate. I would see hangs if I used a slower speed.
+    Wire.setClock(400000);
+
+    debugfln("Ready (%d)", fk_free_memory());
 
     while (true) {
         fk_module_tick(&module);
 
+        sensorModule.tick();
+
+        if (sensorModule.numberOfReadingsReady() > 0) {
+            // Order: Ec1,2,3,4,Temp,pH,Do,ORP
+            float values[sensorModule.numberOfReadingsReady()];
+            size_t size = sensorModule.readAll(values);
+
+            debugf("Reading: ");
+            for (size_t i = 0; i < size; ++i) {
+                debugf("%f ", values[i]);
+            }
+            debugfln("");
+
+            debugfln("Status (%d)", fk_free_memory());
+        }
+
+        if (sensorModule.isIdle()) {
+            delay(10000);
+            sensorModule.beginReading();
+        }
+
         delay(10);
     }
+}
+
+void loop() {
+    delay(10);
 }
