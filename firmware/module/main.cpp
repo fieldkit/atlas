@@ -52,6 +52,17 @@ uint8_t yield_reading(fk_module_t *fkm, fk_pool_t *fkp) {
     return true;
 }
 
+void flush(Stream &stream) {
+    if (stream.available()) {
+        auto flushed = 0;
+        while (stream.available()) {
+            flushed++;
+            stream.read();
+        }
+        debugfln("i2c: flushed %d bytes", flushed);
+    }
+}
+
 void setup() {
     leds.setup();
 
@@ -158,6 +169,7 @@ void setup() {
 
                 fk_module_resume(&module);
 
+                flush(Wire);
             }
             else {
                 fk_module_tick(&module);
