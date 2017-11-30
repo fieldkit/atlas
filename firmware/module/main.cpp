@@ -128,15 +128,14 @@ void setup() {
     }
 
     Wire.begin();
-
     // TODO: Investigate. I would see hangs if I used a slower speed.
     Wire.setClock(400000);
 
     debugfln("Ready (%d)", fk_free_memory());
 
-    while (true) {
-        fk_module_tick(&module);
+    uint32_t idleStart = 0;
 
+    while (true) {
         sensorModule.tick();
 
         if (sensorModule.numberOfReadingsReady() > 0) {
@@ -154,8 +153,24 @@ void setup() {
         }
 
         if (sensorModule.isIdle()) {
-            delay(10000);
-            sensorModule.beginReading();
+            if (idleStart == 0 ) {
+                idleStart = millis() + 20000;
+
+                fk_module_resume(&module);
+
+            }
+            else {
+                fk_module_tick(&module);
+            }
+
+            if (idleStart < millis()) {
+                Wire.begin();
+                // TODO: Investigate. I would see hangs if I used a slower speed.
+                Wire.setClock(400000);
+
+                sensorModule.beginReading();
+                idleStart = 0;
+            }
         }
 
         delay(10);
