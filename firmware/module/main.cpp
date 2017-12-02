@@ -7,17 +7,13 @@
 #include <Arduino.h>
 #include <Wire.h>
 
+#include <fk-module.h>
+
 #include "leds.h"
 #include "atlas.h"
-#include "fk-module.h"
-#include "debug.h"
-
-void moduleMain();
 
 using WireAddress = uint8_t;
 using PinNumber = uint8_t;
-
-const PinNumber LED_PIN = 13;
 
 const WireAddress ATLAS_SENSOR_EC_DEFAULT_ADDRESS = 0x64;
 const WireAddress ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS = 0x66;
@@ -35,23 +31,6 @@ Sensor *sensors[] = { &ec, &ph, &dissolvedOxygen, &orp, &temp };
 SensorModule sensorModule(sensors);
 FkLeds leds;
 
-uint8_t yield_reading(fk_module_t *fkm, fk_pool_t *fkp) {
-    fk_module_readings_t *readings = (fk_module_readings_t *)fk_pool_malloc(fkp, sizeof(fk_module_readings_t));
-    APR_RING_INIT(readings, fk_module_reading_t, link);
-
-    for (size_t i = 0; i < 3; ++i) {
-        fk_module_reading_t *reading = (fk_module_reading_t *)fk_pool_malloc(fkp, sizeof(fk_module_reading_t));
-        reading->sensor = i;
-        reading->time = fkm->rtc.getTime();
-        reading->value = random(20, 150);
-        APR_RING_INSERT_TAIL(readings, reading, fk_module_reading_t, link);
-    }
-
-    fk_module_done_reading(fkm, readings);
-
-    return true;
-}
-
 void flush(Stream &stream) {
     if (stream.available()) {
         auto flushed = 0;
@@ -63,86 +42,101 @@ void flush(Stream &stream) {
     }
 }
 
-void setup() {
-    leds.setup();
+fk::SensorInfo mySensors[] = {
+    {
+        .sensor = 0,
+        .name = "Ec",
+        .unitOfMeasure = "µS/cm",
+    },
+    {
+        .sensor = 1,
+        .name = "TDS",
+        .unitOfMeasure = "°ppm",
+    },
+    {
+        .sensor = 2,
+        .name = "Salinity",
+        .unitOfMeasure = "",
+    },
+    {
+        .sensor = 3,
+        .name = "SG",
+        .unitOfMeasure = "",
+    },
+    {
+        .sensor = 4,
+        .name = "Temp",
+        .unitOfMeasure = "C",
+    },
+    {
+        .sensor = 5,
+        .name = "pH",
+        .unitOfMeasure = "",
+    },
+    {
+        .sensor = 6,
+        .name = "DO",
+        .unitOfMeasure = "mg/L",
+    },
+    {
+        .sensor = 7,
+        .name = "ORP",
+        .unitOfMeasure = "mV",
+    },
+};
 
+fk::ModuleInfo myInfo = {
+    .address = 8,
+    .numberOfSensors = 8,
+    .name = "Atlas",
+    .sensors = mySensors,
+};
+
+class ExampleModule : public fk::Module {
+private:
+
+public:
+    ExampleModule();
+
+public:
+    void beginReading() override;
+    void readingDone() override;
+    void describeSensor(size_t number) override;
+};
+
+ExampleModule::ExampleModule() : Module(myInfo) {
+}
+
+void ExampleModule::beginReading() {
+    readingDone();
+}
+
+void ExampleModule::readingDone() {
+}
+
+void ExampleModule::describeSensor(size_t number) {
+    switch (number) {
+    }
+}
+
+extern "C" {
+
+void setup() {
     Serial.begin(115200);
 
     while (!Serial) {
-        delay(250);
+        delay(100);
     }
 
-    sensorModule.setup();
+    debugfpln("Module", "Starting (%d free)", fk_free_memory());
 
-    fk_pool_t *scan_pool = nullptr;
-    fk_pool_create(&scan_pool, 512, nullptr);
+    ExampleModule module;
 
-    fk_module_sensor_metadata_t sensors[] = {
-        {
-            .id = 0,
-            .name = "Ec",
-            .unitOfMeasure = "µS/cm",
-        },
-        {
-            .id = 1,
-            .name = "TDS",
-            .unitOfMeasure = "°ppm",
-        },
-        {
-            .id = 2,
-            .name = "Salinity",
-            .unitOfMeasure = "",
-        },
-        {
-            .id = 3,
-            .name = "SG",
-            .unitOfMeasure = "",
-        },
-        {
-            .id = 4,
-            .name = "Temp",
-            .unitOfMeasure = "C",
-        },
-        {
-            .id = 5,
-            .name = "pH",
-            .unitOfMeasure = "",
-        },
-        {
-            .id = 6,
-            .name = "DO",
-            .unitOfMeasure = "mg/L",
-        },
-        {
-            .id = 7,
-            .name = "ORP",
-            .unitOfMeasure = "mV",
-        },
-    };
-
-    fk_module_t module = {
-        .address = 8,
-        .name = "Atlas",
-        .number_of_sensors = sizeof(sensors) / sizeof(fk_module_sensor_metadata_t),
-        .sensors = sensors,
-        .begin_reading = yield_reading,
-        .state = fk_module_state_t::START,
-        .reply_pool = nullptr,
-        .readings_pool = nullptr,
-        .readings = nullptr,
-        .pending = nullptr
-    };
-
-    if (!fk_module_start(&module, nullptr)) {
-        debugfln("error creating module");
-        return;
-    }
+    module.begin();
 
     Wire.begin();
     // TODO: Investigate. I would see hangs if I used a slower speed.
     Wire.setClock(400000);
-
-    debugfln("Ready (%d)", fk_free_memory());
 
     uint32_t idleStart = 0;
 
@@ -167,12 +161,12 @@ void setup() {
             if (idleStart == 0 ) {
                 idleStart = millis() + 20000;
 
-                fk_module_resume(&module);
+                module.resume();
 
                 flush(Wire);
             }
             else {
-                fk_module_tick(&module);
+                module.tick();
             }
 
             if (idleStart < millis()) {
@@ -190,5 +184,6 @@ void setup() {
 }
 
 void loop() {
-    delay(10);
+}
+
 }
