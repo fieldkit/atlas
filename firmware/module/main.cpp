@@ -42,6 +42,17 @@ void flush(Stream &stream) {
     }
 }
 
+fk::SensorReading myReadings[] = {
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+};
+
 fk::SensorInfo mySensors[] = {
     {
         .sensor = 0,
@@ -90,6 +101,7 @@ fk::ModuleInfo myInfo = {
     .numberOfSensors = 8,
     .name = "Atlas",
     .sensors = mySensors,
+    .readings = myReadings,
 };
 
 class ExampleModule : public fk::Module {
@@ -99,24 +111,18 @@ public:
     ExampleModule();
 
 public:
-    void beginReading() override;
-    void readingDone() override;
-    void describeSensor(size_t number) override;
+    void beginReading(fk::SensorReading *readings) override;
+    void readingDone(fk::SensorReading *readings) override;
 };
 
 ExampleModule::ExampleModule() : Module(myInfo) {
 }
 
-void ExampleModule::beginReading() {
-    readingDone();
+void ExampleModule::beginReading(fk::SensorReading *readings) {
+    readingDone(readings);
 }
 
-void ExampleModule::readingDone() {
-}
-
-void ExampleModule::describeSensor(size_t number) {
-    switch (number) {
-    }
+void ExampleModule::readingDone(fk::SensorReading *readings) {
 }
 
 extern "C" {
