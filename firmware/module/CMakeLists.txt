@@ -7,6 +7,7 @@ set(SOURCE_FILES
 
 set(LIBRARIES
   Wire
+  SPI
 )
 
 arduino(fk-atlas-module "${SOURCE_FILES}" "${LIBRARIES}")
