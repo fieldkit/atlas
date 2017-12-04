@@ -42,25 +42,25 @@ void flush(Stream &stream) {
     }
 }
 
-class ExampleModule : public fk::Module {
+class AtlasModule : public fk::Module {
 private:
 
 public:
-    ExampleModule(fk::ModuleInfo &info);
+    AtlasModule(fk::ModuleInfo &info);
 
 public:
     void beginReading(fk::SensorReading *readings) override;
     void readingDone(fk::SensorReading *readings) override;
 };
 
-ExampleModule::ExampleModule(fk::ModuleInfo &info) : Module(info) {
+AtlasModule::AtlasModule(fk::ModuleInfo &info) : Module(info) {
 }
 
-void ExampleModule::beginReading(fk::SensorReading *readings) {
+void AtlasModule::beginReading(fk::SensorReading *readings) {
     readingDone(readings);
 }
 
-void ExampleModule::readingDone(fk::SensorReading *readings) {
+void AtlasModule::readingDone(fk::SensorReading *readings) {
 }
 
 extern "C" {
@@ -93,7 +93,7 @@ void setup() {
         },
     };
 
-    ExampleModule module(info);
+    AtlasModule module(info);
 
     module.begin();
 
