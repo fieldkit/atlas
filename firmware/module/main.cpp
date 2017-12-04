@@ -42,80 +42,18 @@ void flush(Stream &stream) {
     }
 }
 
-fk::SensorReading myReadings[] = {
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-    {},
-};
-
-fk::SensorInfo mySensors[] = {
-    {
-        .sensor = 0,
-        .name = "Ec",
-        .unitOfMeasure = "µS/cm",
-    },
-    {
-        .sensor = 1,
-        .name = "TDS",
-        .unitOfMeasure = "°ppm",
-    },
-    {
-        .sensor = 2,
-        .name = "Salinity",
-        .unitOfMeasure = "",
-    },
-    {
-        .sensor = 3,
-        .name = "SG",
-        .unitOfMeasure = "",
-    },
-    {
-        .sensor = 4,
-        .name = "Temp",
-        .unitOfMeasure = "C",
-    },
-    {
-        .sensor = 5,
-        .name = "pH",
-        .unitOfMeasure = "",
-    },
-    {
-        .sensor = 6,
-        .name = "DO",
-        .unitOfMeasure = "mg/L",
-    },
-    {
-        .sensor = 7,
-        .name = "ORP",
-        .unitOfMeasure = "mV",
-    },
-};
-
-fk::ModuleInfo myInfo = {
-    .address = 8,
-    .numberOfSensors = 8,
-    .name = "Atlas",
-    .sensors = mySensors,
-    .readings = myReadings,
-};
-
 class ExampleModule : public fk::Module {
 private:
 
 public:
-    ExampleModule();
+    ExampleModule(fk::ModuleInfo &info);
 
 public:
     void beginReading(fk::SensorReading *readings) override;
     void readingDone(fk::SensorReading *readings) override;
 };
 
-ExampleModule::ExampleModule() : Module(myInfo) {
+ExampleModule::ExampleModule(fk::ModuleInfo &info) : Module(info) {
 }
 
 void ExampleModule::beginReading(fk::SensorReading *readings) {
@@ -136,7 +74,26 @@ void setup() {
 
     debugfpln("Module", "Starting (%d free)", fk_free_memory());
 
-    ExampleModule module;
+    fk::ModuleInfo info = {
+        8,
+        8,
+        "Atlas",
+        {
+            {"Ec", "µS/cm",},
+            {"TDS", "°ppm",},
+            {"Salinity", "",},
+            {"SG", "",},
+            {"Temp", "C",},
+            {"pH", "",},
+            {"DO", "mg/L",},
+            {"ORP", "mV",},
+        },
+        {
+            {}, {}, {}, {}, {}, {}, {}, {},
+        },
+    };
+
+    ExampleModule module(info);
 
     module.begin();
 
