@@ -1,15 +1,20 @@
 BUILD=build
 
-all: cmake
-	cd $(BUILD) && make
+default: all
 
-cmake: gitdeps
+$(BUILD):
 	mkdir -p $(BUILD)
+
+all: $(BUILD) gitdeps
 	cd $(BUILD) && cmake ../
+	cd $(BUILD) && make
 
 gitdeps:
 	simple-deps --config firmware/module/arduino-libraries
 	simple-deps --config firmware/test/arduino-libraries
 
 clean:
-	rm -rf $(BUILD) gitdeps
+	rm -rf $(BUILD)
+
+veryclean: clean
+	rm -rf gitdeps
