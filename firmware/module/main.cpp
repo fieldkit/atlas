@@ -72,7 +72,7 @@ void setup() {
         delay(100);
     }
 
-    debugfpln("Module", "Starting (%d free)", fk_free_memory());
+    debugfpln("Module", "Starting (%lu free)", fk_free_memory());
 
     fk::ModuleInfo info = {
         8,
@@ -115,9 +115,9 @@ void setup() {
             for (size_t i = 0; i < size; ++i) {
                 debugf("%f ", values[i]);
             }
-            debugfln("");
+            debugfln(" ");
 
-            debugfln("Status (%d)", fk_free_memory());
+            debugfln("Status (%lu)", fk_free_memory());
         }
 
         if (sensorModule.isIdle()) {

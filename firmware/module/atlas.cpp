@@ -118,7 +118,7 @@ TickSlice AtlasReader::tick() {
 }
 
 AtlasResponseCode AtlasReader::sendCommand(const char *str, uint32_t readDelay) {
-    debugfln("Atlas(0x%x) <- ('%s', %d))", address, str, readDelay);
+    debugfln("Atlas(0x%x) <- ('%s', %lu))", address, str, readDelay);
 
     bus->beginTransmission(address);
     bus->write(str);
@@ -159,7 +159,7 @@ AtlasResponseCode AtlasReader::readReply(char *buffer, size_t length) {
 
     if (buffer != nullptr) {
         buffer[i] = 0;
-        debugfln("Atlas(0x%x) -> ('%s')", address, buffer, strlen(buffer));
+        debugfln("Atlas(0x%x) -> ('%s')", address, buffer);
 
         if (type == AtlasSensorType::Unknown) {
             type = getSensorType(buffer);
