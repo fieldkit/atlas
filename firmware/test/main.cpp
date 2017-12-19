@@ -1,6 +1,8 @@
 #include <Arduino.h>
 #include <Wire.h>
 
+const uint8_t ATLAS_ENABLE_PIN = 12;
+
 const uint8_t ATLAS_SENSOR_EC_DEFAULT_ADDRESS = 0x64;
 const uint8_t ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS = 0x66;
 const uint8_t ATLAS_SENSOR_PH_DEFAULT_ADDRESS = 0x63;
@@ -81,6 +83,9 @@ public:
 
         //  TODO: Investigate. I would see hangs if I used a slower speed.
         Wire.setClock(400000);
+
+        pinMode(ATLAS_ENABLE_PIN, OUTPUT);
+        digitalWrite(ATLAS_ENABLE_PIN, HIGH);
     }
 
     void test(uint8_t address, const char *name) {
