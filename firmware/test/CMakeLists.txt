@@ -3,6 +3,7 @@ set(SOURCE_FILES
 )
 
 set(LIBRARIES
+  SPI
   Wire
 )
 

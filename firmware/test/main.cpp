@@ -1,7 +1,9 @@
 #include <Arduino.h>
 #include <Wire.h>
+#include <SerialFlash.h>
 
 const uint8_t ATLAS_ENABLE_PIN = 12;
+const uint8_t PIN_FLASH_CS = 5;
 
 const uint8_t ATLAS_SENSOR_EC_DEFAULT_ADDRESS = 0x64;
 const uint8_t ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS = 0x66;
@@ -127,6 +129,31 @@ public:
         test(ATLAS_SENSOR_ORP_DEFAULT_ADDRESS, "ORP");
     }
 
+    bool flashMemory() {
+        Serial.println("test: Checking flash memory...");
+
+        if (!SerialFlash.begin(PIN_FLASH_CS)) {
+            Serial.println("test: Flash memory FAILED");
+            return false;
+        }
+
+        uint8_t buffer[256];
+        SerialFlash.readID(buffer);
+        if (buffer[0] == 0) {
+            Serial.println("test: Flash memory FAILED");
+            return false;
+        }
+
+        uint32_t chipSize = SerialFlash.capacity(buffer);
+        if (chipSize == 0) {
+            Serial.println("test: Flash memory FAILED");
+            return false;
+        }
+
+        Serial.println("test: Flash memory PASSED");
+        return true;
+    }
+
 };
 
 void setup() {
@@ -157,6 +184,7 @@ void setup() {
 
         Serial.println("test: Begin");
 
+        check.flashMemory();
         check.ec();
         check.temp();
         check.ph();
