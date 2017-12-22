@@ -49,14 +49,15 @@ public:
     AtlasModule(fk::ModuleInfo &info);
 
 public:
-    void beginReading(fk::SensorReading *readings) override;
+    fk::ModuleReadingStatus beginReading(fk::SensorReading *readings) override;
 
 };
 
 AtlasModule::AtlasModule(fk::ModuleInfo &info) : Module(info) {
 }
 
-void AtlasModule::beginReading(fk::SensorReading *readings) {
+fk::ModuleReadingStatus AtlasModule::beginReading(fk::SensorReading *readings) {
+    return fk::ModuleReadingStatus();
 }
 
 extern "C" {
