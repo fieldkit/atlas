@@ -29,7 +29,7 @@ AtlasReader orp(&Wire, ATLAS_SENSOR_ORP_DEFAULT_ADDRESS);
 
 Sensor *sensors[] = { &ec, &ph, &dissolvedOxygen, &orp, &temp };
 SensorModule sensorModule(sensors);
-FkLeds leds;
+fk::Leds leds;
 
 void flush(Stream &stream) {
     if (stream.available()) {
