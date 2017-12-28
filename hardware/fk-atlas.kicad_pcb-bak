@@ -2,8 +2,8 @@
 
   (general
     (links 348)
-    (no_connects 0)
-    (area 115.672799 57.328999 204.214801 137.743001)
+    (no_connects 104)
+    (area 106.559933 55.6511 223.731401 137.9054)
     (thickness 1.6)
     (drawings 25)
     (tracks 1150)
@@ -33,11 +33,11 @@
     (46 B.CrtYd user)
     (47 F.CrtYd user)
     (48 B.Fab user hide)
-    (49 F.Fab user hide)
+    (49 F.Fab user)
   )
 
   (setup
-    (last_trace_width 0.381)
+    (last_trace_width 0.254)
     (user_trace_width 0.203)
     (user_trace_width 0.381)
     (user_trace_width 0.587)
@@ -335,7 +335,7 @@
     (add_net VUSB)
   )
 
-  (module Resistors_SMD:R_0603_HandSoldering (layer F.Cu) (tedit 59FCCC1C) (tstamp 59FCDAF0)
+  (module Resistors_SMD:R_0603_HandSoldering (layer F.Cu) (tedit 5A455F74) (tstamp 59FCDAF0)
     (at 142.113 85.4964 270)
     (descr "Resistor SMD 0603, hand soldering")
     (tags "resistor 0603")
@@ -347,7 +347,7 @@
     (fp_text value 10K (at 0 1.55 270) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text user %R (at 0 0 270) (layer F.Fab)
+    (fp_text user %R (at -0.1524 -1.3462 270) (layer F.Fab) hide
       (effects (font (size 0.4 0.4) (thickness 0.075)))
     )
     (fp_line (start -0.8 0.4) (end -0.8 -0.4) (layer F.Fab) (width 0.1))
@@ -1965,13 +1965,13 @@
       (xy 2.530928 -0.782067) (xy 2.7432 -0.78399) (xy 2.7432 -0.486228)) (layer F.SilkS) (width 0.01))
   )
 
-  (module RocketScreamKicadLibrary:SOT-143B (layer F.Cu) (tedit 59A0777F) (tstamp 59A0787B)
+  (module RocketScreamKicadLibrary:SOT-143B (layer F.Cu) (tedit 5A455F51) (tstamp 59A0787B)
     (at 133.207 69.789 270)
     (path /59A0A7C9)
     (fp_text reference D5 (at 0 -2.54 270) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value PRTR5V0U2X (at 2.6518 2.3782 270) (layer F.Fab)
+    (fp_text value PRTR5V0U2X (at 2.6518 2.3782 270) (layer F.Fab) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_line (start 1.7 -1.6) (end -1.7 -1.6) (layer F.CrtYd) (width 0.05))
@@ -1999,7 +1999,7 @@
     (fp_text reference F1 (at 0 -1.778) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value MF-PSMF050X-2 (at -3.2004 -1.7145) (layer F.Fab)
+    (fp_text value MF-PSMF050X-2 (at -2.1971 0.1905) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_line (start 1.85 -1) (end 1.85 1) (layer F.CrtYd) (width 0.05))
@@ -2151,7 +2151,7 @@
     (fp_text reference L2 (at 0 -1.9 180) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value BLM18KG221SN1D (at 4.8514 0.0508 180) (layer F.Fab)
+    (fp_text value BLM18KG221SN1D (at -0.0889 -0.1397 180) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_line (start 1.65 -0.75) (end -1.65 -0.75) (layer F.CrtYd) (width 0.05))
@@ -2505,7 +2505,7 @@
     (fp_text reference Q4 (at 0 -2.794 270) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value 2N7002LT1G (at -0.057001 3.708399 360) (layer F.Fab)
+    (fp_text value 2N7002LT1G (at 2.613807 -2.759741 360) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_line (start -1.75 -1.95) (end -1.75 1.95) (layer F.CrtYd) (width 0.05))
@@ -2827,7 +2827,7 @@
     (fp_text reference C9 (at 0 -1.25) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value 100nF (at 0 -1.4478) (layer F.Fab)
+    (fp_text value 100nF (at 4.2672 0.0254) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_text user %R (at 0 -1.25) (layer F.Fab) hide
@@ -2863,7 +2863,7 @@
     (fp_text reference C10 (at 0 -1.25) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value "4.7uF 10V X5R" (at 7.4676 -0.127) (layer F.Fab)
+    (fp_text value "4.7uF 10V X5R" (at 7.4549 -0.1143) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_text user %R (at 0 -1.25) (layer F.Fab) hide
@@ -2971,7 +2971,7 @@
     (fp_text reference C13 (at 0 -1.25) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value "4.7nF 25V X7R" (at -0.3302 0.1778) (layer F.Fab)
+    (fp_text value "4.7nF 25V X7R" (at -0.3048 0.0508) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_text user %R (at 0 -1.25) (layer F.Fab) hide
@@ -3007,7 +3007,7 @@
     (fp_text reference C14 (at 0 -1.25) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value "1uF 10V X5R" (at 7.3406 -0.0508) (layer F.Fab)
+    (fp_text value "1uF 10V X5R" (at 7.3025 -0.0508) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_text user %R (at 0 -1.25) (layer F.Fab) hide
@@ -3043,7 +3043,7 @@
     (fp_text reference C15 (at 0 -1.25 180) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value "1uF 10V X5R" (at 6.731 0 180) (layer F.Fab)
+    (fp_text value "1uF 10V X5R" (at -6.5913 0.0127 180) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_text user %R (at 0 -1.25 180) (layer F.Fab) hide
@@ -4237,7 +4237,7 @@
     (fp_text reference D4 (at 0 -1.45 180) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value Orange (at 0.046799 -1.397799 180) (layer F.Fab)
+    (fp_text value Orange (at -3.937 0.0762 180) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_line (start -1.8 -0.55) (end -1.8 0.55) (layer F.SilkS) (width 0.12))
@@ -4455,7 +4455,7 @@
     (fp_text reference R8 (at 0 -1.45 180) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value 100K (at 0.014648 -1.397 180) (layer F.Fab)
+    (fp_text value 100K (at -3.922352 0.0508 180) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_text user %R (at 0 0 180) (layer F.Fab) hide
@@ -4491,7 +4491,7 @@
     (fp_text reference R9 (at 0 -1.45 180) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value 330R (at 0 1.492298 180) (layer F.Fab)
+    (fp_text value 330R (at -3.922352 -0.057102 180) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_text user %R (at 0 0 180) (layer F.Fab) hide
@@ -4563,7 +4563,7 @@
     (fp_text reference R11 (at 0 -1.45 180) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value 2K2 (at 0 1.55 180) (layer F.Fab)
+    (fp_text value 2K2 (at -3.3782 0.0762 180) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_text user %R (at 0 0 180) (layer F.Fab) hide
@@ -5280,7 +5280,7 @@
     (pad 4 thru_hole circle (at 5.08 -1.27 270) (size 2.2 2.2) (drill 2.1) (layers *.Cu *.Mask))
   )
 
-  (module Oddities:Dummy_Empty (layer F.Cu) (tedit 59FCCC20) (tstamp 59FA5923)
+  (module Oddities:Dummy_Empty (layer F.Cu) (tedit 5A455ECB) (tstamp 59FA5923)
     (at 143.129 80.229801)
     (descr "Only empty Dummy to give satsfaction to DRC")
     (tags "Only empty Dummy to give satsfaction to DRC")
@@ -5288,12 +5288,12 @@
     (fp_text reference P2 (at 0.07112 -2.49936) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value ATLAS_EC_PROBE (at 0 0) (layer F.Fab)
+    (fp_text value ATLAS_EC_PROBE (at 0 0) (layer F.Fab) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
   )
 
-  (module Oddities:Dummy_Empty (layer F.Cu) (tedit 59FCCC23) (tstamp 59FA5927)
+  (module Oddities:Dummy_Empty (layer F.Cu) (tedit 5A455ED4) (tstamp 59FA5927)
     (at 143.129 80.229801)
     (descr "Only empty Dummy to give satsfaction to DRC")
     (tags "Only empty Dummy to give satsfaction to DRC")
@@ -5301,12 +5301,12 @@
     (fp_text reference P3 (at 0.07112 -2.49936) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value ATLAS_RTD_PROBE (at 0 0) (layer F.Fab)
+    (fp_text value ATLAS_RTD_PROBE (at 0 0) (layer F.Fab) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
   )
 
-  (module Oddities:Dummy_Empty (layer F.Cu) (tedit 59FCCC26) (tstamp 59FA592B)
+  (module Oddities:Dummy_Empty (layer F.Cu) (tedit 5A455ECE) (tstamp 59FA592B)
     (at 143.129 80.229801)
     (descr "Only empty Dummy to give satsfaction to DRC")
     (tags "Only empty Dummy to give satsfaction to DRC")
@@ -5314,12 +5314,12 @@
     (fp_text reference P4 (at 0.07112 -2.49936) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value ATLAS_PH_PROBE (at 0 0) (layer F.Fab)
+    (fp_text value ATLAS_PH_PROBE (at 0 0) (layer F.Fab) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
   )
 
-  (module Oddities:Dummy_Empty (layer F.Cu) (tedit 59FCCC29) (tstamp 59FA592F)
+  (module Oddities:Dummy_Empty (layer F.Cu) (tedit 5A455ED1) (tstamp 59FA592F)
     (at 143.129 80.229801)
     (descr "Only empty Dummy to give satsfaction to DRC")
     (tags "Only empty Dummy to give satsfaction to DRC")
@@ -5327,12 +5327,12 @@
     (fp_text reference P5 (at 0.07112 -2.49936) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value ATLAS_DO_PROBE (at 0 0) (layer F.Fab)
+    (fp_text value ATLAS_DO_PROBE (at 0 0) (layer F.Fab) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
   )
 
-  (module Oddities:Dummy_Empty (layer F.Cu) (tedit 59FCCC30) (tstamp 59FA5933)
+  (module Oddities:Dummy_Empty (layer F.Cu) (tedit 5A455ED6) (tstamp 59FA5933)
     (at 143.129 80.229801)
     (descr "Only empty Dummy to give satsfaction to DRC")
     (tags "Only empty Dummy to give satsfaction to DRC")
@@ -5340,7 +5340,7 @@
     (fp_text reference P6 (at 0.07112 -2.49936) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value ATLAS_ORP_PROBE (at 0 0) (layer F.Fab)
+    (fp_text value ATLAS_ORP_PROBE (at 0 0) (layer F.Fab) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
   )
@@ -5354,7 +5354,7 @@
     (fp_text reference Q5 (at 0 -2.794 270) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value 2N7002LT1G (at 0 2.794 270) (layer F.Fab)
+    (fp_text value 2N7002LT1G (at 0 0.1708 270) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_line (start -1.75 -1.95) (end -1.75 1.95) (layer F.CrtYd) (width 0.05))
@@ -5407,7 +5407,7 @@
       (net 115 /ATLAS_GND))
   )
 
-  (module Socket_Strips:Socket_Strip_Straight_1x07_Pitch2.54mm (layer F.Cu) (tedit 5A1D9FEF) (tstamp 5A0F326C)
+  (module Socket_Strips:Socket_Strip_Straight_1x07_Pitch2.54mm (layer F.Cu) (tedit 5A455EF7) (tstamp 5A0F326C)
     (at 118.0846 91.8718)
     (descr "Through hole straight socket strip, 1x07, 2.54mm pitch, single row")
     (tags "Through hole socket strip THT 1x07 2.54mm single row")
@@ -5415,7 +5415,7 @@
     (fp_text reference J4 (at 0 -2.33) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value Conn_01x07 (at 0 17.57) (layer F.Fab)
+    (fp_text value Conn_01x07 (at 0 17.57) (layer F.Fab) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_line (start -1.27 -1.27) (end -1.27 16.51) (layer F.Fab) (width 0.1))
@@ -5432,7 +5432,7 @@
     (fp_line (start -1.8 17.05) (end 1.8 17.05) (layer F.CrtYd) (width 0.05))
     (fp_line (start 1.8 17.05) (end 1.8 -1.8) (layer F.CrtYd) (width 0.05))
     (fp_line (start 1.8 -1.8) (end -1.8 -1.8) (layer F.CrtYd) (width 0.05))
-    (fp_text user %R (at 0 -2.33) (layer F.Fab)
+    (fp_text user %R (at 0 -2.33) (layer F.Fab) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (pad 1 thru_hole rect (at 0 0) (size 1.7 1.7) (drill 1) (layers *.Cu *.Mask)
@@ -5451,7 +5451,7 @@
       (net 95 /D11))
   )
 
-  (module Capacitors_SMD:C_0603_HandSoldering (layer F.Cu) (tedit 5A1D9DA5) (tstamp 5A1DA81A)
+  (module Capacitors_SMD:C_0603_HandSoldering (layer F.Cu) (tedit 5A455F03) (tstamp 5A1DA81A)
     (at 133.0325 104.2035 90)
     (descr "Capacitor SMD 0603, hand soldering")
     (tags "capacitor 0603")
@@ -5460,10 +5460,10 @@
     (fp_text reference C16 (at 0 -1.25 90) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value 100nF (at 0 1.5 90) (layer F.Fab)
+    (fp_text value 100nF (at 0.0635 1.3843 90) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text user %R (at 0 -1.25 90) (layer F.Fab)
+    (fp_text user %R (at 0 -1.25 90) (layer F.Fab) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_line (start -0.8 0.4) (end -0.8 -0.4) (layer F.Fab) (width 0.1))
@@ -5496,7 +5496,7 @@
     (fp_text reference U1 (at 0 -3.302 180) (layer F.SilkS) hide
       (effects (font (size 1 1) (thickness 0.15)))
     )
-    (fp_text value S25FL1xxK0XM (at 0 3.556 180) (layer F.Fab)
+    (fp_text value S25FL1xxK0XM (at -0.0762 -3.5052 180) (layer F.Fab)
       (effects (font (size 1 1) (thickness 0.15)))
     )
     (fp_line (start 3.95 -2.7) (end 3.95 2.7) (layer F.CrtYd) (width 0.05))
@@ -5573,7 +5573,7 @@
   (gr_text EC (at 164.211 65.405 270) (layer F.SilkS)
     (effects (font (size 1.5 1.5) (thickness 0.25)))
   )
-  (gr_text v0.4 (at 125.6792 58.293 180) (layer F.SilkS)
+  (gr_text v0.5 (at 125.6792 58.293 180) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.25)))
   )
   (gr_line (start 115.7478 136.3218) (end 115.7478 58.7502) (layer Edge.Cuts) (width 0.15))
