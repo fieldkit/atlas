@@ -1173,34 +1173,34 @@ F 3 "" H 5450 8600 50  0000 C CNN
 	1    5450 8600
 	0    -1   -1   0   
 $EndComp
-Text Label 2500 6800 0    60   ~ 0
-SCL
-Text Label 2500 6900 0    60   ~ 0
-SDA
-Text Label 4050 6050 0    60   ~ 0
-SDA
-Text Label 4050 5950 0    60   ~ 0
-SCL
+Text Label 2800 6800 0    50   ~ 0
+SCL1
+Text Label 2800 6900 0    50   ~ 0
+SDA1
+Text Label 4050 6050 0    50   ~ 0
+SDA1
+Text Label 4050 5950 0    50   ~ 0
+SCL1
 Text Label 13750 1400 0    60   ~ 0
-SCL
+SCL1
 Text Label 13750 1300 0    60   ~ 0
-SDA
+SDA1
 Text Label 13750 2350 0    60   ~ 0
-SCL
+SCL1
 Text Label 13750 2250 0    60   ~ 0
-SDA
+SDA1
 Text Label 13750 3300 0    60   ~ 0
-SCL
+SCL1
 Text Label 13750 3200 0    60   ~ 0
-SDA
+SDA1
 Text Label 13750 4250 0    60   ~ 0
-SCL
+SCL1
 Text Label 13750 4150 0    60   ~ 0
-SDA
+SDA1
 Text Label 13750 5200 0    60   ~ 0
-SCL
+SCL1
 Text Label 13750 5100 0    60   ~ 0
-SDA
+SDA1
 Text Label 2550 2300 0    50   ~ 0
 A0
 Text Label 2550 2500 0    50   ~ 0
@@ -1211,10 +1211,6 @@ Text Label 2550 2700 0    50   ~ 0
 D8
 Text Label 2550 2800 0    50   ~ 0
 D9
-Text Label 2550 2900 0    50   ~ 0
-D4
-Text Label 2550 3000 0    50   ~ 0
-D3
 Text Label 2550 3100 0    50   ~ 0
 D1
 Text Label 2550 3200 0    50   ~ 0
@@ -1225,22 +1221,18 @@ Text Label 2550 3400 0    50   ~ 0
 ATN
 Text Label 2550 3500 0    50   ~ 0
 D2
-Text Label 2550 3600 0    50   ~ 0
-D5
 Text Label 2550 3700 0    50   ~ 0
 D11
 Text Label 2550 3900 0    50   ~ 0
 D10
-Text Label 2550 4000 0    50   ~ 0
-D12
 Text Label 2550 4100 0    50   ~ 0
 D6
 Text Label 2550 4200 0    50   ~ 0
 D7
 Text Label 2550 4300 0    50   ~ 0
-SDA
+SDA1
 Text Label 2550 4400 0    50   ~ 0
-SCL
+SCL1
 Text Label 4550 3000 0    50   ~ 0
 MOSI
 Text Label 4550 2900 0    50   ~ 0
@@ -1293,10 +1285,6 @@ Text Notes 4850 2700 0    50   ~ 0
 TX0
 Text Notes 4850 2800 0    50   ~ 0
 RX0
-Text Notes 2350 3200 0    50   ~ 0
-RX1
-Text Notes 2350 3100 0    50   ~ 0
-TX1
 Text Notes 6000 4900 0    60   ~ 0
 1.27 mm (0.05")
 Text Notes 8450 6050 0    60   ~ 0
@@ -1318,9 +1306,9 @@ A5
 Text Label 7000 8850 2    50   ~ 0
 D13
 Wire Wire Line
-	2400 6800 3200 6800
+	2800 6800 3200 6800
 Wire Wire Line
-	2400 6900 3500 6900
+	2800 6900 3500 6900
 Wire Wire Line
 	4350 5650 4100 5650
 Wire Wire Line
@@ -1370,9 +1358,9 @@ Wire Wire Line
 Wire Wire Line
 	2550 2800 2850 2800
 Wire Wire Line
-	2850 2900 2550 2900
+	2550 2900 2850 2900
 Wire Wire Line
-	2850 3000 2550 3000
+	2550 3000 2850 3000
 Wire Wire Line
 	2850 3100 2550 3100
 Wire Wire Line
@@ -1384,13 +1372,11 @@ Wire Wire Line
 Wire Wire Line
 	2850 3500 2550 3500
 Wire Wire Line
-	2850 3600 2550 3600
-Wire Wire Line
-	2000 3700 2850 3700
+	2400 3600 2850 3600
 Wire Wire Line
 	2550 3900 2850 3900
 Wire Wire Line
-	2000 4000 2850 4000
+	2400 4000 2850 4000
 Wire Wire Line
 	2850 4100 2550 4100
 Wire Wire Line
@@ -1634,8 +1620,6 @@ Wire Wire Line
 Wire Wire Line
 	11350 6650 11350 6750
 Wire Wire Line
-	2000 3800 2850 3800
-Wire Wire Line
 	5450 5900 5500 5900
 Wire Wire Line
 	5900 5900 6000 5900
@@ -1763,7 +1747,7 @@ Wire Wire Line
 	13400 5850 14000 5850
 Text Label 13600 5850 0    60   ~ 0
 ATLAS_EN
-Text Label 2000 4000 0    60   ~ 0
+Text Label 2400 4000 0    60   ~ 0
 ATLAS_EN
 Wire Wire Line
 	13100 1100 14150 1100
@@ -1825,10 +1809,10 @@ Wire Wire Line
 	12550 5250 12550 5500
 Wire Wire Line
 	12550 5250 12500 5250
-Text Label 2000 3700 0    50   ~ 0
-SDA2
-Text Label 2000 3800 0    50   ~ 0
-SCL2
+Text Label 2550 2900 0    50   ~ 0
+SDA3
+Text Label 2550 3000 0    50   ~ 0
+SCL3
 $Comp
 L Conn_01x07 J4
 U 1 1 5A0F83DC
@@ -1841,9 +1825,9 @@ F 3 "" H 4550 5950 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Text Label 4050 6250 0    50   ~ 0
-SDA2
+SDA3
 Text Label 4050 6150 0    50   ~ 0
-SCL2
+SCL3
 Wire Wire Line
 	4050 6150 4350 6150
 Wire Wire Line
@@ -1877,7 +1861,7 @@ Text Label 3650 9550 0    60   ~ 0
 SCK
 Text Label 3650 9650 0    60   ~ 0
 MOSI
-Text Label 2050 9450 0    60   ~ 0
+Text Label 1900 9450 0    60   ~ 0
 MISO
 $Comp
 L +3V3 #PWR045
@@ -1937,7 +1921,7 @@ F 3 "" H 1850 9850 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	2050 9450 2350 9450
+	1900 9450 2350 9450
 Wire Wire Line
 	1850 9200 1850 9550
 Wire Wire Line
@@ -1947,9 +1931,9 @@ Wire Wire Line
 Wire Wire Line
 	1850 9550 2350 9550
 Wire Wire Line
-	2050 9350 2350 9350
-Text Label 2050 9350 0    50   ~ 0
-D5
+	1900 9350 2350 9350
+Text Label 1900 9350 0    50   ~ 0
+FLASH_CS
 $Comp
 L GND #PWR049
 U 1 1 5A3A71A5
@@ -2054,4 +2038,10 @@ F 3 "" H 12550 5500 50  0000 C CNN
 $EndComp
 Text Label 13250 4900 0    60   ~ 0
 ATLAS_GND
+Wire Wire Line
+	2550 3700 2850 3700
+Wire Wire Line
+	2850 3800 2550 3800
+Text Label 2400 3600 0    50   ~ 0
+FLASH_CS
 $EndSCHEMATC
