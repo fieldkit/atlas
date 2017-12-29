@@ -1813,17 +1813,6 @@ Text Label 2550 2900 0    50   ~ 0
 SDA3
 Text Label 2550 3000 0    50   ~ 0
 SCL3
-$Comp
-L Conn_01x07 J4
-U 1 1 5A0F83DC
-P 4550 5950
-F 0 "J4" H 4550 6350 50  0000 C CNN
-F 1 "Conn_01x07" H 4550 5550 50  0000 C CNN
-F 2 "Socket_Strips:Socket_Strip_Straight_1x07_Pitch2.54mm" H 4550 5950 50  0001 C CNN
-F 3 "" H 4550 5950 50  0001 C CNN
-	1    4550 5950
-	1    0    0    -1  
-$EndComp
 Text Label 4050 6250 0    50   ~ 0
 SDA3
 Text Label 4050 6150 0    50   ~ 0
@@ -2044,4 +2033,23 @@ Wire Wire Line
 	2850 3800 2550 3800
 Text Label 2400 3600 0    50   ~ 0
 FLASH_CS
+$Comp
+L Conn_01x09 J4
+U 1 1 5A46F380
+P 4550 6050
+F 0 "J4" H 4550 6550 50  0000 C CNN
+F 1 "Conn_01x09" H 4550 5550 50  0000 C CNN
+F 2 "Socket_Strips:Socket_Strip_Straight_1x09_Pitch2.54mm" H 4550 6050 50  0001 C CNN
+F 3 "" H 4550 6050 50  0001 C CNN
+	1    4550 6050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4050 6350 4350 6350
+Wire Wire Line
+	4050 6450 4350 6450
+Text Label 4050 6450 0    50   ~ 0
+D31
+Text Label 4050 6350 0    50   ~ 0
+D30
 $EndSCHEMATC
