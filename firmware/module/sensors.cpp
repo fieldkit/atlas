@@ -1,5 +1,7 @@
 #include "sensors.h"
 
+namespace fk {
+
 bool SensorModule::setup() {
     for (size_t i = 0; i < numberOfSensors; ++i) {
         sensors[i]->setup();
@@ -63,4 +65,6 @@ size_t SensorModule::readAll(float *values) {
         total += number;
     }
     return total;
+}
+
 }

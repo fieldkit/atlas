@@ -1,6 +1,8 @@
 #include "atlas.h"
 #include "debug.h"
 
+namespace fk {
+
 constexpr char Log[] = "Atlas";
 
 AtlasReader::AtlasReader(TwoWire *theBus, uint8_t theAddress)
@@ -203,4 +205,6 @@ size_t AtlasReader::readAll(float *values) {
     size_t number = numberOfValues;
     numberOfValues = 0;
     return number;
+}
+
 }

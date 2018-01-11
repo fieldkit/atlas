@@ -6,6 +6,8 @@
 
 #include "sensors.h"
 
+namespace fk {
+
 enum class AtlasResponseCode : uint8_t {
     NoData = 0xff,
     NotReady = 0xfe,
@@ -70,5 +72,7 @@ private:
     AtlasResponseCode readReply(char *buffer, size_t length);
 
 };
+
+}
 
 #endif

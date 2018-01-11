@@ -9,8 +9,9 @@
 
 #include <fk-module.h>
 
-#include "leds.h"
 #include "atlas.h"
+
+namespace fk {
 
 using WireAddress = uint8_t;
 using PinNumber = uint8_t;
@@ -21,41 +22,30 @@ const WireAddress ATLAS_SENSOR_PH_DEFAULT_ADDRESS = 0x63;
 const WireAddress ATLAS_SENSOR_DO_DEFAULT_ADDRESS = 0x61;
 const WireAddress ATLAS_SENSOR_ORP_DEFAULT_ADDRESS = 0x62;
 
-void flush(Stream &stream) {
-    if (stream.available()) {
-        auto flushed = 0;
-        while (stream.available()) {
-            flushed++;
-            stream.read();
-        }
-        debugfpln("I2C", "Flushed %d bytes", flushed);
-    }
-}
-
-class AtlasModule : public fk::Module {
+class AtlasModule : public Module {
 private:
     SensorModule *atlasSensors;
-    fk::TwoWireBus bus{ fk::Wire11and13 };
+    TwoWireBus bus{ Wire11and13 };
 
 public:
-    AtlasModule(fk::ModuleInfo &info, SensorModule &atlasSensors);
+    AtlasModule(ModuleInfo &info, SensorModule &atlasSensors);
 
 public:
-    fk::ModuleReadingStatus beginReading(fk::PendingSensorReading &pending) override;
-    fk::ModuleReadingStatus readingStatus(fk::PendingSensorReading &pending) override;
+    ModuleReadingStatus beginReading(PendingSensorReading &pending) override;
+    ModuleReadingStatus readingStatus(PendingSensorReading &pending) override;
 
 };
 
-AtlasModule::AtlasModule(fk::ModuleInfo &info, SensorModule &atlasSensors) : Module(bus, info), atlasSensors(&atlasSensors) {
+AtlasModule::AtlasModule(ModuleInfo &info, SensorModule &atlasSensors) : Module(bus, info), atlasSensors(&atlasSensors) {
 }
 
-fk::ModuleReadingStatus AtlasModule::beginReading(fk::PendingSensorReading &pending) {
+ModuleReadingStatus AtlasModule::beginReading(PendingSensorReading &pending) {
     atlasSensors->beginReading();
 
-    return fk::ModuleReadingStatus{ 1000 };
+    return ModuleReadingStatus{ 1000 };
 }
 
-fk::ModuleReadingStatus AtlasModule::readingStatus(fk::PendingSensorReading &pending) {
+ModuleReadingStatus AtlasModule::readingStatus(PendingSensorReading &pending) {
     debugfpln("Atlas", "Number: %d", atlasSensors->numberOfReadingsReady());
     if (atlasSensors->numberOfReadingsReady() == 8) {
         // Order: Ec1,2,3,4,Temp,pH,Do,ORP
@@ -73,11 +63,13 @@ fk::ModuleReadingStatus AtlasModule::readingStatus(fk::PendingSensorReading &pen
         readings[ 7].value = values[7];
         pending.elapsed -= millis();
         for (auto i = 0; i < 8; ++i) {
-            readings[i].status = fk::SensorReadingStatus::Done;
+            readings[i].status = SensorReadingStatus::Done;
         }
     }
 
-    return fk::ModuleReadingStatus{};
+    return ModuleReadingStatus{};
+}
+
 }
 
 extern "C" {
@@ -85,7 +77,7 @@ extern "C" {
 void setup() {
     Serial.begin(115200);
 
-    while (!Serial && millis() < 3000) {
+    while (!Serial && millis() < 2000) {
         delay(100);
     }
 
@@ -110,25 +102,24 @@ void setup() {
         },
     };
 
-    AtlasReader ec(&Wire, ATLAS_SENSOR_EC_DEFAULT_ADDRESS);
-    AtlasReader temp(&Wire, ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS);
-    AtlasReader ph(&Wire, ATLAS_SENSOR_PH_DEFAULT_ADDRESS);
-    AtlasReader dissolvedOxygen(&Wire, ATLAS_SENSOR_DO_DEFAULT_ADDRESS);
-    AtlasReader orp(&Wire, ATLAS_SENSOR_ORP_DEFAULT_ADDRESS);
+    fk::TwoWireBus sensorBus{ Wire };
 
-    Sensor *sensors[] = { &ec, &ph, &dissolvedOxygen, &orp, &temp };
-    SensorModule atlasSensors(sensors);
-    fk::Leds leds;
+    fk::AtlasReader ec(&Wire, fk::ATLAS_SENSOR_EC_DEFAULT_ADDRESS);
+    fk::AtlasReader temp(&Wire, fk::ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS);
+    fk::AtlasReader ph(&Wire, fk::ATLAS_SENSOR_PH_DEFAULT_ADDRESS);
+    fk::AtlasReader dissolvedOxygen(&Wire, fk::ATLAS_SENSOR_DO_DEFAULT_ADDRESS);
+    fk::AtlasReader orp(&Wire, fk::ATLAS_SENSOR_ORP_DEFAULT_ADDRESS);
 
-    AtlasModule module(info, atlasSensors);
+    fk::Sensor *sensors[] = { &ec, &ph, &dissolvedOxygen, &orp, &temp };
+    fk::SensorModule atlasSensors(sensors);
+    fk::AtlasModule module(info, atlasSensors);
+
+    uint32_t idleStart = 0;
 
     module.begin();
 
-    Wire.begin();
     // TODO: Investigate. I would see hangs if I used a slower speed.
-    Wire.setClock(400000);
-
-    uint32_t idleStart = 0;
+    sensorBus.begin(400000);
 
     while (true) {
         atlasSensors.tick();
@@ -139,17 +130,14 @@ void setup() {
                 if (idleStart == 0 ) {
                     idleStart = millis() + 20000;
                     module.resume();
-
-                    flush(Wire);
+                    sensorBus.flush();
                 }
                 else {
                     module.tick();
                 }
 
                 if (idleStart < millis()) {
-                    Wire.begin();
-                    // TODO: Investigate. I would see hangs if I used a slower speed.
-                    Wire.setClock(400000);
+                    sensorBus.begin(400000);
                     atlasSensors.beginReading();
                     idleStart = 0;
                 }

@@ -6,6 +6,8 @@
 #undef max
 #include <functional>
 
+namespace fk {
+
 struct TickSlice {
     bool waitingOnSiblings { false };
     std::function<void()> onFree;
@@ -50,5 +52,7 @@ public:
     bool isIdle() const;
     size_t numberOfReadingsReady() const;
 };
+
+}
 
 #endif
