@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source /home/jlewallen/fieldkit/atlas/hardware/fk-atlas.sch)
-    (date "Thu 11 Jan 2018 01:43:27 PM PST")
+    (date "Thu 11 Jan 2018 02:12:24 PM PST")
     (tool "Eeschema 4.0.7-e2-6376~58~ubuntu16.04.1")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
@@ -382,7 +382,7 @@
       (tstamp 59A0A7F7))
     (comp (ref D1)
       (value Orange)
-      (footprint LEDs:LED_0603_HandSoldering)
+      (footprint RocketScreamKicadLibrary:LED-0603)
       (fields
         (field (name price) 0)
         (field (name spn1) 859-LTST-C190KFKT)
@@ -412,7 +412,7 @@
       (tstamp 59A0A82C))
     (comp (ref D2)
       (value Yellow)
-      (footprint LEDs:LED_0603_HandSoldering)
+      (footprint RocketScreamKicadLibrary:LED-0603)
       (fields
         (field (name price) 0)
         (field (name spn1) 859-LTST-C190KSKT)
@@ -442,7 +442,7 @@
       (tstamp 59A0A831))
     (comp (ref D3)
       (value Blue)
-      (footprint LEDs:LED_0603_HandSoldering)
+      (footprint RocketScreamKicadLibrary:LED-0603)
       (fields
         (field (name price) 0)
         (field (name spn1) 859-LTST-C191TBKT)
@@ -482,7 +482,7 @@
       (tstamp 59A0A7BB))
     (comp (ref D4)
       (value Orange)
-      (footprint LEDs:LED_0603_HandSoldering)
+      (footprint RocketScreamKicadLibrary:LED-0603)
       (fields
         (field (name price) 0)
         (field (name spn1) 859-LTST-C190KFKT)
@@ -1629,12 +1629,12 @@
         (pin (num 19) (name SCL1) (type input))
         (pin (num 20) (name GNDISO) (type input)))))
   (libraries
-    (library (logical conn)
-      (uri /usr/share/kicad/library/conn.lib))
     (library (logical conservify)
       (uri /home/jlewallen/conservify/kicad/conservify.lib))
     (library (logical device)
       (uri /usr/share/kicad/library/device.lib))
+    (library (logical conn)
+      (uri /usr/share/kicad/library/conn.lib))
     (library (logical fk-atlas-cache)
       (uri /home/jlewallen/fieldkit/atlas/hardware/fk-atlas-cache.lib))
     (library (logical RocketScreamKicadLibrary)
