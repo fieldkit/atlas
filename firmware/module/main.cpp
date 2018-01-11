@@ -38,7 +38,7 @@ void flush(Stream &stream) {
             flushed++;
             stream.read();
         }
-        debugfln("i2c: flushed %d bytes", flushed);
+        debugfpln("I2C", "Flushed %d bytes", flushed);
     }
 }
 
@@ -107,14 +107,6 @@ void setup() {
             // Order: Ec1,2,3,4,Temp,pH,Do,ORP
             float values[sensorModule.numberOfReadingsReady()];
             size_t size = sensorModule.readAll(values);
-
-            debugf("Reading: ");
-            for (size_t i = 0; i < size; ++i) {
-                debugf("%f ", values[i]);
-            }
-            debugfln(" ");
-
-            debugfln("Status (%lu)", fk_free_memory());
         }
 
         if (sensorModule.isIdle()) {
