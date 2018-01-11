@@ -44,6 +44,7 @@ void flush(Stream &stream) {
 
 class AtlasModule : public fk::Module {
 private:
+    fk::TwoWireBus bus{ fk::Wire11and13 };
 
 public:
     AtlasModule(fk::ModuleInfo &info);
@@ -53,7 +54,7 @@ public:
 
 };
 
-AtlasModule::AtlasModule(fk::ModuleInfo &info) : Module(info) {
+AtlasModule::AtlasModule(fk::ModuleInfo &info) : Module(bus, info) {
 }
 
 fk::ModuleReadingStatus AtlasModule::beginReading(fk::PendingSensorReading &pending) {
@@ -102,6 +103,7 @@ void setup() {
 
     while (true) {
         sensorModule.tick();
+        module.tick();
 
         if (sensorModule.numberOfReadingsReady() > 0) {
             // Order: Ec1,2,3,4,Temp,pH,Do,ORP
@@ -113,18 +115,18 @@ void setup() {
             if (idleStart == 0 ) {
                 idleStart = millis() + 20000;
 
-                module.resume();
+                // module.resume();
 
                 flush(Wire);
             }
             else {
-                module.tick();
+                // module.tick();
             }
 
             if (idleStart < millis()) {
-                Wire.begin();
+                // Wire.begin();
                 // TODO: Investigate. I would see hangs if I used a slower speed.
-                Wire.setClock(400000);
+                // Wire.setClock(400000);
 
                 sensorModule.beginReading();
                 idleStart = 0;
