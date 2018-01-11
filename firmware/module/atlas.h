@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include <Wire.h>
 
+#include "i2c.h"
 #include "sensors.h"
 
 namespace fk {
@@ -48,7 +49,7 @@ enum class AtlasSensorType {
 
 class AtlasReader : public Sensor {
 private:
-    TwoWire *bus { nullptr };
+    TwoWireBus *bus;
     uint8_t address { 0 };
     AtlasSensorType type { AtlasSensorType::Unknown };
     AtlasReaderState state { AtlasReaderState::Start };
@@ -58,7 +59,7 @@ private:
     size_t numberOfValues { 0 };
 
 public:
-    AtlasReader(TwoWire *theBus, uint8_t theAddress);
+    AtlasReader(TwoWireBus &bus, uint8_t theAddress);
     bool setup() override;
     TickSlice tick() override;
     bool beginReading() override;

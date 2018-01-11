@@ -104,11 +104,11 @@ void setup() {
 
     fk::TwoWireBus sensorBus{ Wire };
 
-    fk::AtlasReader ec(&Wire, fk::ATLAS_SENSOR_EC_DEFAULT_ADDRESS);
-    fk::AtlasReader temp(&Wire, fk::ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS);
-    fk::AtlasReader ph(&Wire, fk::ATLAS_SENSOR_PH_DEFAULT_ADDRESS);
-    fk::AtlasReader dissolvedOxygen(&Wire, fk::ATLAS_SENSOR_DO_DEFAULT_ADDRESS);
-    fk::AtlasReader orp(&Wire, fk::ATLAS_SENSOR_ORP_DEFAULT_ADDRESS);
+    fk::AtlasReader ec(sensorBus, fk::ATLAS_SENSOR_EC_DEFAULT_ADDRESS);
+    fk::AtlasReader temp(sensorBus, fk::ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS);
+    fk::AtlasReader ph(sensorBus, fk::ATLAS_SENSOR_PH_DEFAULT_ADDRESS);
+    fk::AtlasReader dissolvedOxygen(sensorBus, fk::ATLAS_SENSOR_DO_DEFAULT_ADDRESS);
+    fk::AtlasReader orp(sensorBus, fk::ATLAS_SENSOR_ORP_DEFAULT_ADDRESS);
 
     fk::Sensor *sensors[] = { &ec, &ph, &dissolvedOxygen, &orp, &temp };
     fk::SensorModule atlasSensors(sensors);

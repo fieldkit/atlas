@@ -5,8 +5,8 @@ namespace fk {
 
 constexpr char Log[] = "Atlas";
 
-AtlasReader::AtlasReader(TwoWire *theBus, uint8_t theAddress)
-    : bus(theBus), address(theAddress) {
+AtlasReader::AtlasReader(TwoWireBus &bus, uint8_t theAddress)
+    : bus(&bus), address(theAddress) {
 }
 
 bool AtlasReader::setup() {
@@ -124,9 +124,7 @@ TickSlice AtlasReader::tick() {
 AtlasResponseCode AtlasReader::sendCommand(const char *str, uint32_t readDelay) {
     debugfpln(Log, "Atlas(0x%x) <- ('%s', %lu))", address, str, readDelay);
 
-    bus->beginTransmission(address);
-    bus->write(str);
-    bus->endTransmission();
+    bus->send(address, str);
 
     nextCheckAt  = millis() + readDelay;
     return AtlasResponseCode::NotReady;
