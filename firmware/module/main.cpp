@@ -64,6 +64,7 @@ ModuleReadingStatus AtlasModule::readingStatus(PendingSensorReading &pending) {
         pending.elapsed -= millis();
         for (auto i = 0; i < 8; ++i) {
             readings[i].status = SensorReadingStatus::Done;
+            readings[i].time = clock.getTime();
         }
     }
 
