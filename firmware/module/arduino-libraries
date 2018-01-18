@@ -1,6 +1,7 @@
 ../firmware-common/src
 ../module-protocol
 ../app-protocol
+../data-protocol
 ../fkfs
 https://github.com/nanopb/nanopb.git
 https://github.com/arduino-libraries/RTCZero.git
