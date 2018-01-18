@@ -61,6 +61,13 @@ public:
         this->address = address;
     }
 
+    bool reading() {
+        char buffer[20];
+        uint8_t value = readResponse("R", buffer, sizeof(buffer));
+        Serial.println(buffer);
+        return value == 0x1;
+    }
+
     bool find() {
         uint8_t value = readResponse("FIND", nullptr, 0);
         return value == 0x1;
@@ -176,6 +183,8 @@ void setup() {
         delay(100);
     }
 
+    auto takeReadings = true;
+
     while (true) {
         digitalWrite(13, LOW);
         digitalWrite(A3, LOW);
@@ -190,6 +199,11 @@ void setup() {
         check.ph();
         check.dissolvedOxygen();
         check.orp();
+
+        if (takeReadings) {
+            AtlasScientificBoard sensor(ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS);
+            sensor.reading();
+        }
 
         Serial.println("test: Done");
 
