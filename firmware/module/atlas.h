@@ -4,7 +4,7 @@
 #include <Arduino.h>
 #include <Wire.h>
 
-#include "i2c.h"
+#include "two_wire.h"
 #include "sensors.h"
 
 namespace fk {
