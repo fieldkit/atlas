@@ -43,6 +43,7 @@ TaskEval AtlasCommandTask::task() {
 
 class AtlasModule : public Module {
 private:
+    Pool pool{ "AtlasModule", 128 };
     SensorModule *atlasSensors;
     TwoWireBus bus{ Wire11and13 };
 
@@ -91,7 +92,8 @@ ModuleReadingStatus AtlasModule::readingStatus(PendingSensorReading &pending) {
 }
 
 TaskEval AtlasModule::message(ModuleQueryMessage &query, ModuleReplyMessage &reply) {
-    Pool pool{ "ATLAS", 128 };
+    pool.clear();
+
     fk_atlas_WireAtlasQuery queryMessage = fk_atlas_WireAtlasQuery_init_default;
     queryMessage.atlasCommand.command.funcs.decode = pb_decode_string;
     queryMessage.atlasCommand.command.arg = (void *)&pool;
@@ -133,7 +135,7 @@ TaskEval AtlasModule::message(ModuleQueryMessage &query, ModuleReplyMessage &rep
         }
         }
 
-        AtlasReader *reader = reinterpret_cast<AtlasReader*>(sensor);
+        auto reader = reinterpret_cast<AtlasReader*>(sensor);
 
         reader->singleCommand((const char *)queryMessage.atlasCommand.command.arg);
 
@@ -155,12 +157,15 @@ TaskEval AtlasModule::message(ModuleQueryMessage &query, ModuleReplyMessage &rep
         return TaskEval::error();
     }
 
-    uint8_t buffer[required + 2];
-
-    auto stream = pb_ostream_from_buffer(buffer, required + 2);
+    auto messageData = pb_data_allocate(&pool, required + ProtoBufEncodeOverhead);
+    auto stream = pb_ostream_from_buffer((uint8_t *)messageData->buffer, messageData->length);
     if (!pb_encode_delimited(&stream, fk_atlas_WireAtlasReply_fields, &replyMessage)) {
         return TaskEval::error();
     }
+
+    reply.m().type = fk_module_ReplyType_REPLY_CUSTOM;
+    reply.m().custom.message.funcs.encode = pb_encode_data;
+    reply.m().custom.message.arg = (void *)messageData;
 
     return TaskEval::done();
 }
