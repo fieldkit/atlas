@@ -1,0 +1,54 @@
+syntax = "proto3";
+package fk_atlas;
+
+enum SensorType {
+  PH = 0;
+  TEMP = 1;
+  ORP = 2;
+  DO = 3;
+  EC = 4;
+}
+
+enum QueryType {
+  QUERY_NONE = 0;
+  QUERY_ATLAS_COMMAND = 1;
+}
+
+enum ReplyType {
+  REPLY_NONE = 0;
+  REPLY_RETRY = 1;
+  REPLY_ERROR = 2;
+  REPLY_ATLAS_COMMAND = 3;
+}
+
+message AtlasCommand {
+  SensorType sensor = 1;
+  string command = 2;
+}
+
+message AtlasReply {
+  SensorType sensor = 1;
+  string reply = 2;
+}
+
+message WireAtlasQuery {
+  QueryType type = 1;
+  AtlasCommand atlasCommand = 2;
+}
+
+enum ErrorType {
+  NONE = 0;
+  GENERAL = 1;
+  UNEXPECTED = 2;
+}
+
+message Error {
+  ErrorType type = 1;
+  string message = 2;
+}
+
+message WireAtlasReply {
+  ReplyType type = 1;
+  Error error = 2;
+  AtlasReply atlasReply = 3;
+}

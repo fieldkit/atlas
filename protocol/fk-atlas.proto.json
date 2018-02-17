@@ -1,0 +1,102 @@
+{
+  "nested": {
+    "fk_atlas": {
+      "nested": {
+        "SensorType": {
+          "values": {
+            "PH": 0,
+            "TEMP": 1,
+            "ORP": 2,
+            "DO": 3,
+            "EC": 4
+          }
+        },
+        "QueryType": {
+          "values": {
+            "QUERY_NONE": 0,
+            "QUERY_ATLAS_COMMAND": 1
+          }
+        },
+        "ReplyType": {
+          "values": {
+            "REPLY_NONE": 0,
+            "REPLY_RETRY": 1,
+            "REPLY_ERROR": 2,
+            "REPLY_ATLAS_COMMAND": 3
+          }
+        },
+        "AtlasCommand": {
+          "fields": {
+            "sensor": {
+              "type": "SensorType",
+              "id": 1
+            },
+            "command": {
+              "type": "string",
+              "id": 2
+            }
+          }
+        },
+        "AtlasReply": {
+          "fields": {
+            "sensor": {
+              "type": "SensorType",
+              "id": 1
+            },
+            "reply": {
+              "type": "string",
+              "id": 2
+            }
+          }
+        },
+        "WireAtlasQuery": {
+          "fields": {
+            "type": {
+              "type": "QueryType",
+              "id": 1
+            },
+            "atlasCommand": {
+              "type": "AtlasCommand",
+              "id": 2
+            }
+          }
+        },
+        "ErrorType": {
+          "values": {
+            "NONE": 0,
+            "GENERAL": 1,
+            "UNEXPECTED": 2
+          }
+        },
+        "Error": {
+          "fields": {
+            "type": {
+              "type": "ErrorType",
+              "id": 1
+            },
+            "message": {
+              "type": "string",
+              "id": 2
+            }
+          }
+        },
+        "WireAtlasReply": {
+          "fields": {
+            "type": {
+              "type": "ReplyType",
+              "id": 1
+            },
+            "error": {
+              "type": "Error",
+              "id": 2
+            },
+            "atlasReply": {
+              "type": "AtlasReply",
+              "id": 3
+            }
+          }
+        }
+      }
+    }
+  }
+}
