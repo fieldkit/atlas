@@ -1,6 +1,7 @@
 set(SOURCE_FILES
   main.cpp
   atlas.cpp
+  atlas_module.cpp
   sensors.cpp
   exceptions.cpp
 )
