@@ -8,6 +8,7 @@
 #include <Wire.h>
 
 #include <fk-module.h>
+#include <fk-atlas-protocol.h>
 
 #include "atlas.h"
 
@@ -22,6 +23,24 @@ const WireAddress ATLAS_SENSOR_PH_DEFAULT_ADDRESS = 0x63;
 const WireAddress ATLAS_SENSOR_DO_DEFAULT_ADDRESS = 0x61;
 const WireAddress ATLAS_SENSOR_ORP_DEFAULT_ADDRESS = 0x62;
 
+class AtlasCommandTask : public Task {
+private:
+    const char *command;
+    ModuleReplyMessage *reply;
+
+public:
+    AtlasCommandTask(const char *command) : Task("Atlas"), command(command) {
+    }
+
+public:
+    TaskEval task() override;
+
+};
+
+TaskEval AtlasCommandTask::task() {
+    return TaskEval::done();
+}
+
 class AtlasModule : public Module {
 private:
     SensorModule *atlasSensors;
@@ -33,7 +52,7 @@ public:
 public:
     ModuleReadingStatus beginReading(PendingSensorReading &pending) override;
     ModuleReadingStatus readingStatus(PendingSensorReading &pending) override;
-
+    TaskEval message(ModuleQueryMessage &query, ModuleReplyMessage &reply) override;
 };
 
 AtlasModule::AtlasModule(ModuleInfo &info, SensorModule &atlasSensors) : Module(bus, info), atlasSensors(&atlasSensors) {
@@ -69,6 +88,81 @@ ModuleReadingStatus AtlasModule::readingStatus(PendingSensorReading &pending) {
     }
 
     return ModuleReadingStatus{};
+}
+
+TaskEval AtlasModule::message(ModuleQueryMessage &query, ModuleReplyMessage &reply) {
+    Pool pool{ "ATLAS", 128 };
+    fk_atlas_WireAtlasQuery queryMessage = fk_atlas_WireAtlasQuery_init_default;
+    queryMessage.atlasCommand.command.funcs.decode = pb_decode_string;
+    queryMessage.atlasCommand.command.arg = (void *)&pool;
+
+    {
+        auto raw = (pb_data_t *)query.m().custom.message.arg;
+        auto stream = pb_istream_from_buffer((uint8_t *)raw->buffer, raw->length);
+        if (!pb_decode_delimited(&stream, fk_atlas_WireAtlasQuery_fields, &queryMessage)) {
+            return TaskEval::error();
+        }
+    }
+
+    fk_atlas_WireAtlasReply replyMessage = fk_atlas_WireAtlasReply_init_default;
+    replyMessage.type = fk_atlas_ReplyType_REPLY_ERROR;
+
+    if (queryMessage.type == fk_atlas_QueryType_QUERY_ATLAS_COMMAND) {
+        Sensor *sensor = nullptr;
+
+        switch (queryMessage.atlasCommand.sensor) {
+        case fk_atlas_SensorType_PH: {
+            sensor = atlasSensors->getSensor(1);
+            break;
+        }
+        case fk_atlas_SensorType_TEMP: {
+            sensor = atlasSensors->getSensor(4);
+            break;
+        }
+        case fk_atlas_SensorType_ORP: {
+            sensor = atlasSensors->getSensor(3);
+            break;
+        }
+        case fk_atlas_SensorType_DO: {
+            sensor = atlasSensors->getSensor(2);
+            break;
+        }
+        case fk_atlas_SensorType_EC: {
+            sensor = atlasSensors->getSensor(0);
+            break;
+        }
+        }
+
+        AtlasReader *reader = reinterpret_cast<AtlasReader*>(sensor);
+
+        reader->singleCommand((const char *)queryMessage.atlasCommand.command.arg);
+
+        auto started = millis();
+        while (millis() - started < 1000 && !reader->isIdle()) {
+            reader->tick();
+        }
+
+        if (!reader->isIdle()) {
+            replyMessage.type = fk_atlas_ReplyType_REPLY_ATLAS_COMMAND;
+            replyMessage.atlasReply.reply.funcs.encode = pb_encode_string;
+            replyMessage.atlasReply.reply.arg = (void *)reader->lastReply();
+        }
+    }
+
+    size_t required = 0;
+
+    if (!pb_get_encoded_size(&required, fk_atlas_WireAtlasReply_fields, &replyMessage)) {
+        return TaskEval::error();
+    }
+
+    uint8_t buffer[required + 2];
+
+    auto stream = pb_ostream_from_buffer(buffer, required + 2);
+    if (!pb_encode_delimited(&stream, fk_atlas_WireAtlasReply_fields, &replyMessage)) {
+        return TaskEval::error();
+    }
+
+    return TaskEval::done();
 }
 
 }

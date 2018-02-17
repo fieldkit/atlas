@@ -35,7 +35,8 @@ enum class AtlasReaderState {
     ParseReading,
     TakeReading,
     WaitingOnReply,
-    WaitingOnEmptyReply
+    WaitingOnEmptyReply,
+    SendCommand,
 };
 
 enum class AtlasSensorType {
@@ -57,6 +58,7 @@ private:
     uint32_t nextCheckAt { 0 };
     float values[ATLAS_MAXIMUM_NUMBER_OF_VALUES];
     size_t numberOfValues { 0 };
+    char buffer[ATLAS_MAXIMUM_COMMAND_LENGTH];
 
 public:
     AtlasReader(TwoWireBus &bus, uint8_t theAddress);
@@ -67,6 +69,10 @@ public:
     size_t numberOfReadingsReady() const override;
     bool isIdle() const override;
     void sleep();
+    AtlasResponseCode singleCommand(const char *command);
+    const char *lastReply() {
+        return buffer;
+    }
 
 private:
     AtlasResponseCode sendCommand(const char *str, uint32_t readDelay = ATLAS_DEFAULT_DELAY_COMMAND);

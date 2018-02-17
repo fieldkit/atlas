@@ -103,7 +103,6 @@ TickSlice AtlasReader::tick() {
         break;
     }
     case AtlasReaderState::WaitingOnReply: {
-        char buffer[ATLAS_MAXIMUM_COMMAND_LENGTH];
         if (readReply(buffer, sizeof(buffer)) == AtlasResponseCode::NotReady) {
             nextCheckAt = millis() + ATLAS_DEFAULT_DELAY_NOT_READY;
             break;
@@ -119,6 +118,11 @@ TickSlice AtlasReader::tick() {
     }
     }
     return TickSlice{};
+}
+
+AtlasResponseCode AtlasReader::singleCommand(const char *command) {
+    state = AtlasReaderState::WaitingOnReply;
+    return sendCommand(command, 300);
 }
 
 AtlasResponseCode AtlasReader::sendCommand(const char *str, uint32_t readDelay) {

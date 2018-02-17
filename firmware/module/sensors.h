@@ -43,6 +43,7 @@ public:
     SensorModule(Sensor *(&sensors)[N]) : sensors(sensors), numberOfSensors(N) {
     }
 
+public:
     bool setup();
     bool tick();
     void beginReading();
@@ -51,6 +52,10 @@ public:
     bool isBusy() const;
     bool isIdle() const;
     size_t numberOfReadingsReady() const;
+
+    Sensor *getSensor(size_t index) {
+        return sensors[index];
+    }
 };
 
 }
