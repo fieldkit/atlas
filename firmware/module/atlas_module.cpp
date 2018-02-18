@@ -2,6 +2,8 @@
 
 namespace fk {
 
+constexpr uint32_t CustomAtlasCommandTimeout = 1000;
+
 AtlasModule::AtlasModule(ModuleInfo &info, TwoWireBus &sensorBus) : Module(moduleBus, info),
     sensorBus(&sensorBus), sensors { &ec, &ph, &dissolvedOxygen, &orp, &temp }, atlasSensors(sensors) {
 }
@@ -68,7 +70,7 @@ TaskEval AtlasModule::message(ModuleQueryMessage &query, ModuleReplyMessage &rep
         sensor.singleCommand((const char *)queryMessage.atlasCommand.command.arg);
 
         auto started = millis();
-        while (millis() - started < 1000 && !sensor.isIdle()) {
+        while (millis() - started < CustomAtlasCommandTimeout && !sensor.isIdle()) {
             sensor.tick();
         }
 
