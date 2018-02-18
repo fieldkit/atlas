@@ -9,7 +9,7 @@ bool SensorModule::setup() {
     return true;
 }
 
-bool SensorModule::tick() {
+TaskEval SensorModule::task() {
     auto allWaiting = true;
     TickSlice slices[numberOfSensors];
     for (size_t i = 0; i < numberOfSensors; ++i) {
@@ -23,7 +23,7 @@ bool SensorModule::tick() {
             slices[i].free();
         }
     }
-    return true;
+    return TaskEval::idle();
 }
 
 bool SensorModule::isBusy() const {

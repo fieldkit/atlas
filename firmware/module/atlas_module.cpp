@@ -1,24 +1,29 @@
-#include <fk-atlas-protocol.h>
-
 #include "atlas_module.h"
 
 namespace fk {
 
-AtlasModule::AtlasModule(ModuleInfo &info, SensorModule &atlasSensors) : Module(bus, info), atlasSensors(&atlasSensors) {
+AtlasModule::AtlasModule(ModuleInfo &info, TwoWireBus &sensorBus) : Module(moduleBus, info),
+    sensorBus(&sensorBus), sensors { &ec, &ph, &dissolvedOxygen, &orp, &temp }, atlasSensors(sensors) {
+}
+
+void AtlasModule::begin() {
+    Module::begin();
+    atlasSensors.setup();
+    push(atlasSensors);
 }
 
 ModuleReadingStatus AtlasModule::beginReading(PendingSensorReading &pending) {
-    atlasSensors->beginReading();
+    atlasSensors.beginReading();
 
     return ModuleReadingStatus{ 1000 };
 }
 
 ModuleReadingStatus AtlasModule::readingStatus(PendingSensorReading &pending) {
-    debugfpln("Atlas", "Number: %d", atlasSensors->numberOfReadingsReady());
-    if (atlasSensors->numberOfReadingsReady() == 8) {
+    debugfpln("Atlas", "Number: %d", atlasSensors.numberOfReadingsReady());
+    if (atlasSensors.numberOfReadingsReady() == 8) {
         // Order: Ec1,2,3,4,Temp,pH,Do,ORP
-        float values[atlasSensors->numberOfReadingsReady()];
-        size_t size = atlasSensors->readAll(values);
+        float values[atlasSensors.numberOfReadingsReady()];
+        size_t size = atlasSensors.readAll(values);
 
         auto readings = pending.readings;
         readings[ 0].value = values[0];
@@ -58,44 +63,19 @@ TaskEval AtlasModule::message(ModuleQueryMessage &query, ModuleReplyMessage &rep
     replyMessage.type = fk_atlas_ReplyType_REPLY_ERROR;
 
     if (queryMessage.type == fk_atlas_QueryType_QUERY_ATLAS_COMMAND) {
-        Sensor *sensor = nullptr;
+        auto sensor = getSensor(queryMessage.atlasCommand.sensor);
 
-        switch (queryMessage.atlasCommand.sensor) {
-        case fk_atlas_SensorType_PH: {
-            sensor = atlasSensors->getSensor(1);
-            break;
-        }
-        case fk_atlas_SensorType_TEMP: {
-            sensor = atlasSensors->getSensor(4);
-            break;
-        }
-        case fk_atlas_SensorType_ORP: {
-            sensor = atlasSensors->getSensor(3);
-            break;
-        }
-        case fk_atlas_SensorType_DO: {
-            sensor = atlasSensors->getSensor(2);
-            break;
-        }
-        case fk_atlas_SensorType_EC: {
-            sensor = atlasSensors->getSensor(0);
-            break;
-        }
-        }
-
-        auto reader = reinterpret_cast<AtlasReader*>(sensor);
-
-        reader->singleCommand((const char *)queryMessage.atlasCommand.command.arg);
+        sensor.singleCommand((const char *)queryMessage.atlasCommand.command.arg);
 
         auto started = millis();
-        while (millis() - started < 1000 && !reader->isIdle()) {
-            reader->tick();
+        while (millis() - started < 1000 && !sensor.isIdle()) {
+            sensor.tick();
         }
 
-        if (!reader->isIdle()) {
+        if (!sensor.isIdle()) {
             replyMessage.type = fk_atlas_ReplyType_REPLY_ATLAS_COMMAND;
             replyMessage.atlasReply.reply.funcs.encode = pb_encode_string;
-            replyMessage.atlasReply.reply.arg = (void *)reader->lastReply();
+            replyMessage.atlasReply.reply.arg = (void *)sensor.lastReply();
         }
     }
 
@@ -116,6 +96,18 @@ TaskEval AtlasModule::message(ModuleQueryMessage &query, ModuleReplyMessage &rep
     reply.m().custom.message.arg = (void *)messageData;
 
     return TaskEval::done();
+}
+
+AtlasReader &AtlasModule::getSensor(fk_atlas_SensorType type) {
+    switch (type) {
+    case fk_atlas_SensorType_PH: return ph;
+    case fk_atlas_SensorType_TEMP: return temp;
+    case fk_atlas_SensorType_ORP: return orp;
+    case fk_atlas_SensorType_DO: return dissolvedOxygen;
+    case fk_atlas_SensorType_EC: return ec;
+    }
+
+    fk_assert(false);
 }
 
 }

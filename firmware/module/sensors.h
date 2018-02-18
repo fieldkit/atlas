@@ -5,6 +5,7 @@
 #undef min
 #undef max
 #include <functional>
+#include <active_object.h>
 
 namespace fk {
 
@@ -33,19 +34,20 @@ public:
     virtual size_t readAll(float *values) = 0;
 };
 
-class SensorModule {
+class SensorModule : public Task {
 private:
     Sensor **sensors { nullptr };
     const size_t numberOfSensors { 0 };
 
 public:
     template<size_t N>
-    SensorModule(Sensor *(&sensors)[N]) : sensors(sensors), numberOfSensors(N) {
+    SensorModule(Sensor *(&sensors)[N]) : Task("Sensors"), sensors(sensors), numberOfSensors(N) {
     }
 
 public:
     bool setup();
-    bool tick();
+    TaskEval task() override;
+
     void beginReading();
     size_t readAll(float *values);
 
