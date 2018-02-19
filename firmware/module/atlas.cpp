@@ -121,6 +121,7 @@ TickSlice AtlasReader::tick() {
 }
 
 AtlasResponseCode AtlasReader::singleCommand(const char *command) {
+    postReplyState = AtlasReaderState::Sleep;
     state = AtlasReaderState::WaitingOnReply;
     return sendCommand(command, 300);
 }

@@ -56,7 +56,8 @@ TaskEval AtlasModule::message(ModuleQueryMessage &query, ModuleReplyMessage &rep
     {
         auto raw = (pb_data_t *)query.m().custom.message.arg;
         auto stream = pb_istream_from_buffer((uint8_t *)raw->buffer, raw->length);
-        if (!pb_decode_delimited(&stream, fk_atlas_WireAtlasQuery_fields, &queryMessage)) {
+        if (!pb_decode(&stream, fk_atlas_WireAtlasQuery_fields, &queryMessage)) {
+            log("Error decoding Atlas query (%d).", raw->length);
             return TaskEval::error();
         }
     }
@@ -66,32 +67,43 @@ TaskEval AtlasModule::message(ModuleQueryMessage &query, ModuleReplyMessage &rep
 
     if (queryMessage.type == fk_atlas_QueryType_QUERY_ATLAS_COMMAND) {
         auto sensor = getSensor(queryMessage.atlasCommand.sensor);
+        auto command = (const char *)queryMessage.atlasCommand.command.arg;
 
-        sensor.singleCommand((const char *)queryMessage.atlasCommand.command.arg);
+        sensor.singleCommand(command);
 
         auto started = millis();
         while (millis() - started < CustomAtlasCommandTimeout && !sensor.isIdle()) {
             sensor.tick();
         }
 
-        if (!sensor.isIdle()) {
+        if (sensor.isIdle()) {
             replyMessage.type = fk_atlas_ReplyType_REPLY_ATLAS_COMMAND;
             replyMessage.atlasReply.reply.funcs.encode = pb_encode_string;
             replyMessage.atlasReply.reply.arg = (void *)sensor.lastReply();
         }
+        else {
+            log("Error getting reply from sensor");
+        }
+    }
+    else {
+        log("Unknown AtlasQuery");
     }
 
     size_t required = 0;
 
     if (!pb_get_encoded_size(&required, fk_atlas_WireAtlasReply_fields, &replyMessage)) {
+        log("Error getting size for reply");
         return TaskEval::error();
     }
 
-    auto messageData = pb_data_allocate(&pool, required + ProtoBufEncodeOverhead);
+    auto messageData = pb_data_allocate(&pool, required);
     auto stream = pb_ostream_from_buffer((uint8_t *)messageData->buffer, messageData->length);
-    if (!pb_encode_delimited(&stream, fk_atlas_WireAtlasReply_fields, &replyMessage)) {
+    if (!pb_encode(&stream, fk_atlas_WireAtlasReply_fields, &replyMessage)) {
+        log("Error encoding Atlas reply");
         return TaskEval::error();
     }
+
+    log("Replying with %d bytes", messageData->length);
 
     reply.m().type = fk_module_ReplyType_REPLY_CUSTOM;
     reply.m().custom.message.funcs.encode = pb_encode_data;
