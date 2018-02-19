@@ -18,7 +18,7 @@ const WireAddress ATLAS_SENSOR_ORP_DEFAULT_ADDRESS = 0x62;
 
 class AtlasModule : public Module {
 private:
-    Pool pool{ "AtlasModule", 128 };
+    StaticPool<128> pool{ "AtlasModule" };
     TwoWireBus *sensorBus;
     TwoWireBus moduleBus{ Wire11and13 };
     AtlasReader ec{*sensorBus, ATLAS_SENSOR_EC_DEFAULT_ADDRESS};
