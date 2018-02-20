@@ -22,10 +22,10 @@ private:
     TwoWireBus *sensorBus;
     TwoWireBus moduleBus{ Wire11and13 };
     AtlasReader ec{*sensorBus, ATLAS_SENSOR_EC_DEFAULT_ADDRESS};
-    AtlasReader temp{*sensorBus, ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS};
     AtlasReader ph{*sensorBus, ATLAS_SENSOR_PH_DEFAULT_ADDRESS};
     AtlasReader dissolvedOxygen{*sensorBus, ATLAS_SENSOR_DO_DEFAULT_ADDRESS};
     AtlasReader orp{*sensorBus, ATLAS_SENSOR_ORP_DEFAULT_ADDRESS};
+    AtlasReader temp{*sensorBus, ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS};
     Sensor *sensors[5];
     SensorModule atlasSensors;
 

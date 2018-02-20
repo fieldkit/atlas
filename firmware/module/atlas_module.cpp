@@ -2,7 +2,7 @@
 
 namespace fk {
 
-constexpr uint32_t CustomAtlasCommandTimeout = 1000;
+constexpr uint32_t CustomAtlasCommandTimeout = 3000;
 
 AtlasModule::AtlasModule(ModuleInfo &info, TwoWireBus &sensorBus) : Module(moduleBus, info),
     sensorBus(&sensorBus), sensors { &ec, &ph, &dissolvedOxygen, &orp, &temp }, atlasSensors(sensors) {
@@ -23,7 +23,7 @@ ModuleReadingStatus AtlasModule::beginReading(PendingSensorReading &pending) {
 ModuleReadingStatus AtlasModule::readingStatus(PendingSensorReading &pending) {
     debugfpln("Atlas", "Number: %d", atlasSensors.numberOfReadingsReady());
     if (atlasSensors.numberOfReadingsReady() == 8) {
-        // Order: Ec1,2,3,4,Temp,pH,Do,ORP
+        // Order: Ec1,2,3,4,pH,Do,ORP,Temp
         float values[atlasSensors.numberOfReadingsReady()];
         size_t size = atlasSensors.readAll(values);
 
