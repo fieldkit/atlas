@@ -28,7 +28,7 @@ void setup() {
         "Atlas",
         {
             {"ec", "µS/cm",},
-            {"td", "°ppm",},
+            {"tds", "°ppm",},
             {"salinity", "",},
             {"sg", "",},
             {"ph", "",},
