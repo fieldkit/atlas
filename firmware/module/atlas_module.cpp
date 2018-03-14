@@ -21,7 +21,7 @@ ModuleReadingStatus AtlasModule::beginReading(PendingSensorReading &pending) {
 }
 
 ModuleReadingStatus AtlasModule::readingStatus(PendingSensorReading &pending) {
-    debugfpln("Atlas", "Number: %d", atlasSensors.numberOfReadingsReady());
+    log("NumberOfReadingsReady: %d", atlasSensors.numberOfReadingsReady());
     if (atlasSensors.numberOfReadingsReady() == 8) {
         // Order: Ec1,2,3,4,pH,Do,ORP,Temp
         float values[atlasSensors.numberOfReadingsReady()];
