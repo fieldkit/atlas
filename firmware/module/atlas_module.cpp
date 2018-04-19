@@ -11,11 +11,12 @@ AtlasModule::AtlasModule(ModuleInfo &info, TwoWireBus &sensorBus) : Module(modul
 void AtlasModule::begin() {
     Module::begin();
     atlasSensors.setup();
-    push(atlasSensors);
+    taskQueue().append(atlasSensors);
 }
 
 ModuleReadingStatus AtlasModule::beginReading(PendingSensorReading &pending) {
     atlasSensors.beginReading();
+    taskQueue().append(atlasSensors);
 
     return ModuleReadingStatus{ 1000 };
 }

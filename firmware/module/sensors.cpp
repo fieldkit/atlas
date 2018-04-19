@@ -23,7 +23,10 @@ TaskEval SensorModule::task() {
             slices[i].free();
         }
     }
-    return TaskEval::idle();
+    if (isBusy()) {
+        return TaskEval::busy();
+    }
+    return TaskEval::done();
 }
 
 bool SensorModule::isBusy() const {
