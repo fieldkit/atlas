@@ -3,14 +3,15 @@
 ../app-protocol
 ../data-protocol
 ../fkfs
+../arduino-logging
 ../lwstreams
 ./protocol/src
-https://github.com/nanopb/nanopb.git
-https://github.com/arduino-libraries/RTCZero.git
-https://github.com/adafruit/RTClib.git
-https://github.com/Conservify/WiFi101.git
-https://github.com/adafruit/Adafruit_ASFcore.git
-https://github.com/Conservify/AtSamd.git
-https://github.com/Conservify/FuelGauge.git
-https://github.com/mikalhart/TinyGPS.git
+https://github.com/nanopb/nanopb.git 2b0db997d7e85b2cc4ae4ee5654e63f6426b18a1
+https://github.com/arduino-libraries/RTCZero.git 618d53117e94c85141b362c121497c0acf07ce29
+https://github.com/adafruit/RTClib.git 82d00a1a15bcf738b001e42bf26a3d1f1a15be32
+https://github.com/Conservify/WiFi101.git a3c4ad31d2c95f4d4c6a5bcf73e2b344ba87e13e
+https://github.com/adafruit/Adafruit_ASFcore.git 99f9be5465caad6e368102b5465b30aa9b07a26e
+https://github.com/Conservify/AtSamd.git 60a93e97c87e31e6095af12e0036b43755867c52
+https://github.com/Conservify/FuelGauge.git c597e032ca7113cfbe899fe60839ae83ecc3ca45
+https://github.com/mikalhart/TinyGPS.git db4ef9c97af767e7345f5ccb277ac3bd1a2eb81f
 https://github.com/PaulStoffregen/SerialFlash.git 754e1d025c08d98a2dc744547885b3c5db2a914b

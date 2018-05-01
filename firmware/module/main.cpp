@@ -20,7 +20,7 @@ void setup() {
         delay(100);
     }
 
-    debugfpln("Module", "Starting (%lu free)", fk_free_memory());
+    loginfof("Module", "Starting (%lu free)", fk_free_memory());
 
     fk::ModuleInfo info = {
         fk_module_ModuleType_SENSOR,

@@ -127,7 +127,7 @@ AtlasResponseCode AtlasReader::singleCommand(const char *command) {
 }
 
 AtlasResponseCode AtlasReader::sendCommand(const char *str, uint32_t readDelay) {
-    debugfpln(Log, "Atlas(0x%x) <- ('%s', %lu))", address, str, readDelay);
+    loginfof(Log, "Atlas(0x%x) <- ('%s', %lu))", address, str, readDelay);
 
     bus->send(address, str);
 
@@ -166,7 +166,7 @@ AtlasResponseCode AtlasReader::readReply(char *buffer, size_t length) {
 
     if (buffer != nullptr) {
         buffer[i] = 0;
-        debugfpln(Log, "Atlas(0x%x) -> ('%s')", address, buffer);
+        loginfof(Log, "Atlas(0x%x) -> ('%s')", address, buffer);
 
         if (type == AtlasSensorType::Unknown) {
             type = getSensorType(buffer);
@@ -191,7 +191,7 @@ AtlasResponseCode AtlasReader::readReply(char *buffer, size_t length) {
                     }
                 }
                 else {
-                    debugfpln(Log, "Error: Too many values");
+                    loginfof(Log, "Error: Too many values");
                     break;
                 }
             }
