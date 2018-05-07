@@ -31,7 +31,6 @@ LIBS:valves
 LIBS:conservify
 LIBS:RocketScreamKicadLibrary
 LIBS:fk-atlas-cache
-LIBS:mounting-cache
 EELAYER 25 0
 EELAYER END
 $Descr A3 16535 11693
@@ -1734,10 +1733,10 @@ Wire Wire Line
 	13100 6100 13100 6450
 Wire Wire Line
 	13400 5850 14000 5850
-Text Label 13600 5850 0    60   ~ 0
-ATLAS_EN
+Text Label 13500 5850 0    60   ~ 0
+PERIPH_EN
 Text Label 2400 4000 0    60   ~ 0
-ATLAS_EN
+PERIPH_EN
 Wire Wire Line
 	13100 1100 14150 1100
 Wire Wire Line
@@ -1852,24 +1851,13 @@ F 3 "" H 3600 8000 50  0000 C CNN
 	1    3600 8000
 	1    0    0    -1  
 $EndComp
-$Comp
-L GND #PWR14
-U 1 1 5A1D1A01
-P 4250 8150
-F 0 "#PWR14" H 4250 7900 50  0001 C CNN
-F 1 "GND" H 4250 8000 50  0001 C CNN
-F 2 "" H 4250 8150 60  0000 C CNN
-F 3 "" H 4250 8150 60  0000 C CNN
-	1    4250 8150
-	0    -1   -1   0   
-$EndComp
 Wire Wire Line
 	3600 8000 3600 8250
 Wire Wire Line
 	3450 8150 3750 8150
 Connection ~ 3600 8150
 Wire Wire Line
-	4250 8150 4050 8150
+	4050 8150 4650 8150
 Wire Wire Line
 	3900 8350 3450 8350
 Wire Wire Line
@@ -1887,25 +1875,12 @@ F 3 "" H 1850 8000 50  0000 C CNN
 	1    1850 8000
 	1    0    0    -1  
 $EndComp
-$Comp
-L GND #PWR5
-U 1 1 5A1D26FC
-P 1850 8650
-F 0 "#PWR5" H 1850 8400 50  0001 C CNN
-F 1 "GND" H 1850 8500 50  0001 C CNN
-F 2 "" H 1850 8650 60  0000 C CNN
-F 3 "" H 1850 8650 60  0000 C CNN
-	1    1850 8650
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	1900 8250 2350 8250
 Wire Wire Line
 	1850 8000 1850 8350
 Wire Wire Line
 	2350 8450 1850 8450
-Wire Wire Line
-	1850 8450 1850 8650
 Wire Wire Line
 	1850 8350 2350 8350
 Wire Wire Line
@@ -2015,7 +1990,7 @@ F 3 "" H 12550 5500 50  0000 C CNN
 	1    0    0    -1  
 $EndComp
 Text Label 13250 4900 0    60   ~ 0
-ATLAS_GND
+PERIPH_GND
 Wire Wire Line
 	2550 3700 2850 3700
 Wire Wire Line
@@ -2151,4 +2126,8 @@ Wire Notes Line
 	2650 11150 2650 9750
 Wire Notes Line
 	2650 9750 550  9750
+Text Label 1850 8450 0    60   ~ 0
+PERIPH_GND
+Text Label 4100 8150 0    60   ~ 0
+PERIPH_GND
 $EndSCHEMATC

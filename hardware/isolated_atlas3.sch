@@ -31,7 +31,6 @@ LIBS:valves
 LIBS:conservify
 LIBS:RocketScreamKicadLibrary
 LIBS:fk-atlas-cache
-LIBS:mounting-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
