@@ -2,8 +2,8 @@
 
   (general
     (links 358)
-    (no_connects 114)
-    (area 115.672799 57.328999 204.214801 137.743001)
+    (no_connects 0)
+    (area 112.513076 55.0796 223.731401 140.0924)
     (thickness 1.6)
     (drawings 31)
     (tracks 1272)
@@ -37,7 +37,7 @@
   )
 
   (setup
-    (last_trace_width 0.381)
+    (last_trace_width 0.254)
     (user_trace_width 0.203)
     (user_trace_width 0.381)
     (user_trace_width 0.587)
@@ -1464,7 +1464,7 @@
   )
 
   (module conservify:conservify_text_negative_4000 (layer F.Cu) (tedit 0) (tstamp 59515CA4)
-    (at 136.975061 120.097347 315)
+    (at 135.501861 122.383347 315)
     (fp_text reference G*** (at 0 0 315) (layer F.SilkS) hide
       (effects (font (thickness 0.3)))
     )
@@ -1880,7 +1880,7 @@
   )
 
   (module conservify:fk_negative_2500 (layer F.Cu) (tedit 0) (tstamp 59515CA6)
-    (at 135.654261 122.688147 315)
+    (at 134.181061 124.974147 315)
     (fp_text reference G*** (at 0 0 315) (layer F.SilkS) hide
       (effects (font (thickness 0.3)))
     )
@@ -5691,10 +5691,10 @@
   (gr_text D13 (at 145.288 104.9528) (layer F.SilkS) (tstamp 5A57E3B5)
     (effects (font (size 1 1) (thickness 0.2)))
   )
-  (gr_text A5 (at 117.094 61.1886) (layer F.SilkS) (tstamp 5A57DE68)
+  (gr_text A5 (at 117.094 61.2648) (layer F.SilkS) (tstamp 5A57DE68)
     (effects (font (size 1 1) (thickness 0.2)))
   )
-  (gr_text A4 (at 117.1194 66.2432) (layer F.SilkS) (tstamp 5A57DE62)
+  (gr_text A4 (at 117.1194 66.294) (layer F.SilkS) (tstamp 5A57DE62)
     (effects (font (size 1 1) (thickness 0.2)))
   )
   (gr_text A3 (at 117.1194 71.4502) (layer F.SilkS)
