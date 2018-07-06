@@ -94,7 +94,10 @@ public:
         Wire.setClock(400000);
 
         pinMode(ATLAS_ENABLE_PIN, OUTPUT);
+        digitalWrite(ATLAS_ENABLE_PIN, LOW);
+        delay(1000);
         digitalWrite(ATLAS_ENABLE_PIN, HIGH);
+        delay(1000);
     }
 
     void test(uint8_t address, const char *name) {
