@@ -1,5 +1,6 @@
 #include "atlas.h"
 #include "debug.h"
+#include "tuning.h"
 
 namespace fk {
 
@@ -56,7 +57,12 @@ TickSlice AtlasReader::tick() {
         break;
     }
     case AtlasReaderState::LedsOn: {
-        sendCommand("L,1");
+        if (fk_uptime() > LedsDisableAfter) {
+            sendCommand("L,0");
+        }
+        else {
+            sendCommand("L,1");
+        }
         state = AtlasReaderState::WaitingOnEmptyReply;
         postReplyState = AtlasReaderState::Status;
         break;
