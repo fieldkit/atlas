@@ -3,6 +3,7 @@
 
 #include <fk-module.h>
 #include <fk-atlas-protocol.h>
+#include "atlas-hardware.h"
 #include "atlas.h"
 
 namespace fk {
@@ -27,6 +28,7 @@ private:
     AtlasReader orp{*sensorBus, ATLAS_SENSOR_ORP_DEFAULT_ADDRESS};
     AtlasReader temp{*sensorBus, ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS};
     Sensor *sensors[5];
+    EnableSensors enableSensors;
     SensorModule atlasSensors;
 
 public:
@@ -34,6 +36,7 @@ public:
 
 public:
     void begin() override;
+    void tick() override;
     ModuleReadingStatus beginReading(PendingSensorReading &pending) override;
     ModuleReadingStatus readingStatus(PendingSensorReading &pending) override;
     TaskEval message(ModuleQueryMessage &query, ModuleReplyMessage &reply) override;

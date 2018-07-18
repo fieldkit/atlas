@@ -16,6 +16,9 @@ extern "C" {
 void setup() {
     Serial.begin(115200);
 
+    pinMode(fk::FK_ATLAS_PIN_PERIPH_ENABLE, OUTPUT);
+    digitalWrite(fk::FK_ATLAS_PIN_PERIPH_ENABLE, LOW);
+
     while (!Serial && millis() < 2000) {
         delay(100);
     }

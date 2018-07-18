@@ -34,6 +34,19 @@ public:
     virtual size_t readAll(float *values) = 0;
 };
 
+class EnableSensors : public Task {
+private:
+    uint32_t expireAt_{ 0 };
+
+public:
+    EnableSensors();
+
+public:
+    void enqueued() override;
+    TaskEval task() override;
+
+};
+
 class SensorModule : public Task {
 private:
     Sensor **sensors { nullptr };

@@ -1,8 +1,35 @@
-#include "sensors.h"
+#include "atlas-hardware.h"
+#include "atlas.h"
 
 namespace fk {
 
+EnableSensors::EnableSensors() : Task("EnableSensors") {
+}
+
+void EnableSensors::enqueued() {
+    if (!digitalRead(FK_ATLAS_PIN_PERIPH_ENABLE)) {
+        log("Enabling Sensors");
+
+        digitalWrite(FK_ATLAS_PIN_PERIPH_ENABLE, HIGH);
+
+        expireAt_ = fk_uptime() + 2000;
+    }
+    else {
+        expireAt_ = fk_uptime();
+    }
+}
+
+TaskEval EnableSensors::task() {
+    if (fk_uptime() > expireAt_) {
+        log("Done");
+        return TaskEval::done();
+    }
+    return TaskEval::idle();
+}
+
 bool SensorModule::setup() {
+    pinMode(FK_ATLAS_PIN_PERIPH_ENABLE, OUTPUT);
+
     for (size_t i = 0; i < numberOfSensors; ++i) {
         sensors[i]->setup();
     }

@@ -10,12 +10,28 @@ AtlasModule::AtlasModule(ModuleInfo &info, TwoWireBus &sensorBus) : Module(modul
 
 void AtlasModule::begin() {
     Module::begin();
+
     atlasSensors.setup();
+
+    taskQueue().append(enableSensors);
     taskQueue().append(atlasSensors);
+}
+
+void AtlasModule::tick() {
+    Module::tick();
+
+    if (elapsedSinceActivity() > 5000) {
+        if (digitalRead(FK_ATLAS_PIN_PERIPH_ENABLE)) {
+            log("Disabling peripherals.");
+            digitalWrite(FK_ATLAS_PIN_PERIPH_ENABLE, LOW);
+        }
+    }
 }
 
 ModuleReadingStatus AtlasModule::beginReading(PendingSensorReading &pending) {
     atlasSensors.beginReading();
+
+    taskQueue().append(enableSensors);
     taskQueue().append(atlasSensors);
 
     return ModuleReadingStatus{ 1000 };
