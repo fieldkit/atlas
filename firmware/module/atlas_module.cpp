@@ -21,6 +21,11 @@ void AtlasModule::begin() {
 
     atlasSensors.setup();
 
+    #ifdef FK_ENABLE_MS5803
+    ms5803Pressure.reset();
+    ms5803Pressure.begin();
+    #endif
+
     taskQueue().append(enableSensors);
     taskQueue().append(atlasSensors);
 }
@@ -46,18 +51,41 @@ ModuleReadingStatus AtlasModule::beginReading(PendingSensorReading &pending) {
 }
 
 ModuleReadingStatus AtlasModule::readingStatus(PendingSensorReading &pending) {
+    static_assert(NumberOfReadings >= NumberOfAtlasReadings, "NumberOfReadings should be >= NumberOfAtlasReadings");
+
     log("NumberOfReadingsReady: %d", atlasSensors.numberOfReadingsReady());
-    if (atlasSensors.numberOfReadingsReady() == NumberOfReadings) {
+
+    if (atlasSensors.numberOfReadingsReady() == NumberOfAtlasReadings) {
         // Order: Ec1,2,3,4,pH,Do,ORP,Temp
         float values[atlasSensors.numberOfReadingsReady()];
-        size_t size = atlasSensors.readAll(values);
+        auto size = atlasSensors.readAll(values);
+        auto now = clock.getTime();
 
         auto readings = pending.readings;
-        for (auto i = 0; i < NumberOfReadings; ++i) {
+        for (auto i = 0; i < size; ++i) {
             readings[i].value = values[i];
             readings[i].status = SensorReadingStatus::Done;
-            readings[i].time = clock.getTime();
+            readings[i].time = now;
         }
+
+        #ifdef FK_ENABLE_MS5803
+        auto pressureTemperature = ms5803Pressure.getTemperature(CELSIUS, ADC_512);
+        auto pressureAbsolute = ms5803Pressure.getPressure(ADC_4096);
+        auto index = size;
+
+        readings[index].value = pressureTemperature;
+        readings[index].status = SensorReadingStatus::Done;
+        readings[index].time = now;
+
+        index++;
+
+        readings[index].value = pressureAbsolute;
+        readings[index].status = SensorReadingStatus::Done;
+        readings[index].time = now;
+
+        log("Ms5803: %f %f (%d)", pressureAbsolute, pressureTemperature, index);
+        #endif
+
         pending.elapsed -= millis();
     }
 

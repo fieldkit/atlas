@@ -6,6 +6,10 @@
 #include "atlas-hardware.h"
 #include "atlas.h"
 
+#ifdef FK_ENABLE_MS5803
+#include <SparkFun_MS5803_I2C.h>
+#endif
+
 namespace fk {
 
 using WireAddress = uint8_t;
@@ -17,13 +21,23 @@ constexpr WireAddress ATLAS_SENSOR_PH_DEFAULT_ADDRESS = 0x63;
 constexpr WireAddress ATLAS_SENSOR_DO_DEFAULT_ADDRESS = 0x61;
 constexpr WireAddress ATLAS_SENSOR_ORP_DEFAULT_ADDRESS = 0x62;
 
-#ifdef FK_ENABLE_ATLAS_ORP
-constexpr size_t NumberOfSensors = 5;
-constexpr size_t NumberOfReadings = 8;
-#else
-constexpr size_t NumberOfSensors = 4;
-constexpr size_t NumberOfReadings = 7;
-#endif
+constexpr size_t NumberOfSensors = 4
+    #ifdef FK_ENABLE_ATLAS_ORP
+    + 1
+    #endif
+    ;
+
+constexpr size_t NumberOfAtlasReadings = 7
+    #ifdef FK_ENABLE_ATLAS_ORP
+    + 1
+    #endif
+    ;
+
+constexpr size_t NumberOfReadings = NumberOfAtlasReadings
+    #ifdef FK_ENABLE_MS5803
+    + 2
+    #endif
+    ;
 
 class AtlasModule : public Module {
 private:
@@ -40,6 +54,9 @@ private:
     Sensor *sensors[NumberOfSensors];
     EnableSensors enableSensors;
     SensorModule atlasSensors;
+    #ifdef FK_ENABLE_MS5803
+    MS5803 ms5803Pressure{ ADDRESS_HIGH };
+    #endif
 
 public:
     AtlasModule(ModuleInfo &info, TwoWireBus &sensorBus);

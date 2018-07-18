@@ -25,6 +25,16 @@ void setup() {
 
     loginfof("Module", "Starting (%lu free)", fk_free_memory());
 
+    #ifdef FK_ENABLE_MS5803
+    loginfof("Module", "FK_ENABLE_MS5803");
+    #endif
+    #ifdef FK_ENABLE_ATLAS_ORP
+    loginfof("Module", "FK_ENABLE_ATLAS_ORP");
+    #endif
+    #ifdef FK_DISABLE_ATLAS_ORP
+    loginfof("Module", "FK_DISABLE_ATLAS_ORP");
+    #endif
+
     fk::ModuleInfo info = {
         fk_module_ModuleType_SENSOR,
         8,
@@ -41,6 +51,10 @@ void setup() {
             {"orp", "mV",},
             #endif
             {"temp", "C",},
+            #ifdef FK_ENABLE_MS5803
+            {"temp_bottom", "C",},
+            {"pressure", "mbar",},
+            #endif
         },
         {
             {}, {}, {}, {}, {}, {}, {}, {},
