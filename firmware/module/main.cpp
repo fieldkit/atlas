@@ -28,7 +28,7 @@ void setup() {
     fk::ModuleInfo info = {
         fk_module_ModuleType_SENSOR,
         8,
-        8,
+        fk::NumberOfReadings,
         "Atlas",
         {
             {"ec", "µS/cm",},
@@ -37,7 +37,9 @@ void setup() {
             {"sg", "",},
             {"ph", "",},
             {"do", "mg/L",},
+            #ifdef FK_ENABLE_ATLAS_ORP
             {"orp", "mV",},
+            #endif
             {"temp", "C",},
         },
         {

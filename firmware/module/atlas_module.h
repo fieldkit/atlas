@@ -11,11 +11,19 @@ namespace fk {
 using WireAddress = uint8_t;
 using PinNumber = uint8_t;
 
-const WireAddress ATLAS_SENSOR_EC_DEFAULT_ADDRESS = 0x64;
-const WireAddress ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS = 0x66;
-const WireAddress ATLAS_SENSOR_PH_DEFAULT_ADDRESS = 0x63;
-const WireAddress ATLAS_SENSOR_DO_DEFAULT_ADDRESS = 0x61;
-const WireAddress ATLAS_SENSOR_ORP_DEFAULT_ADDRESS = 0x62;
+constexpr WireAddress ATLAS_SENSOR_EC_DEFAULT_ADDRESS = 0x64;
+constexpr WireAddress ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS = 0x66;
+constexpr WireAddress ATLAS_SENSOR_PH_DEFAULT_ADDRESS = 0x63;
+constexpr WireAddress ATLAS_SENSOR_DO_DEFAULT_ADDRESS = 0x61;
+constexpr WireAddress ATLAS_SENSOR_ORP_DEFAULT_ADDRESS = 0x62;
+
+#ifdef FK_ENABLE_ATLAS_ORP
+constexpr size_t NumberOfSensors = 5;
+constexpr size_t NumberOfReadings = 8;
+#else
+constexpr size_t NumberOfSensors = 4;
+constexpr size_t NumberOfReadings = 7;
+#endif
 
 class AtlasModule : public Module {
 private:
@@ -25,9 +33,11 @@ private:
     AtlasReader ec{*sensorBus, ATLAS_SENSOR_EC_DEFAULT_ADDRESS};
     AtlasReader ph{*sensorBus, ATLAS_SENSOR_PH_DEFAULT_ADDRESS};
     AtlasReader dissolvedOxygen{*sensorBus, ATLAS_SENSOR_DO_DEFAULT_ADDRESS};
+    #ifdef FK_ENABLE_ATLAS_ORP
     AtlasReader orp{*sensorBus, ATLAS_SENSOR_ORP_DEFAULT_ADDRESS};
+    #endif
     AtlasReader temp{*sensorBus, ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS};
-    Sensor *sensors[5];
+    Sensor *sensors[NumberOfSensors];
     EnableSensors enableSensors;
     SensorModule atlasSensors;
 

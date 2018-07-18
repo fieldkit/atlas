@@ -73,6 +73,14 @@ public:
         return value == 0x1;
     }
 
+    bool status() {
+        char buffer[20];
+        uint8_t value = readResponse("STATUS", buffer, sizeof(buffer));
+        Serial.print("test: STATUS: ");
+        Serial.println(buffer);
+        return value == 0x1;
+    }
+
     bool info() {
         char buffer[20];
         uint8_t value = readResponse("I", buffer, sizeof(buffer));
@@ -122,6 +130,10 @@ public:
 
         if (!sensor.info()) {
             Serial.println("test: INFO FAILED");
+        }
+
+        if (!sensor.status()) {
+            Serial.println("test: STATUS FAILED");
         }
 
         if (!sensor.ledsOn()) {
@@ -213,7 +225,9 @@ void setup() {
         check.temp();
         check.ph();
         check.dissolvedOxygen();
-        // check.orp();
+        #ifdef FK_ENABLE_ATLAS_ORP
+        check.orp();
+        #endif
 
         if (takeReadings) {
             AtlasScientificBoard sensor(ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS);

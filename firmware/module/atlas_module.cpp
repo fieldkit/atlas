@@ -5,7 +5,15 @@ namespace fk {
 constexpr uint32_t CustomAtlasCommandTimeout = 3000;
 
 AtlasModule::AtlasModule(ModuleInfo &info, TwoWireBus &sensorBus) : Module(moduleBus, info),
-    sensorBus(&sensorBus), sensors { &ec, &ph, &dissolvedOxygen, &orp, &temp }, atlasSensors(sensors) {
+    sensorBus(&sensorBus), sensors {
+        &ec,
+        &ph,
+        &dissolvedOxygen,
+        #ifdef FK_ENABLE_ATLAS_ORP
+        &orp,
+        #endif
+        &temp
+    }, atlasSensors(sensors) {
 }
 
 void AtlasModule::begin() {
@@ -39,25 +47,18 @@ ModuleReadingStatus AtlasModule::beginReading(PendingSensorReading &pending) {
 
 ModuleReadingStatus AtlasModule::readingStatus(PendingSensorReading &pending) {
     log("NumberOfReadingsReady: %d", atlasSensors.numberOfReadingsReady());
-    if (atlasSensors.numberOfReadingsReady() == 8) {
+    if (atlasSensors.numberOfReadingsReady() == NumberOfReadings) {
         // Order: Ec1,2,3,4,pH,Do,ORP,Temp
         float values[atlasSensors.numberOfReadingsReady()];
         size_t size = atlasSensors.readAll(values);
 
         auto readings = pending.readings;
-        readings[ 0].value = values[0];
-        readings[ 1].value = values[1];
-        readings[ 2].value = values[2];
-        readings[ 3].value = values[3];
-        readings[ 4].value = values[4];
-        readings[ 5].value = values[5];
-        readings[ 6].value = values[6];
-        readings[ 7].value = values[7];
-        pending.elapsed -= millis();
-        for (auto i = 0; i < 8; ++i) {
+        for (auto i = 0; i < NumberOfReadings; ++i) {
+            readings[i].value = values[i];
             readings[i].status = SensorReadingStatus::Done;
             readings[i].time = clock.getTime();
         }
+        pending.elapsed -= millis();
     }
 
     return ModuleReadingStatus{};
@@ -133,7 +134,9 @@ AtlasReader &AtlasModule::getSensor(fk_atlas_SensorType type) {
     switch (type) {
     case fk_atlas_SensorType_PH: return ph;
     case fk_atlas_SensorType_TEMP: return temp;
+    #ifdef FK_ENABLE_ATLAS_ORP
     case fk_atlas_SensorType_ORP: return orp;
+    #endif
     case fk_atlas_SensorType_DO: return dissolvedOxygen;
     case fk_atlas_SensorType_EC: return ec;
     }
