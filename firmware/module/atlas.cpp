@@ -54,6 +54,9 @@ TickSlice AtlasReader::tick() {
         sendCommand("I");
         state = AtlasReaderState::WaitingOnReply;
         postReplyState = AtlasReaderState::LedsOn;
+        for (size_t i = 0; i < ATLAS_MAXIMUM_NUMBER_OF_VALUES; ++i) {
+            values[i] = 0.0f;
+        }
         break;
     }
     case AtlasReaderState::LedsOn: {
