@@ -2,7 +2,7 @@
 #include <Wire.h>
 #include <SerialFlash.h>
 
-const uint8_t ATLAS_ENABLE_PIN = 12;
+const uint8_t PIN_PERIPH_ENABLE = 12;
 const uint8_t PIN_FLASH_CS = 5;
 
 const uint8_t ATLAS_SENSOR_EC_DEFAULT_ADDRESS = 0x64;
@@ -73,6 +73,14 @@ public:
         return value == 0x1;
     }
 
+    bool info() {
+        char buffer[20];
+        uint8_t value = readResponse("I", buffer, sizeof(buffer));
+        Serial.print("test: INFO: ");
+        Serial.println(buffer);
+        return value == 0x1;
+    }
+
     bool ledsOn() {
         uint8_t value = readResponse("L,1", nullptr, 0);
         return value == 0x1;
@@ -93,10 +101,10 @@ public:
         //  TODO: Investigate. I would see hangs if I used a slower speed.
         Wire.setClock(400000);
 
-        pinMode(ATLAS_ENABLE_PIN, OUTPUT);
-        digitalWrite(ATLAS_ENABLE_PIN, LOW);
+        pinMode(PIN_PERIPH_ENABLE, OUTPUT);
+        digitalWrite(PIN_PERIPH_ENABLE, LOW);
         delay(1000);
-        digitalWrite(ATLAS_ENABLE_PIN, HIGH);
+        digitalWrite(PIN_PERIPH_ENABLE, HIGH);
         delay(1000);
     }
 
@@ -110,6 +118,10 @@ public:
         }
         else {
             Serial.println(" PASSED");
+        }
+
+        if (!sensor.info()) {
+            Serial.println("test: INFO FAILED");
         }
 
         if (!sensor.ledsOn()) {
@@ -196,12 +208,12 @@ void setup() {
 
         Serial.println("test: Begin");
 
-        check.flashMemory();
+        // check.flashMemory();
         check.ec();
         check.temp();
         check.ph();
         check.dissolvedOxygen();
-        check.orp();
+        // check.orp();
 
         if (takeReadings) {
             AtlasScientificBoard sensor(ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS);
@@ -215,6 +227,9 @@ void setup() {
         digitalWrite(A4, HIGH);
         digitalWrite(A5, HIGH);
 
+        digitalWrite(PIN_PERIPH_ENABLE, LOW);
+        delay(10000);
+        digitalWrite(PIN_PERIPH_ENABLE, HIGH);
         delay(1000);
     }
 
