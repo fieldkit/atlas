@@ -21,7 +21,7 @@ class AtlasModule : public Module {
 private:
     StaticPool<128> pool{ "AtlasModule" };
     TwoWireBus *sensorBus;
-    TwoWireBus moduleBus{ Wire11and13 };
+    TwoWireBus moduleBus{ Wire4and3 };
     AtlasReader ec{*sensorBus, ATLAS_SENSOR_EC_DEFAULT_ADDRESS};
     AtlasReader ph{*sensorBus, ATLAS_SENSOR_PH_DEFAULT_ADDRESS};
     AtlasReader dissolvedOxygen{*sensorBus, ATLAS_SENSOR_DO_DEFAULT_ADDRESS};
