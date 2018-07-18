@@ -33,6 +33,7 @@ bool SensorModule::setup() {
     for (size_t i = 0; i < numberOfSensors; ++i) {
         sensors[i]->setup();
     }
+
     return true;
 }
 
@@ -69,9 +70,9 @@ bool SensorModule::isIdle() const {
     return true;
 }
 
-void SensorModule::beginReading() {
+void SensorModule::beginReading(bool sleep) {
     for (size_t i = 0; i < numberOfSensors; ++i) {
-        sensors[i]->beginReading();
+        sensors[i]->beginReading(sleep);
     }
 }
 
@@ -94,6 +95,7 @@ size_t SensorModule::readAll(float *values) {
         values += number;
         total += number;
     }
+
     return total;
 }
 

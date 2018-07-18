@@ -27,7 +27,8 @@ void AtlasReader::sleep() {
     }
 }
 
-bool AtlasReader::beginReading() {
+bool AtlasReader::beginReading(bool sleep) {
+    sleepAfter = sleep;
     state = AtlasReaderState::TakeReading;
     return true;
 }
@@ -100,7 +101,12 @@ TickSlice AtlasReader::tick() {
         break;
     }
     case AtlasReaderState::ParseReading: {
-        state = AtlasReaderState::Sleep;
+        if (sleepAfter) {
+            state = AtlasReaderState::Sleep;
+        }
+        else {
+            state = AtlasReaderState::Idle;
+        }
         break;
     }
     case AtlasReaderState::WaitingOnEmptyReply: {
@@ -203,6 +209,14 @@ AtlasResponseCode AtlasReader::readReply(char *buffer, size_t length) {
                     loginfof(Log, "Error: Too many values");
                     break;
                 }
+            }
+
+            if (numberOfValues == 0) {
+                loginfof(Log, "No values, retry?");
+                tries++;
+            }
+            else {
+                tries = 0;
             }
         }
     }

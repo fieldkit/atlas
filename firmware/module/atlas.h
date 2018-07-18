@@ -59,12 +59,14 @@ private:
     float values[ATLAS_MAXIMUM_NUMBER_OF_VALUES];
     size_t numberOfValues { 0 };
     char buffer[ATLAS_MAXIMUM_COMMAND_LENGTH];
+    uint8_t tries{ 0 };
+    bool sleepAfter{ true };
 
 public:
     AtlasReader(TwoWireBus &bus, uint8_t theAddress);
     bool setup() override;
     TickSlice tick() override;
-    bool beginReading() override;
+    bool beginReading(bool sleep) override;
     size_t readAll(float *values) override;
     size_t numberOfReadingsReady() const override;
     bool isIdle() const override;

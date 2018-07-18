@@ -37,7 +37,7 @@ void AtlasModule::tick() {
 }
 
 ModuleReadingStatus AtlasModule::beginReading(PendingSensorReading &pending) {
-    atlasSensors.beginReading();
+    atlasSensors.beginReading(pending.number <= 1);
 
     taskQueue().append(enableSensors);
     taskQueue().append(atlasSensors);
