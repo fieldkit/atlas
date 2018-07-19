@@ -7,10 +7,10 @@ EnableSensors::EnableSensors() : Task("EnableSensors") {
 }
 
 void EnableSensors::enqueued() {
-    if (!digitalRead(FK_ATLAS_PIN_PERIPH_ENABLE)) {
+    if (!enabled()) {
         log("Enabling Sensors");
 
-        digitalWrite(FK_ATLAS_PIN_PERIPH_ENABLE, HIGH);
+        enabled(true);
 
         expireAt_ = fk_uptime() + 2000;
     }
@@ -25,6 +25,14 @@ TaskEval EnableSensors::task() {
         return TaskEval::done();
     }
     return TaskEval::idle();
+}
+
+bool EnableSensors::enabled() const {
+    return digitalRead(FK_ATLAS_PIN_PERIPH_ENABLE);
+}
+
+void EnableSensors::enabled(bool enabled) {
+    digitalWrite(FK_ATLAS_PIN_PERIPH_ENABLE, enabled ? HIGH : LOW);
 }
 
 bool SensorModule::setup() {

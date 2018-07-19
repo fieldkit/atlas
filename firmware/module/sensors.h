@@ -45,6 +45,10 @@ public:
     void enqueued() override;
     TaskEval task() override;
 
+public:
+    bool enabled() const;
+    void enabled(bool enabled);
+
 };
 
 class SensorModule : public Task {

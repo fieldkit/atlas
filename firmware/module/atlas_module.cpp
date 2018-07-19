@@ -34,9 +34,9 @@ void AtlasModule::tick() {
     Module::tick();
 
     if (elapsedSinceActivity() > 5000) {
-        if (digitalRead(FK_ATLAS_PIN_PERIPH_ENABLE)) {
+        if (enableSensors.enabled()) {
             log("Disabling peripherals.");
-            digitalWrite(FK_ATLAS_PIN_PERIPH_ENABLE, LOW);
+            enableSensors.enabled(false);
         }
     }
 }
@@ -47,7 +47,11 @@ ModuleReadingStatus AtlasModule::beginReading(PendingSensorReading &pending) {
     taskQueue().append(enableSensors);
     taskQueue().append(atlasSensors);
 
-    return ModuleReadingStatus{ 1000 };
+    if (enableSensors.enabled()) {
+        return ModuleReadingStatus{ 1000 };
+    }
+
+    return ModuleReadingStatus{ 3000 };
 }
 
 ModuleReadingStatus AtlasModule::readingStatus(PendingSensorReading &pending) {
