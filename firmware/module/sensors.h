@@ -9,6 +9,21 @@
 
 namespace fk {
 
+struct Compensation {
+    float temperature;
+    bool valid;
+
+    Compensation() {
+    }
+
+    Compensation(float temperature) : temperature(temperature), valid(true) {
+    }
+
+    operator bool() {
+        return valid && temperature >= -1000.0f;
+    }
+};
+
 struct TickSlice {
     bool waitingOnSiblings { false };
     std::function<void()> onFree;
@@ -28,6 +43,7 @@ class Sensor {
 public:
     virtual bool setup() = 0;
     virtual TickSlice tick() = 0;
+    virtual void compensate(Compensation compensation) = 0;
     virtual bool beginReading(bool sleep) = 0;
     virtual size_t numberOfReadingsReady() const = 0;
     virtual bool isIdle() const = 0;
@@ -65,6 +81,7 @@ public:
     bool setup();
     TaskEval task() override;
 
+    void compensate(Compensation compensation);
     void beginReading(bool sleep);
     size_t readAll(float *values);
 
@@ -75,6 +92,7 @@ public:
     Sensor *getSensor(size_t index) {
         return sensors[index];
     }
+
 };
 
 }

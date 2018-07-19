@@ -54,6 +54,7 @@ private:
     Sensor *sensors[NumberOfSensors];
     EnableSensors enableSensors;
     SensorModule atlasSensors;
+    Compensation compensation;
     #ifdef FK_ENABLE_MS5803
     MS5803 ms5803Pressure{ ADDRESS_HIGH };
     #endif

@@ -33,6 +33,7 @@ enum class AtlasReaderState {
     Sleeping,
     Idle,
     ParseReading,
+    ApplyCompensation,
     TakeReading,
     WaitingOnReply,
     WaitingOnEmptyReply,
@@ -61,11 +62,15 @@ private:
     char buffer[ATLAS_MAXIMUM_COMMAND_LENGTH];
     uint8_t tries{ 0 };
     bool sleepAfter{ true };
+    Compensation compensation;
 
 public:
     AtlasReader(TwoWireBus &bus, uint8_t theAddress);
     bool setup() override;
     TickSlice tick() override;
+    void compensate(Compensation c) override {
+        compensation = c;
+    }
     bool beginReading(bool sleep) override;
     size_t readAll(float *values) override;
     size_t numberOfReadingsReady() const override;

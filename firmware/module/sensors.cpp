@@ -78,6 +78,12 @@ bool SensorModule::isIdle() const {
     return true;
 }
 
+void SensorModule::compensate(Compensation compensation) {
+    for (size_t i = 0; i < numberOfSensors; ++i) {
+        sensors[i]->compensate(compensation);
+    }
+}
+
 void SensorModule::beginReading(bool sleep) {
     for (size_t i = 0; i < numberOfSensors; ++i) {
         sensors[i]->beginReading(sleep);

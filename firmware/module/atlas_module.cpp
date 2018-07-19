@@ -42,6 +42,8 @@ void AtlasModule::tick() {
 }
 
 ModuleReadingStatus AtlasModule::beginReading(PendingSensorReading &pending) {
+    atlasSensors.compensate(compensation);
+
     atlasSensors.beginReading(pending.number <= 1);
 
     taskQueue().append(enableSensors);
@@ -71,6 +73,9 @@ ModuleReadingStatus AtlasModule::readingStatus(PendingSensorReading &pending) {
             readings[i].status = SensorReadingStatus::Done;
             readings[i].time = now;
         }
+
+        // Temperature is always the final reading.
+        compensation = Compensation{ values[size - 1] };
 
         #ifdef FK_ENABLE_MS5803
         auto pressureTemperature = ms5803Pressure.getTemperature(CELSIUS, ADC_512);

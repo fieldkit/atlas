@@ -29,7 +29,7 @@ void AtlasReader::sleep() {
 
 bool AtlasReader::beginReading(bool sleep) {
     sleepAfter = sleep;
-    state = AtlasReaderState::TakeReading;
+    state = AtlasReaderState::ApplyCompensation;
     return true;
 }
 
@@ -92,6 +92,31 @@ TickSlice AtlasReader::tick() {
     case AtlasReaderState::Sleep: {
         sendCommand("SLEEP");
         state = AtlasReaderState::Sleeping;
+        break;
+    }
+    case AtlasReaderState::ApplyCompensation: {
+        if (compensation) {
+            // NOTE: I wish we could use RT,n, need newer firmware though.
+            switch (type) {
+            case AtlasSensorType::Ph:
+            case AtlasSensorType::Do:
+            case AtlasSensorType::Ec: {
+                char command[20];
+                snprintf(command, sizeof(buffer), "T,%f", compensation.temperature);
+                sendCommand(command, ATLAS_DEFAULT_DELAY_COMMAND_READ);
+                state = AtlasReaderState::WaitingOnReply;
+                postReplyState = AtlasReaderState::TakeReading;
+                break;
+            }
+            default: {
+                state = AtlasReaderState::TakeReading;
+                break;
+            }
+            }
+        }
+        else {
+            state = AtlasReaderState::TakeReading;
+        }
         break;
     }
     case AtlasReaderState::TakeReading: {
