@@ -1,0 +1,10 @@
+#!/bin/bash
+
+set -xe
+
+rm -rf build
+mkdir -p build
+pushd build
+cmake -DFK_ENABLE_ATLAS_ORP=OFF -DFK_ENABLE_MS5803=ON ../
+make
+popd
