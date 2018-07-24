@@ -2,10 +2,10 @@
 ../module-protocol
 ../app-protocol
 ../data-protocol
-../fkfs
 ../phylum
 ../arduino-logging
 ../lwstreams
+../lwcron
 ./protocol/src
 https://github.com/nanopb/nanopb.git 2b0db997d7e85b2cc4ae4ee5654e63f6426b18a1
 https://github.com/arduino-libraries/RTCZero.git 618d53117e94c85141b362c121497c0acf07ce29
