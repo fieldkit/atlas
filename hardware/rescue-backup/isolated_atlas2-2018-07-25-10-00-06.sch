@@ -1,6 +1,7 @@
-EESchema Schematic File Version 4
+EESchema Schematic File Version 2
+LIBS:conservify
 LIBS:fk-atlas-cache
-EELAYER 26 0
+EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
@@ -15,7 +16,7 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L fk-atlas-rescue:adm3260 U401
+L adm3260 U401
 U 1 1 594C2CF1
 P 4400 2900
 F 0 "U401" H 4400 2750 60  0000 C CNN
@@ -28,7 +29,7 @@ F 5 "584-ADM3260ARSZ" H 0   0   50  0001 C CNN "spn1"
 	1    0    0    -1  
 $EndComp
 $Comp
-L fk-atlas-rescue:C C403
+L C C403
 U 1 1 594C2CF4
 P 5650 3800
 F 0 "C403" H 5675 3900 50  0000 L CNN
@@ -42,7 +43,7 @@ F 6 "mouser" H 0   0   50  0001 C CNN "spn2"
 	0    -1   -1   0   
 $EndComp
 $Comp
-L fk-atlas-rescue:C C404
+L C C404
 U 1 1 594C2CF8
 P 5650 4100
 F 0 "C404" H 5675 4200 50  0000 L CNN
@@ -56,7 +57,7 @@ F 6 "mouser" H 0   0   50  0001 C CNN "spn2"
 	0    -1   -1   0   
 $EndComp
 $Comp
-L fk-atlas-rescue:C C405
+L C C405
 U 1 1 594C2CFB
 P 5650 4400
 F 0 "C405" H 5675 4500 50  0000 L CNN
@@ -70,7 +71,7 @@ F 6 "mouser" H 0   0   50  0001 C CNN "spn2"
 	0    -1   -1   0   
 $EndComp
 $Comp
-L fk-atlas-rescue:C C406
+L C C406
 U 1 1 594C2CFF
 P 5650 4650
 F 0 "C406" H 5675 4750 50  0000 L CNN
@@ -84,7 +85,7 @@ F 6 "mouser" H 0   0   50  0001 C CNN "spn2"
 	0    -1   -1   0   
 $EndComp
 $Comp
-L fk-atlas-rescue:C C401
+L C C401
 U 1 1 594C2D03
 P 2900 3800
 F 0 "C401" H 2925 3900 50  0000 L CNN
@@ -98,7 +99,7 @@ F 6 "mouser" H 0   0   50  0001 C CNN "spn2"
 	0    -1   -1   0   
 $EndComp
 $Comp
-L fk-atlas-rescue:C C402
+L C C402
 U 1 1 594C2D07
 P 2900 4100
 F 0 "C402" H 2925 4200 50  0000 L CNN
@@ -112,7 +113,7 @@ F 6 "mouser" H 0   0   50  0001 C CNN "spn2"
 	0    -1   -1   0   
 $EndComp
 $Comp
-L fk-atlas-rescue:R R401
+L R R401
 U 1 1 594C2D0B
 P 5650 3300
 F 0 "R401" V 5730 3300 50  0000 C CNN
@@ -126,7 +127,7 @@ F 6 "mouser" H 0   0   50  0001 C CNN "spn2"
 	0    1    1    0   
 $EndComp
 $Comp
-L fk-atlas-rescue:R R402
+L R R402
 U 1 1 594C2D10
 P 6250 2700
 F 0 "R402" V 6330 2700 50  0000 C CNN
@@ -140,7 +141,7 @@ F 6 "mouser" H 0   0   50  0001 C CNN "spn2"
 	0    -1   -1   0   
 $EndComp
 $Comp
-L fk-atlas-rescue:R R404
+L R R404
 U 1 1 594C2D14
 P 6700 2700
 F 0 "R404" V 6780 2700 50  0000 C CNN
@@ -154,7 +155,7 @@ F 6 "mouser" H 0   0   50  0001 C CNN "spn2"
 	0    -1   -1   0   
 $EndComp
 $Comp
-L fk-atlas-rescue:R R403
+L R R403
 U 1 1 5948E450
 P 6300 3250
 F 0 "R403" V 6380 3250 50  0000 C CNN
@@ -168,7 +169,7 @@ F 6 "mouser" H 0   0   50  0001 C CNN "spn2"
 	1    0    0    -1  
 $EndComp
 $Comp
-L fk-atlas-rescue:R R405
+L R R405
 U 1 1 594C2D1B
 P 6800 3250
 F 0 "R405" V 6880 3250 50  0000 C CNN
@@ -182,7 +183,7 @@ F 6 "mouser" H 0   0   50  0001 C CNN "spn2"
 	1    0    0    -1  
 $EndComp
 $Comp
-L fk-atlas-rescue:VCC #PWR061
+L VCC #PWR061
 U 1 1 594C2D24
 P 2450 3750
 F 0 "#PWR061" H 2450 3600 50  0001 C CNN
@@ -193,7 +194,7 @@ F 3 "" H 2450 3750 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L fk-atlas-rescue:VCC #PWR062
+L VCC #PWR062
 U 1 1 594C2D2A
 P 2450 2350
 F 0 "#PWR062" H 2450 2200 50  0001 C CNN
@@ -204,7 +205,7 @@ F 3 "" H 2450 2350 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L conservify:ATLAS_SENSOR U402
+L ATLAS_SENSOR U402
 U 1 1 594C2D35
 P 8550 2900
 F 0 "U402" H 8100 2550 60  0000 C CNN
@@ -216,7 +217,7 @@ F 4 "0" H 8100 2650 50  0001 C CNN "price"
 	1    0    0    -1  
 $EndComp
 $Comp
-L fk-atlas-rescue:CONN_01X02 J401
+L CONN_01X02 J401
 U 1 1 59A1BC7D
 P 10100 2950
 F 0 "J401" H 10100 3100 50  0000 C CNN
@@ -229,7 +230,7 @@ F 5 "523-31-5431" H 250 0   50  0001 C CNN "spn1"
 	1    0    0    -1  
 $EndComp
 $Comp
-L fk-atlas-rescue:WATER_PROBE P4
+L WATER_PROBE P4
 U 1 1 59D2A29B
 P 8800 3600
 F 0 "P4" H 8800 3600 60  0000 C CNN

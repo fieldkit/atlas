@@ -1,4 +1,4 @@
-update=Wed 25 Jul 2018 10:00:08 AM PDT
+update=Mon 23 Jul 2018 01:54:14 PM PDT
 version=1
 last_client=kicad
 [pcbnew]
@@ -27,4 +27,6 @@ version=1
 NetIExt=net
 [eeschema]
 version=1
-LibDir=
+LibDir=../../kicad
+[eeschema/libraries]
+LibName1=/home/jlewallen/conservify/kicad/conservify
