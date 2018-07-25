@@ -23,6 +23,9 @@ void setup() {
         delay(100);
     }
 
+    firmware_version_set(FIRMWARE_GIT_HASH);
+    firmware_build_set(FIRMWARE_BUILD);
+
     loginfof("Module", "Starting (%lu free)", fk_free_memory());
 
     #ifdef FK_ENABLE_MS5803
