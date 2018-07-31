@@ -38,6 +38,25 @@ void setup() {
     loginfof("Module", "FK_DISABLE_ATLAS_ORP");
     #endif
 
+    fk::SensorInfo sensors[fk::NumberOfReadings] = {
+        {"ec", "µS/cm",},
+        {"tds", "°ppm",},
+        {"salinity", "",},
+        {"sg", "",},
+        {"ph", "",},
+        {"do", "mg/L",},
+        #ifdef FK_ENABLE_ATLAS_ORP
+        {"orp", "mV",},
+        #endif
+        {"temp", "C",},
+        #ifdef FK_ENABLE_MS5803
+        {"temp_bottom", "C",},
+        {"pressure", "mbar",},
+        #endif
+    };
+
+    fk::SensorReading readings[fk::NumberOfReadings];
+
     fk::ModuleInfo info = {
         fk_module_ModuleType_SENSOR,
         8,
@@ -45,25 +64,8 @@ void setup() {
         10,
         "Atlas",
         "fk-atlas",
-        {
-            {"ec", "µS/cm",},
-            {"tds", "°ppm",},
-            {"salinity", "",},
-            {"sg", "",},
-            {"ph", "",},
-            {"do", "mg/L",},
-            #ifdef FK_ENABLE_ATLAS_ORP
-            {"orp", "mV",},
-            #endif
-            {"temp", "C",},
-            #ifdef FK_ENABLE_MS5803
-            {"temp_bottom", "C",},
-            {"pressure", "mbar",},
-            #endif
-        },
-        {
-            {}, {}, {}, {}, {}, {}, {}, {},
-        },
+        sensors,
+        readings
     };
 
     fk::TwoWireBus sensorBus{ Wire };
