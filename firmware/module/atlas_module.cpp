@@ -1,8 +1,37 @@
 #include "atlas_module.h"
+#include "module_idle.h"
 
 namespace fk {
 
 constexpr uint32_t CustomAtlasCommandTimeout = 3000;
+
+AtlasServices *AtlasModuleState::atlasServices_{ nullptr };
+
+class TakeAtlasReadings : public AtlasModuleState {
+public:
+    const char *name() const override {
+        return "TakeAtlasReadings";
+    }
+
+public:
+    void task() override;
+};
+
+void TakeAtlasReadings::task() {
+    atlasServices().enableSensors->enqueued();
+
+    while (simple_task_run(*atlasServices().enableSensors)) {
+        services().alive();
+    }
+
+    atlasServices().atlasSensors->enqueued();
+
+    while (simple_task_run(*atlasServices().atlasSensors)) {
+        services().alive();
+    }
+
+    transit<ModuleIdle>();
+}
 
 AtlasModule::AtlasModule(ModuleInfo &info, TwoWireBus &sensorBus) : Module(moduleBus, info),
     sensorBus(&sensorBus), sensors {
@@ -21,13 +50,12 @@ void AtlasModule::begin() {
 
     atlasSensors.setup();
 
+    AtlasModuleState::atlasServices(atlasServices);
+
     #ifdef FK_ENABLE_MS5803
     ms5803Pressure.reset();
     ms5803Pressure.begin();
     #endif
-
-    taskQueue().append(enableSensors);
-    taskQueue().append(atlasSensors);
 }
 
 void AtlasModule::tick() {
@@ -46,14 +74,15 @@ ModuleReadingStatus AtlasModule::beginReading(PendingSensorReading &pending) {
 
     atlasSensors.beginReading(pending.number <= 1);
 
-    taskQueue().append(enableSensors);
-    taskQueue().append(atlasSensors);
-
     if (enableSensors.enabled()) {
         return ModuleReadingStatus{ 1000 };
     }
 
     return ModuleReadingStatus{ 3000 };
+}
+
+DeferredModuleState AtlasModule::beginReadingState() {
+    return ModuleFsm::deferred<TakeAtlasReadings>();
 }
 
 ModuleReadingStatus AtlasModule::readingStatus(PendingSensorReading &pending) {

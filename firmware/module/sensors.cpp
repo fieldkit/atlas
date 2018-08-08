@@ -1,4 +1,4 @@
-#include "atlas-hardware.h"
+#include "atlas_hardware.h"
 #include "atlas.h"
 
 namespace fk {

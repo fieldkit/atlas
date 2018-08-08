@@ -3,7 +3,7 @@
 
 #include <fk-module.h>
 #include <fk-atlas-protocol.h>
-#include "atlas-hardware.h"
+#include "atlas_hardware.h"
 #include "atlas.h"
 
 #ifdef FK_ENABLE_MS5803
@@ -39,6 +39,30 @@ constexpr size_t NumberOfReadings = NumberOfAtlasReadings
     #endif
     ;
 
+struct AtlasServices {
+    EnableSensors *enableSensors;
+    SensorModule *atlasSensors;
+
+    AtlasServices(EnableSensors *enableSensors, SensorModule *atlasSensors) : enableSensors(enableSensors), atlasSensors(atlasSensors) {
+    }
+};
+
+class AtlasModuleState : public ModuleServicesState {
+private:
+    static AtlasServices *atlasServices_;
+
+public:
+    static AtlasServices &atlasServices() {
+        fk_assert(atlasServices_ != nullptr);
+        return *atlasServices_;
+    }
+
+    static void atlasServices(AtlasServices &newServices) {
+        atlasServices_ = &newServices;
+    }
+
+};
+
 class AtlasModule : public Module {
 private:
     StaticPool<128> pool{ "AtlasModule" };
@@ -58,6 +82,10 @@ private:
     Sensor *sensors[NumberOfSensors];
     EnableSensors enableSensors;
     SensorModule atlasSensors;
+    AtlasServices atlasServices{
+        &enableSensors,
+        &atlasSensors
+    };
     Compensation compensation;
     #ifdef FK_ENABLE_MS5803
     MS5803 ms5803Pressure{ ADDRESS_HIGH };
@@ -70,6 +98,7 @@ public:
     void begin() override;
     void tick() override;
     ModuleReadingStatus beginReading(PendingSensorReading &pending) override;
+    DeferredModuleState beginReadingState() override;
     ModuleReadingStatus readingStatus(PendingSensorReading &pending) override;
     TaskEval message(ModuleQueryMessage &query, ModuleReplyMessage &reply) override;
 
