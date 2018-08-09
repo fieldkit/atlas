@@ -1,9 +1,11 @@
 @Library('conservify') _
 
+conservifyProperties()
+
 timestamps {
     node () {
-        conservifyBuild(name: 'atlas', repository: 'https://github.com/fieldkit/atlas.git')
+        conservifyBuild(name: 'atlas')
 
-        build job: "distribution", parameters: []
+        build job: "distribution", wait: false
     }
 }
