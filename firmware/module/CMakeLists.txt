@@ -54,3 +54,6 @@ if(FK_PROFILE_AMAZON)
     target_compile_options(fk-atlas-amazon PUBLIC -DFK_MODULE_WIRE11AND13)
   endif(FK_MODULE_WIRE11AND13)
 endif(FK_PROFILE_AMAZON)
+
+add_definitions(-DPHYLUM_ENABLE_SERIAL_FLASH)
+target_compile_options(arduino_zero_phylum PUBLIC -DPHYLUM_ENABLE_SERIAL_FLASH)
