@@ -61,12 +61,13 @@ void AtlasModule::begin() {
 void AtlasModule::tick() {
     Module::tick();
 
+    /*
     if (elapsedSinceActivity() > 5000) {
         if (enableSensors.enabled()) {
             log("Disabling peripherals.");
             enableSensors.enabled(false);
         }
-    }
+        }*/
 }
 
 ModuleReadingStatus AtlasModule::beginReading(PendingSensorReading &pending) {
