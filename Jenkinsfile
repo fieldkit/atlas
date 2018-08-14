@@ -5,6 +5,7 @@ conservifyProperties()
 timestamps {
     node () {
         conservifyBuild(name: 'atlas')
+        distributeFirmware()
     }
 
     refreshDistribution()
