@@ -1,4 +1,4 @@
-../firmware-common/src
+../firmware-common
 ../module-protocol
 ../app-protocol
 ../data-protocol
