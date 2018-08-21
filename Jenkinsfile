@@ -4,7 +4,7 @@ conservifyProperties()
 
 timestamps {
     node () {
-        conservifyBuild(name: 'atlas', archive: true)
+        conservifyBuild(name: 'atlas', archive: "build/firmware/module/*.bin")
         distributeFirmware()
     }
 
