@@ -1,4 +1,2 @@
 (sym_lib_table
-  (lib (name fk-atlas-rescue)(type Legacy)(uri ${KIPRJMOD}/fk-atlas-rescue.lib)(options "")(descr ""))
-  (lib (name conservify)(type Legacy)(uri /home/jlewallen/conservify/kicad/conservify.lib)(options "")(descr ""))
 )
