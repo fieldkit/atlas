@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source /home/jlewallen/fieldkit/atlas/hardware/fk-atlas.sch)
-    (date "Fri 24 Aug 2018 02:28:22 PM PDT")
+    (date "Tue 28 Aug 2018 02:49:25 PM PDT")
     (tool "Eeschema 5.0.0-fee4fd1~66~ubuntu16.04.1")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
@@ -686,7 +686,7 @@
       (tstamp 59FECC54))
     (comp (ref U1)
       (value S25FL116K0XMFI041)
-      (footprint conservify:SOIC-8-N)
+      (footprint conservify:SOIC-8-N-WIDE)
       (fields
         (field (name Critical) " ")
         (field (name MFN) "Cypress Semiconductor")
@@ -2611,11 +2611,11 @@
         (field (name Value) MICRO_USB)
         (field (name Footprint) conservify:MICRO-USB))
       (pins
-        (pin (num 1) (name VBUS) (type input))
+        (pin (num 1) (name VBUS) (type power_out))
         (pin (num 2) (name D-) (type input))
         (pin (num 3) (name D+) (type input))
         (pin (num 4) (name ID) (type input))
-        (pin (num 5) (name GND) (type input))
+        (pin (num 5) (name GND) (type power_in))
         (pin (num 6) (name SHIELD) (type input))
         (pin (num 7) (name SHIELD) (type input))
         (pin (num 8) (name SHIELD) (type input))
