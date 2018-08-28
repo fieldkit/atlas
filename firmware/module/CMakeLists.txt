@@ -18,7 +18,10 @@ target_link_libraries(fk-atlas-standard SparkFun_MS5803-14BA_Breakout_Arduino_Li
 option(FK_MODULE_WIRE11AND13 "Use TwoWire11And13 for Module to Core communications." OFF)
 if(FK_MODULE_WIRE11AND13)
   target_compile_options(fk-atlas-standard PUBLIC -DFK_HARDWARE_WIRE11AND13_ENABLE)
+  target_compile_options(firmware-common PUBLIC -DFK_HARDWARE_WIRE11AND13_ENABLE)
+
   target_compile_options(fk-atlas-standard PUBLIC -DFK_MODULE_WIRE11AND13)
+  target_compile_options(firmware-common PUBLIC -DFK_MODULE_WIRE11AND13)
 endif(FK_MODULE_WIRE11AND13)
 
 option(FK_ENABLE_ATLAS_ORP "Enable/disable ORP sensor." ON)

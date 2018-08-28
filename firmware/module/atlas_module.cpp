@@ -5,26 +5,53 @@ namespace fk {
 
 constexpr uint32_t CustomAtlasCommandTimeout = 3000;
 
+AttachedSensors::AttachedSensors(PendingReadings *readings) : readings_(readings) {
+}
+
+bool AttachedSensors::setup() {
+    #ifdef FK_ENABLE_MS5803
+    ms5803Pressure_.reset();
+    ms5803Pressure_.begin();
+    #endif
+    return true;
+}
+
+bool AttachedSensors::take(size_t number) {
+    #ifdef FK_ENABLE_MS5803
+    auto pressureTemperature = ms5803Pressure_.getTemperature(CELSIUS, ADC_512);
+    auto pressureAbsolute = ms5803Pressure_.getPressure(ADC_4096);
+
+    readings_->done(number++, pressureTemperature);
+
+    readings_->done(number++, pressureAbsolute);
+
+    sdebug() << "Ms5803: " << pressureAbsolute << " " << pressureTemperature << " " << number << endl;
+    #endif
+
+    return true;
+}
+
 AtlasServices *AtlasModuleState::atlasServices_{ nullptr };
 
 void TakeAtlasReadings::task() {
     auto atlasSensors = atlasServices().atlasSensors;
+    auto enableSensors = atlasServices().enableSensors;
 
     atlasSensors->compensate(atlasServices().compensation);
 
-    // beginReading(atlasServices().readings->remaining() <= 1);
+    atlasSensors->beginReading(services().readings->remaining() <= 1);
 
-    atlasServices().enableSensors->enabled();
+    enableSensors->enabled();
 
-    atlasServices().enableSensors->enqueued();
+    enableSensors->enqueued();
 
-    while (simple_task_run(*atlasServices().enableSensors)) {
+    while (simple_task_run(*enableSensors)) {
         services().alive();
     }
 
     atlasServices().atlasSensors->enqueued();
 
-    while (simple_task_run(*atlasServices().atlasSensors)) {
+    while (simple_task_run(*atlasSensors)) {
         services().alive();
     }
 
@@ -33,41 +60,19 @@ void TakeAtlasReadings::task() {
     log("NumberOfReadingsReady: %d", atlasSensors->numberOfReadingsReady());
 
     if (atlasSensors->numberOfReadingsReady() == NumberOfAtlasReadings) {
-        /*
         // Order: Ec1,2,3,4,pH,Do,ORP,Temp
         float values[atlasSensors->numberOfReadingsReady()];
-        auto size = atlasSensors.readAll(values);
+        auto size = atlasSensors->readAll(values);
         auto now = clock.getTime();
 
-        auto readings = pending.readings;
         for (auto i = 0; i < size; ++i) {
-            readings[i].value = values[i];
-            readings[i].status = SensorReadingStatus::Done;
-            readings[i].time = now;
+            services().readings->done(i, values[i]);
         }
 
         // Temperature is always the final reading.
-        compensation = Compensation{ values[size - 1] };
+        atlasServices().compensation = Compensation{ values[size - 1] };
 
-        #ifdef FK_ENABLE_MS5803
-        auto pressureTemperature = ms5803Pressure.getTemperature(CELSIUS, ADC_512);
-        auto pressureAbsolute = ms5803Pressure.getPressure(ADC_4096);
-        auto index = size;
-
-        readings[index].value = pressureTemperature;
-        readings[index].status = SensorReadingStatus::Done;
-        readings[index].time = now;
-
-        index++;
-
-        readings[index].value = pressureAbsolute;
-        readings[index].status = SensorReadingStatus::Done;
-        readings[index].time = now;
-
-        log("Ms5803: %f %f (%d)", pressureAbsolute, pressureTemperature, index);
-        #endif
-
-        */
+        atlasServices().attachedSensors->take(size);
     }
 
     transit<ModuleIdle>();
@@ -143,7 +148,7 @@ void CustomAtlasQuery::task() {
     transit<fk::ModuleIdle>();
 }
 
-AtlasModule::AtlasModule(ModuleInfo &info, TwoWireBus &sensorBus) : Module(moduleBus, info),
+AtlasModule::AtlasModule(ModuleInfo &info, TwoWireBus &sensorBus) : Module(moduleBus, info, { 5 }),
     sensorBus(&sensorBus), sensors {
         &ec,
         &ph,
@@ -162,10 +167,7 @@ void AtlasModule::begin() {
 
     AtlasModuleState::atlasServices(atlasServices);
 
-    #ifdef FK_ENABLE_MS5803
-    ms5803Pressure.reset();
-    ms5803Pressure.begin();
-    #endif
+    attachedSensors.setup();
 }
 
 void AtlasModule::tick() {

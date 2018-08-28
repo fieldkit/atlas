@@ -39,12 +39,32 @@ constexpr size_t NumberOfReadings = NumberOfAtlasReadings
     #endif
     ;
 
+class AttachedSensors {
+private:
+    PendingReadings *readings_;
+    #ifdef FK_ENABLE_MS5803
+    MS5803 ms5803Pressure_{ ADDRESS_HIGH };
+    #endif
+
+public:
+    AttachedSensors(PendingReadings *readings);
+
+public:
+    bool setup();
+
+public:
+    bool take(size_t number);
+
+};
+
 struct AtlasServices {
     EnableSensors *enableSensors;
     SensorModule *atlasSensors;
+    AttachedSensors *attachedSensors;
     Compensation compensation;
 
-    AtlasServices(EnableSensors *enableSensors, SensorModule *atlasSensors) : enableSensors(enableSensors), atlasSensors(atlasSensors) {
+    AtlasServices(EnableSensors *enableSensors, SensorModule *atlasSensors, AttachedSensors *attachedSensors)
+        : enableSensors(enableSensors), atlasSensors(atlasSensors),  attachedSensors(attachedSensors) {
     }
 };
 
@@ -103,13 +123,12 @@ private:
     Sensor *sensors[NumberOfSensors];
     EnableSensors enableSensors;
     SensorModule atlasSensors;
+    AttachedSensors attachedSensors{ moduleServices().readings };
     AtlasServices atlasServices{
         &enableSensors,
-        &atlasSensors
+        &atlasSensors,
+        &attachedSensors,
     };
-    #ifdef FK_ENABLE_MS5803
-    MS5803 ms5803Pressure{ ADDRESS_HIGH };
-    #endif
 
 public:
     AtlasModule(ModuleInfo &info, TwoWireBus &sensorBus);
