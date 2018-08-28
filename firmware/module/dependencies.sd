@@ -10,10 +10,8 @@ https://github.com/fieldkit/atlas-protocol.git
 https://github.com/nanopb/nanopb.git 66eba33227d75bec02b7163874d40989b7b919b2
 https://github.com/arduino-libraries/RTCZero.git 618d53117e94c85141b362c121497c0acf07ce29
 https://github.com/adafruit/RTClib.git 82d00a1a15bcf738b001e42bf26a3d1f1a15be32
-https://github.com/Conservify/WiFi101.git 3d1280655ef8e663a909d5d6f27e596bc171125f
 https://github.com/adafruit/Adafruit_ASFcore.git 99f9be5465caad6e368102b5465b30aa9b07a26e
 https://github.com/Conservify/AtSamd.git 60a93e97c87e31e6095af12e0036b43755867c52
-https://github.com/Conservify/FuelGauge.git c597e032ca7113cfbe899fe60839ae83ecc3ca45
-https://github.com/mikalhart/TinyGPS.git db4ef9c97af767e7345f5ccb277ac3bd1a2eb81f
 https://github.com/PaulStoffregen/SerialFlash.git a3508c30be8d8a3c705572d0bfc8d048adcd29ff
 https://github.com/sparkfun/SparkFun_MS5803-14BA_Breakout_Arduino_Library.git f133ac516346b41c370df74ef1a4e6efb06ff5c5
+https://github.com/adafruit/Adafruit_NeoPixel.git ec3c77e28e84b221dc159b48358929cb24ba97bd
