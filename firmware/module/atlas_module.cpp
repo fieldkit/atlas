@@ -7,17 +7,15 @@ constexpr uint32_t CustomAtlasCommandTimeout = 3000;
 
 AtlasServices *AtlasModuleState::atlasServices_{ nullptr };
 
-class TakeAtlasReadings : public AtlasModuleState {
-public:
-    const char *name() const override {
-        return "TakeAtlasReadings";
-    }
-
-public:
-    void task() override;
-};
-
 void TakeAtlasReadings::task() {
+    auto atlasSensors = atlasServices().atlasSensors;
+
+    atlasSensors->compensate(atlasServices().compensation);
+
+    // beginReading(atlasServices().readings->remaining() <= 1);
+
+    atlasServices().enableSensors->enabled();
+
     atlasServices().enableSensors->enqueued();
 
     while (simple_task_run(*atlasServices().enableSensors)) {
@@ -30,70 +28,14 @@ void TakeAtlasReadings::task() {
         services().alive();
     }
 
-    transit<ModuleIdle>();
-}
-
-AtlasModule::AtlasModule(ModuleInfo &info, TwoWireBus &sensorBus) : Module(moduleBus, info),
-    sensorBus(&sensorBus), sensors {
-        &ec,
-        &ph,
-        &dissolvedOxygen,
-        #ifdef FK_ENABLE_ATLAS_ORP
-        &orp,
-        #endif
-        &temp
-    }, atlasSensors(sensors) {
-}
-
-void AtlasModule::begin() {
-    Module::begin();
-
-    atlasSensors.setup();
-
-    AtlasModuleState::atlasServices(atlasServices);
-
-    #ifdef FK_ENABLE_MS5803
-    ms5803Pressure.reset();
-    ms5803Pressure.begin();
-    #endif
-}
-
-void AtlasModule::tick() {
-    Module::tick();
-
-    /*
-    if (elapsedSinceActivity() > 5000) {
-        if (enableSensors.enabled()) {
-            log("Disabling peripherals.");
-            enableSensors.enabled(false);
-        }
-        }*/
-}
-
-ModuleReadingStatus AtlasModule::beginReading(PendingSensorReading &pending) {
-    atlasSensors.compensate(compensation);
-
-    atlasSensors.beginReading(pending.number <= 1);
-
-    if (enableSensors.enabled()) {
-        return ModuleReadingStatus{ 1000 };
-    }
-
-    return ModuleReadingStatus{ 3000 };
-}
-
-DeferredModuleState AtlasModule::beginReadingState() {
-    return ModuleFsm::deferred<TakeAtlasReadings>();
-}
-
-ModuleReadingStatus AtlasModule::readingStatus(PendingSensorReading &pending) {
     static_assert(NumberOfReadings >= NumberOfAtlasReadings, "NumberOfReadings should be >= NumberOfAtlasReadings");
 
-    log("NumberOfReadingsReady: %d", atlasSensors.numberOfReadingsReady());
+    log("NumberOfReadingsReady: %d", atlasSensors->numberOfReadingsReady());
 
-    if (atlasSensors.numberOfReadingsReady() == NumberOfAtlasReadings) {
+    if (atlasSensors->numberOfReadingsReady() == NumberOfAtlasReadings) {
+        /*
         // Order: Ec1,2,3,4,pH,Do,ORP,Temp
-        float values[atlasSensors.numberOfReadingsReady()];
+        float values[atlasSensors->numberOfReadingsReady()];
         auto size = atlasSensors.readAll(values);
         auto now = clock.getTime();
 
@@ -125,13 +67,14 @@ ModuleReadingStatus AtlasModule::readingStatus(PendingSensorReading &pending) {
         log("Ms5803: %f %f (%d)", pressureAbsolute, pressureTemperature, index);
         #endif
 
-        pending.elapsed -= millis();
+        */
     }
 
-    return ModuleReadingStatus{};
+    transit<ModuleIdle>();
 }
 
-TaskEval AtlasModule::message(ModuleQueryMessage &query, ModuleReplyMessage &reply) {
+void CustomAtlasQuery::task() {
+    /*
     pool.clear();
 
     fk_atlas_WireAtlasQuery queryMessage = fk_atlas_WireAtlasQuery_init_default;
@@ -178,14 +121,16 @@ TaskEval AtlasModule::message(ModuleQueryMessage &query, ModuleReplyMessage &rep
 
     if (!pb_get_encoded_size(&required, fk_atlas_WireAtlasReply_fields, &replyMessage)) {
         log("Error getting size for reply");
-        return TaskEval::error();
+        transit<fk::ModuleIdle>();
+        return;
     }
 
     auto messageData = pb_data_allocate(&pool, required);
     auto stream = pb_ostream_from_buffer((uint8_t *)messageData->buffer, messageData->length);
     if (!pb_encode(&stream, fk_atlas_WireAtlasReply_fields, &replyMessage)) {
         log("Error encoding Atlas reply");
-        return TaskEval::error();
+        transit<fk::ModuleIdle>();
+        return;
     }
 
     log("Replying with %d bytes", messageData->length);
@@ -193,8 +138,47 @@ TaskEval AtlasModule::message(ModuleQueryMessage &query, ModuleReplyMessage &rep
     reply.m().type = fk_module_ReplyType_REPLY_CUSTOM;
     reply.m().custom.message.funcs.encode = pb_encode_data;
     reply.m().custom.message.arg = (void *)messageData;
+    */
 
-    return TaskEval::done();
+    transit<fk::ModuleIdle>();
+}
+
+AtlasModule::AtlasModule(ModuleInfo &info, TwoWireBus &sensorBus) : Module(moduleBus, info),
+    sensorBus(&sensorBus), sensors {
+        &ec,
+        &ph,
+        &dissolvedOxygen,
+        #ifdef FK_ENABLE_ATLAS_ORP
+        &orp,
+        #endif
+        &temp
+    }, atlasSensors(sensors) {
+}
+
+void AtlasModule::begin() {
+    Module::begin();
+
+    atlasSensors.setup();
+
+    AtlasModuleState::atlasServices(atlasServices);
+
+    #ifdef FK_ENABLE_MS5803
+    ms5803Pressure.reset();
+    ms5803Pressure.begin();
+    #endif
+}
+
+void AtlasModule::tick() {
+    Module::tick();
+
+    /*
+    if (elapsedSinceActivity() > 5000) {
+        if (enableSensors.enabled()) {
+            log("Disabling peripherals.");
+            enableSensors.enabled(false);
+        }
+    }
+    */
 }
 
 AtlasReader &AtlasModule::getSensor(fk_atlas_SensorType type) {

@@ -42,6 +42,7 @@ constexpr size_t NumberOfReadings = NumberOfAtlasReadings
 struct AtlasServices {
     EnableSensors *enableSensors;
     SensorModule *atlasSensors;
+    Compensation compensation;
 
     AtlasServices(EnableSensors *enableSensors, SensorModule *atlasSensors) : enableSensors(enableSensors), atlasSensors(atlasSensors) {
     }
@@ -61,6 +62,26 @@ public:
         atlasServices_ = &newServices;
     }
 
+};
+
+class TakeAtlasReadings : public AtlasModuleState {
+public:
+    const char *name() const override {
+        return "TakeAtlasReadings";
+    }
+
+public:
+    void task() override;
+};
+
+class CustomAtlasQuery : public AtlasModuleState {
+public:
+    const char *name() const override {
+        return "CustomAtlasQuery";
+    }
+
+public:
+    void task() override;
 };
 
 class AtlasModule : public Module {
@@ -86,7 +107,6 @@ private:
         &enableSensors,
         &atlasSensors
     };
-    Compensation compensation;
     #ifdef FK_ENABLE_MS5803
     MS5803 ms5803Pressure{ ADDRESS_HIGH };
     #endif
@@ -97,10 +117,15 @@ public:
 public:
     void begin() override;
     void tick() override;
-    ModuleReadingStatus beginReading(PendingSensorReading &pending) override;
-    DeferredModuleState beginReadingState() override;
-    ModuleReadingStatus readingStatus(PendingSensorReading &pending) override;
-    TaskEval message(ModuleQueryMessage &query, ModuleReplyMessage &reply) override;
+
+public:
+    fk::ModuleStates states() override {
+        return {
+            fk::ModuleFsm::deferred<fk::ConfigureModule>(),
+            fk::ModuleFsm::deferred<TakeAtlasReadings>(),
+            fk::ModuleFsm::deferred<CustomAtlasQuery>()
+        };
+    }
 
 private:
     AtlasReader &getSensor(fk_atlas_SensorType type);
