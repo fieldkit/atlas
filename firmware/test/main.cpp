@@ -2,14 +2,12 @@
 #include <Wire.h>
 #include <SerialFlash.h>
 
+#include "debug.h"
+
+#define FK_ATLAS_OEM
+
 const uint8_t PIN_PERIPH_ENABLE = 12;
 const uint8_t PIN_FLASH_CS = 5;
-
-const uint8_t ATLAS_SENSOR_EC_DEFAULT_ADDRESS = 0x64;
-const uint8_t ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS = 0x66;
-const uint8_t ATLAS_SENSOR_PH_DEFAULT_ADDRESS = 0x63;
-const uint8_t ATLAS_SENSOR_DO_DEFAULT_ADDRESS = 0x61;
-const uint8_t ATLAS_SENSOR_ORP_DEFAULT_ADDRESS = 0x62;
 
 const uint8_t ATLAS_RESPONSE_CODE_NO_DATA = 0xff;
 const uint8_t ATLAS_RESPONSE_CODE_NOT_READY = 0xfe;
@@ -17,19 +15,148 @@ const uint8_t ATLAS_RESPONSE_CODE_ERROR = 0x2;
 const uint8_t ATLAS_RESPONSE_CODE_SUCCESS = 0x1;
 
 class AtlasScientificBoard {
+    virtual bool begin() = 0;
+    virtual bool reading() = 0;
+    virtual bool find() = 0;
+    virtual bool status() = 0;
+    virtual bool info() = 0;
+    virtual bool ledsOn() = 0;
+    virtual bool ledsOff() = 0;
+};
+
+class AtlasScientificOemBoard : public AtlasScientificBoard {
 private:
-    uint8_t address;
+    uint8_t address_;
+    uint8_t type_;
+
+private:
+    struct BoardConfig {
+        uint8_t valid;
+        uint8_t value_register;
+        uint8_t number_of_values;
+    };
+
+private:
+    static constexpr uint8_t OEM_TYPE_EC = 4;
+    static constexpr uint8_t OEM_TYPE_PH = 1;
+    static constexpr uint8_t OEM_TYPE_DO = 3;
+    static constexpr uint8_t OEM_TYPE_TEMP = 5;
+
+    BoardConfig config() {
+        switch (type_) {
+        case OEM_TYPE_EC: {
+            return { true, 0x18, 3 };
+        }
+        case OEM_TYPE_PH: {
+            return { true, 0x16, 1 };
+        }
+        case OEM_TYPE_DO: {
+            return { true, 0x22, 1 };
+        }
+        case OEM_TYPE_TEMP: {
+            return { true, 0x0E, 1 };
+        }
+        }
+
+        return { false, 0, 0 };
+    }
+
+public:
+    AtlasScientificOemBoard(uint8_t address) : address_(address) {
+    }
+
+public:
+    bool begin() override {
+        Wire.beginTransmission(address_);
+        Wire.write(0x00);
+        Wire.endTransmission();
+
+        Wire.requestFrom((uint8_t)address_, 2);
+
+        type_ = Wire.read();
+        Wire.read(); // Firmware
+
+        Wire.endTransmission();
+
+        return config().valid;
+    }
+
+    bool reading() override {
+        auto cfg = config();
+
+        Wire.beginTransmission(address_);
+        Wire.write(cfg.value_register);
+        Wire.endTransmission();
+
+        union data_t {
+            byte bytes[4];
+            uint32_t u32;
+            float f32;
+        };
+
+        data_t data;
+
+        Wire.requestFrom((uint8_t)address_, 4);
+        for (auto i = 0; i < 4; ++i) {
+            data.bytes[i] = Wire.read();
+        }
+        Wire.endTransmission();
+
+        return true;
+    }
+
+    bool find() override {
+        for (auto i = 0; i < 3; ++i) {
+            ledsOn();
+            delay(100);
+            ledsOff();
+            delay(100);
+        }
+
+        return true;
+    }
+
+    bool status() override {
+        return true;
+    }
+
+    bool info() override {
+        return true;
+    }
+
+    bool ledsOn() override {
+        Wire.beginTransmission(address_);
+        Wire.write(0x05);
+        Wire.write(0x01);
+        Wire.endTransmission();
+
+        return true;
+    }
+
+    bool ledsOff() override {
+        Wire.beginTransmission(address_);
+        Wire.write(0x05);
+        Wire.write(0x00);
+        Wire.endTransmission();
+
+        return true;
+    }
+};
+
+class AtlasScientificPrototypeBoard : public AtlasScientificBoard {
+private:
+    uint8_t address_;
 
 private:
     uint8_t readResponse(const char *str, char *buffer, size_t length, uint32_t read_delay = 200) {
-        Wire.beginTransmission(address);
+        Wire.beginTransmission(address_);
         Wire.write(str);
         Wire.endTransmission();
 
         delay(read_delay);
 
         while (true) {
-            Wire.requestFrom((uint8_t)address, 1 + length, (uint8_t)1);
+            Wire.requestFrom((uint8_t)address_, 1 + length, (uint8_t)1);
 
             uint8_t code = Wire.read();
             if (code == ATLAS_RESPONSE_CODE_NOT_READY) {
@@ -57,23 +184,29 @@ private:
     }
 
 public:
-    AtlasScientificBoard(uint8_t address) {
-        this->address = address;
+    AtlasScientificPrototypeBoard(uint8_t address) : address_(address) {
     }
 
-    bool reading() {
+public:
+    bool begin() override {
+        char buffer[20];
+        uint8_t value = readResponse("I", buffer, sizeof(buffer));
+        return value != 0xff;
+    }
+
+    bool reading() override {
         char buffer[20];
         uint8_t value = readResponse("R", buffer, sizeof(buffer));
         Serial.println(buffer);
         return value == 0x1;
     }
 
-    bool find() {
+    bool find() override {
         uint8_t value = readResponse("FIND", nullptr, 0);
         return value == 0x1;
     }
 
-    bool status() {
+    bool status() override {
         char buffer[20];
         uint8_t value = readResponse("STATUS", buffer, sizeof(buffer));
         Serial.print("test: STATUS: ");
@@ -81,7 +214,7 @@ public:
         return value == 0x1;
     }
 
-    bool info() {
+    bool info() override {
         char buffer[20];
         uint8_t value = readResponse("I", buffer, sizeof(buffer));
         Serial.print("test: INFO: ");
@@ -89,17 +222,33 @@ public:
         return value == 0x1;
     }
 
-    bool ledsOn() {
+    bool ledsOn() override {
         uint8_t value = readResponse("L,1", nullptr, 0);
         return value == 0x1;
     }
 
-    bool begin() {
-        char buffer[20];
-        uint8_t value = readResponse("I", buffer, sizeof(buffer));
-        return value != 0xff;
+    bool ledsOff() override {
+        uint8_t value = readResponse("L,0", nullptr, 0);
+        return value == 0x1;
     }
+
 };
+
+#if defined(FK_ATLAS_OEM)
+const uint8_t ATLAS_SENSOR_EC_DEFAULT_ADDRESS = 0x64;
+const uint8_t ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS = 0x68;
+const uint8_t ATLAS_SENSOR_PH_DEFAULT_ADDRESS = 0x65;
+const uint8_t ATLAS_SENSOR_DO_DEFAULT_ADDRESS = 0x67;
+const uint8_t ATLAS_SENSOR_ORP_DEFAULT_ADDRESS = 0x66;
+using AtlasBoardType = AtlasScientificOemBoard;
+#else
+const uint8_t ATLAS_SENSOR_EC_DEFAULT_ADDRESS = 0x64;
+const uint8_t ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS = 0x66;
+const uint8_t ATLAS_SENSOR_PH_DEFAULT_ADDRESS = 0x63;
+const uint8_t ATLAS_SENSOR_DO_DEFAULT_ADDRESS = 0x61;
+const uint8_t ATLAS_SENSOR_ORP_DEFAULT_ADDRESS = 0x62;
+using AtlasBoardType = AtlasScientificPrototypeBoard;
+#endif
 
 class Check {
 public:
@@ -117,7 +266,7 @@ public:
     }
 
     void test(uint8_t address, const char *name) {
-        AtlasScientificBoard sensor(address);
+        AtlasBoardType sensor(address);
         Serial.print("test: ");
         Serial.print(name);
         if (!sensor.begin()) {
@@ -220,7 +369,7 @@ void setup() {
 
         Serial.println("test: Begin");
 
-        // check.flashMemory();
+        check.flashMemory();
         check.ec();
         check.temp();
         check.ph();
@@ -230,7 +379,7 @@ void setup() {
         #endif
 
         if (takeReadings) {
-            AtlasScientificBoard sensor(ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS);
+            AtlasBoardType sensor(ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS);
             sensor.reading();
         }
 
@@ -242,7 +391,7 @@ void setup() {
         digitalWrite(A5, HIGH);
 
         digitalWrite(PIN_PERIPH_ENABLE, LOW);
-        delay(10000);
+        delay(5000);
         digitalWrite(PIN_PERIPH_ENABLE, HIGH);
         delay(1000);
     }
