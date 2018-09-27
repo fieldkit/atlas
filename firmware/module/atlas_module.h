@@ -104,7 +104,7 @@ public:
     void task() override;
 };
 
-class AtlasModule : public Module {
+class AtlasModule : public Module<MinimumFlashState> {
 private:
     StaticPool<128> pool{ "AtlasModule" };
     TwoWireBus *sensorBus;
