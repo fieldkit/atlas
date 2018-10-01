@@ -33,7 +33,11 @@ private:
     struct BoardConfig {
         uint8_t valid;
         uint8_t value_register;
+        uint8_t reading_register;
+        uint8_t active_register;
         uint8_t number_of_values;
+        float divisor;
+        const char *name;
     };
 
 private:
@@ -45,20 +49,20 @@ private:
     BoardConfig config() {
         switch (type_) {
         case OEM_TYPE_EC: {
-            return { true, 0x18, 3 };
+            return { true, 0x18, 0x07, 0x06, 3, 100.0f, "EC" };
         }
         case OEM_TYPE_PH: {
-            return { true, 0x16, 1 };
+            return { true, 0x16, 0x07, 0x06, 1, 1000.0f, "PH" };
         }
         case OEM_TYPE_DO: {
-            return { true, 0x22, 1 };
+            return { true, 0x22, 0x07, 0x06, 1, 100.0f, "DO" };
         }
         case OEM_TYPE_TEMP: {
-            return { true, 0x0E, 1 };
+            return { true, 0x0E, 0x07, 0x06, 1, 1000.0f, "TEMP" };
         }
         }
 
-        return { false, 0, 0 };
+        return { false, 0, 0, 0, 0, 1.0f, "<unknown>" };
     }
 
 public:
@@ -71,36 +75,108 @@ public:
         Wire.write(0x00);
         Wire.endTransmission();
 
-        Wire.requestFrom((uint8_t)address_, 2);
+        Wire.requestFrom(address_, 2);
 
         type_ = Wire.read();
-        Wire.read(); // Firmware
+        auto version = Wire.read(); // Firmware
 
         Wire.endTransmission();
+        delay(50);
 
-        return config().valid;
+        auto cfg = config();
+
+        if (!cfg.valid) {
+            return false;
+        }
+
+        auto active = get_register(cfg.active_register);
+        delay(50);
+
+        auto irq = get_register(0x04);
+        delay(50);
+
+        if (!wake()) {
+            return false;
+        }
+
+        loginfof("Atlas", "Board type=%d version=%d active=%d irq=%d", type_, version, active, irq);
+
+        return true;
+    }
+
+    bool has_reading() {
+        return get_register(config().reading_register);
+    }
+
+    uint8_t get_register(uint8_t reg) {
+        Wire.beginTransmission(address_);
+        Wire.write(reg);
+        Wire.endTransmission();
+
+        Wire.requestFrom(address_, 1);
+        auto value = Wire.read();
+        Wire.endTransmission();
+
+        return value;
+    }
+
+    bool wake() {
+        auto cfg = config();
+
+        Wire.beginTransmission(address_);
+        Wire.write(cfg.active_register);
+        Wire.write(0x01);
+        Wire.endTransmission();
+
+        delay(100);
+
+        return get_register(cfg.active_register) == 1;
+    }
+
+    bool hibernate() {
+        auto cfg = config();
+
+        Wire.beginTransmission(address_);
+        Wire.write(cfg.active_register);
+        Wire.write(0x00);
+        Wire.endTransmission();
+
+        delay(100);
+
+        return get_register(cfg.active_register) == 0;
     }
 
     bool reading() override {
         auto cfg = config();
+
+        if (!has_reading()) {
+            return true;
+        }
 
         Wire.beginTransmission(address_);
         Wire.write(cfg.value_register);
         Wire.endTransmission();
 
         union data_t {
-            byte bytes[4];
+            uint8_t bytes[4];
             uint32_t u32;
-            float f32;
         };
 
-        data_t data;
+        for (auto i = 0; i < cfg.number_of_values; ++i) {
+            data_t data;
 
-        Wire.requestFrom((uint8_t)address_, 4);
-        for (auto i = 0; i < 4; ++i) {
-            data.bytes[i] = Wire.read();
+            Wire.requestFrom(address_, 4);
+            for (auto i = 4; i > 0; --i) {
+                data.bytes[i - 1] = Wire.read();
+            }
+            Wire.endTransmission();
+
+            float value = data.u32;
+            value /= cfg.divisor;
+
+            loginfof("Module", "%s: %f", cfg.name, value);
         }
-        Wire.endTransmission();
+
 
         return true;
     }
@@ -256,7 +332,7 @@ public:
         Wire.begin();
 
         //  TODO: Investigate. I would see hangs if I used a slower speed.
-        Wire.setClock(400000);
+        // Wire.setClock(400000);
 
         pinMode(PIN_PERIPH_ENABLE, OUTPUT);
         digitalWrite(PIN_PERIPH_ENABLE, LOW);
@@ -265,51 +341,51 @@ public:
         delay(1000);
     }
 
-    void test(uint8_t address, const char *name) {
+    bool test(uint8_t address, const char *name) {
         AtlasBoardType sensor(address);
-        Serial.print("test: ");
-        Serial.print(name);
         if (!sensor.begin()) {
-            Serial.println(" FAILED");
-            return;
+            loginfof("Atlas", "test: %s FAILED", name);
+            return false;
         }
         else {
-            Serial.println(" PASSED");
+            loginfof("Atlas", "test: %s PASSED", name);
         }
 
         if (!sensor.info()) {
-            Serial.println("test: INFO FAILED");
+            loginfof("Atlas", "test: INFO FAILED");
         }
 
         if (!sensor.status()) {
-            Serial.println("test: STATUS FAILED");
+            loginfof("Atlas", "test: STATUS FAILED");
         }
 
         if (!sensor.ledsOn()) {
-            Serial.println("test: LEDS FAILED");
+            loginfof("Atlas", "test: LEDS FAILED");
         }
 
         sensor.find();
+
+        return true;
     }
 
-    void ec() {
-        test(ATLAS_SENSOR_EC_DEFAULT_ADDRESS, "EC");
+    bool ec() {
+        return test(ATLAS_SENSOR_EC_DEFAULT_ADDRESS, "EC");
     }
 
-    void temp() {
-        test(ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS, "TEMP");
+    bool temp() {
+        return test(ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS, "TEMP");
     }
 
-    void ph() {
-        test(ATLAS_SENSOR_PH_DEFAULT_ADDRESS, "PH");
+    bool ph() {
+        return test(ATLAS_SENSOR_PH_DEFAULT_ADDRESS, "PH");
     }
 
-    void dissolvedOxygen() {
-        test(ATLAS_SENSOR_DO_DEFAULT_ADDRESS, "DO");
+    bool dissolvedOxygen() {
+        return test(ATLAS_SENSOR_DO_DEFAULT_ADDRESS, "DO");
     }
 
-    void orp() {
-        test(ATLAS_SENSOR_ORP_DEFAULT_ADDRESS, "ORP");
+    bool orp() {
+        return test(ATLAS_SENSOR_ORP_DEFAULT_ADDRESS, "ORP");
     }
 
     bool flashMemory() {
@@ -369,18 +445,45 @@ void setup() {
 
         Serial.println("test: Begin");
 
-        check.flashMemory();
-        check.ec();
-        check.temp();
-        check.ph();
-        check.dissolvedOxygen();
+        auto success = true;
+
+        success = check.flashMemory() || success;
+        success = check.ec() || success;
+        success = check.temp() || success;
+        success = check.ph() || success;
+        success = check.dissolvedOxygen();
         #ifdef FK_ENABLE_ATLAS_ORP
-        check.orp();
+        success = check.orp() || success;
         #endif
 
-        if (takeReadings) {
-            AtlasBoardType sensor(ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS);
-            sensor.reading();
+        if (takeReadings && success) {
+            AtlasBoardType boards[] = {
+                ATLAS_SENSOR_EC_DEFAULT_ADDRESS,
+                ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS,
+                ATLAS_SENSOR_PH_DEFAULT_ADDRESS,
+                ATLAS_SENSOR_DO_DEFAULT_ADDRESS
+            };
+
+            auto initialized = true;
+            for (auto &board : boards) {
+                if (!board.begin()) {
+                    initialized = false;
+                }
+            }
+
+            if (initialized) {
+                while (true) {
+                    loginfof("Atlas", "-------------------");
+
+                    for (auto &board : boards) {
+                        board.ledsOn();
+                        board.reading();
+                        board.ledsOff();
+                    }
+
+                    delay(1000);
+                }
+            }
         }
 
         Serial.println("test: Done");
