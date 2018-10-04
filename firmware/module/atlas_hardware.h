@@ -5,6 +5,7 @@
 
 namespace fk {
 
+constexpr uint8_t FK_ATLAS_PIN_FLASH = 5;
 constexpr uint8_t FK_ATLAS_PIN_PERIPH_ENABLE = 12;
 
 }

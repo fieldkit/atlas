@@ -1,9 +1,3 @@
-/**
- * Things to keep in mind:
- * TODO: Allow calibration based on temperature reading (if attached)
- * TODO: Logging that can be relayed to the caller? Maybe with log levels?
- * TODO: Calibration mode. With the help of the app, this is a big deal I think.
- */
 #include <Arduino.h>
 #include <Wire.h>
 

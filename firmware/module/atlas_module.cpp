@@ -148,7 +148,8 @@ void CustomAtlasQuery::task() {
     transit<fk::ModuleIdle>();
 }
 
-AtlasModule::AtlasModule(ModuleInfo &info, TwoWireBus &sensorBus) : Module(moduleBus, info, { 5 }),
+AtlasModule::AtlasModule(ModuleInfo &info, TwoWireBus &sensorBus) :
+    Module(moduleBus, info, { FK_ATLAS_PIN_FLASH, FK_ATLAS_PIN_PERIPH_ENABLE }),
     sensorBus(&sensorBus), sensors {
         &ec,
         &ph,
