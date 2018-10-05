@@ -206,7 +206,7 @@ AtlasResponseCode AtlasReader::readReply(char *buffer, size_t length) {
 
     if (buffer != nullptr) {
         buffer[i] = 0;
-        loginfof(Log, "Atlas(0x%x) -> ('%s')", address, buffer);
+        loginfof(Log, "Atlas(0x%x) -> ('%s') (code=0x%x)", address, buffer, code);
 
         if (type == AtlasSensorType::Unknown) {
             type = getSensorType(buffer);

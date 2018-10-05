@@ -3,22 +3,21 @@
 namespace fk {
 
 void TakeAtlasReadings::task() {
-    auto atlasSensors = atlasServices().atlasSensors;
     auto enableSensors = atlasServices().enableSensors;
 
-    atlasSensors->compensate(atlasServices().compensation);
-
-    atlasSensors->beginReading(services().readings->remaining() <= 1);
-
     enableSensors->enabled();
-
     enableSensors->enqueued();
 
     while (simple_task_run(*enableSensors)) {
         services().alive();
     }
 
-    atlasServices().atlasSensors->enqueued();
+    auto atlasSensors = atlasServices().atlasSensors;
+
+    atlasSensors->compensate(atlasServices().compensation);
+    atlasSensors->beginReading(services().readings->remaining() <= 1);
+
+    atlasSensors->enqueued();
 
     while (simple_task_run(*atlasSensors)) {
         services().alive();
