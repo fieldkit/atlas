@@ -48,8 +48,8 @@ if(FK_PROFILE_AMAZON)
   target_link_libraries(fk-atlas-amazon SparkFun_MS5803-14BA_Breakout_Arduino_Library)
 
   target_compile_options(fk-atlas-amazon PUBLIC -DFK_PROFILE_AMAZON)
-  target_compile_options(fk-atlas-amazon PUBLIC -DFK_ENABLE_MS5803)
   target_compile_options(fk-atlas-amazon PUBLIC -DFK_DISABLE_ATLAS_ORP)
+
   if(FK_MODULE_WIRE11AND13)
     target_compile_options(fk-atlas-amazon PUBLIC -DFK_HARDWARE_WIRE11AND13_ENABLE)
     target_compile_options(fk-atlas-amazon PUBLIC -DFK_MODULE_WIRE11AND13)

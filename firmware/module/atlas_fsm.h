@@ -7,30 +7,10 @@
 #include "atlas_hardware.h"
 #include "atlas.h"
 #include "sensors.h"
-
-#ifdef FK_ENABLE_MS5803
-#include <SparkFun_MS5803_I2C.h>
-#endif
+#include "sensor_power.h"
+#include "attached_sensors.h"
 
 namespace fk {
-
-class AttachedSensors {
-private:
-    PendingReadings *readings_;
-    #ifdef FK_ENABLE_MS5803
-    MS5803 ms5803Pressure_{ ADDRESS_HIGH };
-    #endif
-
-public:
-    AttachedSensors(PendingReadings *readings);
-
-public:
-    bool setup();
-
-public:
-    bool take(size_t number);
-
-};
 
 struct AtlasServices {
     EnableSensors *enableSensors;
