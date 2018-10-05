@@ -5,13 +5,13 @@
 
 namespace fk {
 
-class EnableSensors : public Task {
+class SensorPower : public Task {
 private:
     uint32_t last_powered_on_{ 0 };
     uint32_t expire_at_{ 0 };
 
 public:
-    EnableSensors();
+    SensorPower();
 
 public:
     void enqueued() override;

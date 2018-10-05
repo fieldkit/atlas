@@ -26,9 +26,9 @@ void CustomAtlasQuery::task() {
     replyMessage.type = fk_atlas_ReplyType_REPLY_ERROR;
 
     if (queryMessage.type == fk_atlas_QueryType_QUERY_ATLAS_COMMAND) {
-        auto enableSensors = atlasServices().enableSensors;
-        enableSensors->enqueued();
-        while (simple_task_run(*enableSensors)) {
+        auto sensorPower = atlasServices().sensorPower;
+        sensorPower->enqueued();
+        while (simple_task_run(*sensorPower)) {
             services().alive();
         }
 

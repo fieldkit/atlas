@@ -3,9 +3,9 @@
 namespace fk {
 
 void TakeAtlasReadings::task() {
-    auto enableSensors = atlasServices().enableSensors;
-    enableSensors->enqueued();
-    while (simple_task_run(*enableSensors)) {
+    auto sensorPower = atlasServices().sensorPower;
+    sensorPower->enqueued();
+    while (simple_task_run(*sensorPower)) {
         services().alive();
     }
 

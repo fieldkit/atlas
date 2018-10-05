@@ -13,13 +13,13 @@
 namespace fk {
 
 struct AtlasServices {
-    EnableSensors *enableSensors;
+    SensorPower *sensorPower;
     SensorModule *atlasSensors;
     AttachedSensors *attachedSensors;
     Compensation compensation;
 
-    AtlasServices(EnableSensors *enableSensors, SensorModule *atlasSensors, AttachedSensors *attachedSensors)
-        : enableSensors(enableSensors), atlasSensors(atlasSensors),  attachedSensors(attachedSensors) {
+    AtlasServices(SensorPower *sensorPower, SensorModule *atlasSensors, AttachedSensors *attachedSensors)
+        : sensorPower(sensorPower), atlasSensors(atlasSensors),  attachedSensors(attachedSensors) {
     }
 };
 

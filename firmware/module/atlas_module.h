@@ -20,11 +20,11 @@ private:
     TwoWireBus moduleBus{ Wire4and3 };
     #endif
 
-    EnableSensors enableSensors;
+    SensorPower sensorPower;
     SensorModule atlasSensors;
     AttachedSensors attachedSensors{ moduleServices().readings };
     AtlasServices atlasServices{
-        &enableSensors,
+        &sensorPower,
         &atlasSensors,
         &attachedSensors,
     };

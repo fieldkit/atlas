@@ -3,10 +3,10 @@
 
 namespace fk {
 
-EnableSensors::EnableSensors() : Task("EnableSensors") {
+SensorPower::SensorPower() : Task("SensorPower") {
 }
 
-void EnableSensors::enqueued() {
+void SensorPower::enqueued() {
     if (!enabled()) {
         log("Powering up");
 
@@ -20,7 +20,7 @@ void EnableSensors::enqueued() {
     }
 }
 
-TaskEval EnableSensors::task() {
+TaskEval SensorPower::task() {
     if (expire_at_ > 0) {
         if (fk_uptime() > expire_at_) {
             expire_at_ = 0;
@@ -40,11 +40,11 @@ TaskEval EnableSensors::task() {
     return TaskEval::idle();
 }
 
-bool EnableSensors::enabled() const {
+bool SensorPower::enabled() const {
     return digitalRead(FK_ATLAS_PIN_PERIPH_ENABLE);
 }
 
-void EnableSensors::enabled(bool enabled) {
+void SensorPower::enabled(bool enabled) {
     digitalWrite(FK_ATLAS_PIN_PERIPH_ENABLE, enabled ? HIGH : LOW);
 }
 
