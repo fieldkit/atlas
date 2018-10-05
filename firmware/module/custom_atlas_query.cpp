@@ -27,10 +27,7 @@ void CustomAtlasQuery::task() {
 
     if (queryMessage.type == fk_atlas_QueryType_QUERY_ATLAS_COMMAND) {
         auto enableSensors = atlasServices().enableSensors;
-
-        enableSensors->enabled();
         enableSensors->enqueued();
-
         while (simple_task_run(*enableSensors)) {
             services().alive();
         }
