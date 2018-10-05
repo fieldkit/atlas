@@ -7,6 +7,7 @@
 #include "atlas_hardware.h"
 #include "atlas.h"
 
+#include "configure_atlas.h"
 #include "custom_atlas_query.h"
 #include "take_atlas_readings.h"
 
@@ -39,7 +40,7 @@ public:
 public:
     fk::ModuleStates states() override {
         return {
-            fk::ModuleFsm::deferred<fk::ConfigureModule>(),
+            fk::ModuleFsm::deferred<ConfigureAtlas>(),
             fk::ModuleFsm::deferred<TakeAtlasReadings>(),
             fk::ModuleFsm::deferred<CustomAtlasQuery>()
         };

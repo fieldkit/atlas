@@ -4,7 +4,7 @@ namespace fk {
 
 void TakeAtlasReadings::task() {
     auto sensorPower = atlasServices().sensorPower;
-    sensorPower->enqueued();
+    sensorPower->enable(AtlasDefaultMinimum);
     while (simple_task_run(*sensorPower)) {
         services().alive();
     }

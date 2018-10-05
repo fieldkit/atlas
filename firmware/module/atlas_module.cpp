@@ -15,13 +15,6 @@ void AtlasModule::begin() {
     attachedSensors.setup();
 
     AtlasModuleState::atlasServices(atlasServices);
-
-    sensorPower.enqueued();
-    while (simple_task_run(sensorPower)) {
-    }
-    atlasSensors.enqueued();
-    while (simple_task_run(atlasSensors)) {
-    }
 }
 
 void AtlasModule::tick() {

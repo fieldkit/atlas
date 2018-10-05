@@ -6,13 +6,15 @@ namespace fk {
 SensorPower::SensorPower() : Task("SensorPower") {
 }
 
-void SensorPower::enqueued() {
+void SensorPower::enable(uint32_t minimum) {
+    minimum_ = minimum;
+
     if (!enabled()) {
-        log("Powering up");
+        log("Powering up (%lums)", minimum_);
 
         enabled(true);
 
-        expire_at_ = fk_uptime() + 2000;
+        expire_at_ = fk_uptime() + AtlasPowerOnTime;
         last_powered_on_ = fk_uptime();
     }
     else {
@@ -30,10 +32,11 @@ TaskEval SensorPower::task() {
 
     if (enabled()) {
         auto elapsed = fk_uptime() - last_powered_on_;
-        if (elapsed > 10 * 1000) {
+        if (elapsed > minimum_) {
             log("Powering down");
             enabled(false);
             last_powered_on_ = 0;
+            minimum_ = 0;
         }
     }
 
