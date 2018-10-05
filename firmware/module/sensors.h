@@ -1,54 +1,13 @@
 #ifndef SENSORS_H_INCLUDED
 #define SENSORS_H_INCLUDED
 
-#include <Arduino.h>
-#undef min
-#undef max
-#include <functional>
+#include <fk-atlas-protocol.h>
+
+#include "atlas.h"
+
 #include <task.h>
 
 namespace fk {
-
-struct Compensation {
-    float temperature;
-    bool valid;
-
-    Compensation() {
-    }
-
-    Compensation(float temperature) : temperature(temperature), valid(true) {
-    }
-
-    operator bool() {
-        return valid && temperature >= -1000.0f;
-    }
-};
-
-struct TickSlice {
-    bool waitingOnSiblings { false };
-    std::function<void()> onFree;
-
-    TickSlice() {
-    }
-
-    TickSlice(std::function<void()> f) : waitingOnSiblings(true), onFree(f) {
-    }
-
-    void free() {
-        onFree();
-    }
-};
-
-class Sensor {
-public:
-    virtual bool setup() = 0;
-    virtual TickSlice tick() = 0;
-    virtual void compensate(Compensation compensation) = 0;
-    virtual bool beginReading(bool sleep) = 0;
-    virtual size_t numberOfReadingsReady() const = 0;
-    virtual bool isIdle() const = 0;
-    virtual size_t readAll(float *values) = 0;
-};
 
 class EnableSensors : public Task {
 private:
@@ -67,15 +26,47 @@ public:
 
 };
 
+constexpr size_t NumberOfSensors = 4
+    #ifdef FK_ENABLE_ATLAS_ORP
+    + 1
+    #endif
+    ;
+
 class SensorModule : public Task {
 private:
-    Sensor **sensors { nullptr };
-    const size_t numberOfSensors { 0 };
+    using WireAddress = uint8_t;
+
+    static constexpr WireAddress ATLAS_SENSOR_EC_DEFAULT_ADDRESS = 0x64;
+    static constexpr WireAddress ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS = 0x66;
+    static constexpr WireAddress ATLAS_SENSOR_PH_DEFAULT_ADDRESS = 0x63;
+    static constexpr WireAddress ATLAS_SENSOR_DO_DEFAULT_ADDRESS = 0x61;
+    static constexpr WireAddress ATLAS_SENSOR_ORP_DEFAULT_ADDRESS = 0x62;
+
+    TwoWireBus sensorBus{ Wire };
+    AtlasReader ec{sensorBus, ATLAS_SENSOR_EC_DEFAULT_ADDRESS};
+    AtlasReader ph{sensorBus, ATLAS_SENSOR_PH_DEFAULT_ADDRESS};
+    AtlasReader dissolvedOxygen{sensorBus, ATLAS_SENSOR_DO_DEFAULT_ADDRESS};
+    #ifdef FK_ENABLE_ATLAS_ORP
+    AtlasReader orp{sensorBus, ATLAS_SENSOR_ORP_DEFAULT_ADDRESS};
+    #endif
+    AtlasReader temp{sensorBus, ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS};
+    AtlasReader *sensors[NumberOfSensors];
+    const size_t numberOfSensors { NumberOfSensors };
 
 public:
-    template<size_t N>
-    SensorModule(Sensor *(&sensors)[N]) : Task("Sensors"), sensors(sensors), numberOfSensors(N) {
+    SensorModule() :
+        Task("Sensors"),
+        sensors {
+            &ec,
+            &ph,
+            &dissolvedOxygen,
+            #ifdef FK_ENABLE_ATLAS_ORP
+            &orp,
+            #endif
+            &temp
+        } {
     }
+
 
 public:
     bool setup();
@@ -89,7 +80,9 @@ public:
     bool isIdle() const;
     size_t numberOfReadingsReady() const;
 
-    Sensor *getSensor(size_t index) {
+    AtlasReader *getSensorByType(fk_atlas_SensorType type);
+
+    AtlasReader *getSensor(size_t index) {
         return sensors[index];
     }
 

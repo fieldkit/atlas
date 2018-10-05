@@ -66,13 +66,9 @@ void setup() {
         readings
     };
 
-    fk::TwoWireBus sensorBus{ Wire };
-    fk::AtlasModule module(info, sensorBus);
+    fk::AtlasModule module(info);
 
     module.begin();
-
-    // TODO: Investigate. I would see hangs if I used a slower speed.
-    sensorBus.begin(400000);
 
     while (true) {
         module.tick();

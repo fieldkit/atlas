@@ -4,8 +4,10 @@
 #include <Arduino.h>
 #include <Wire.h>
 
+#undef min
+#undef max
+#include <functional>
 #include "two_wire.h"
-#include "sensors.h"
 
 namespace fk {
 
@@ -49,7 +51,37 @@ enum class AtlasSensorType {
     Temp
 };
 
-class AtlasReader : public Sensor {
+struct Compensation {
+    float temperature;
+    bool valid;
+
+    Compensation() {
+    }
+
+    Compensation(float temperature) : temperature(temperature), valid(true) {
+    }
+
+    operator bool() {
+        return valid && temperature >= -1000.0f;
+    }
+};
+
+struct TickSlice {
+    bool waitingOnSiblings { false };
+    std::function<void()> onFree;
+
+    TickSlice() {
+    }
+
+    TickSlice(std::function<void()> f) : waitingOnSiblings(true), onFree(f) {
+    }
+
+    void free() {
+        onFree();
+    }
+};
+
+class AtlasReader {
 private:
     TwoWireBus *bus;
     uint8_t address { 0 };
@@ -66,15 +98,15 @@ private:
 
 public:
     AtlasReader(TwoWireBus &bus, uint8_t theAddress);
-    bool setup() override;
-    TickSlice tick() override;
-    void compensate(Compensation c) override {
+    bool setup();
+    TickSlice tick();
+    void compensate(Compensation c) {
         compensation = c;
     }
-    bool beginReading(bool sleep) override;
-    size_t readAll(float *values) override;
-    size_t numberOfReadingsReady() const override;
-    bool isIdle() const override;
+    bool beginReading(bool sleep);
+    size_t readAll(float *values);
+    size_t numberOfReadingsReady() const;
+    bool isIdle() const;
     void sleep();
     AtlasResponseCode singleCommand(const char *command);
     const char *lastReply() {

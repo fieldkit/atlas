@@ -6,6 +6,7 @@
 
 #include "atlas_hardware.h"
 #include "atlas.h"
+#include "sensors.h"
 
 #ifdef FK_ENABLE_MS5803
 #include <SparkFun_MS5803_I2C.h>

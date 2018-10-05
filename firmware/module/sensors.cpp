@@ -1,5 +1,5 @@
+#include "sensors.h"
 #include "atlas_hardware.h"
-#include "atlas.h"
 
 namespace fk {
 
@@ -37,6 +37,9 @@ void EnableSensors::enabled(bool enabled) {
 
 bool SensorModule::setup() {
     pinMode(FK_ATLAS_PIN_PERIPH_ENABLE, OUTPUT);
+
+    // TODO: Investigate. I would see hangs if I used a slower speed.
+    sensorBus.begin(400000);
 
     for (size_t i = 0; i < numberOfSensors; ++i) {
         sensors[i]->setup();
@@ -111,6 +114,21 @@ size_t SensorModule::readAll(float *values) {
     }
 
     return total;
+}
+
+AtlasReader *SensorModule::getSensorByType(fk_atlas_SensorType type) {
+    switch (type) {
+    case fk_atlas_SensorType_PH: return &ph;
+    case fk_atlas_SensorType_TEMP: return &temp;
+    #ifdef FK_ENABLE_ATLAS_ORP
+    case fk_atlas_SensorType_ORP: return &orp;
+    #endif
+    case fk_atlas_SensorType_DO: return &dissolvedOxygen;
+    case fk_atlas_SensorType_EC: return &ec;
+    }
+
+    fk_assert(false);
+    return nullptr;
 }
 
 }

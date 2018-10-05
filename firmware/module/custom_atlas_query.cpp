@@ -5,19 +5,20 @@ namespace fk {
 constexpr uint32_t CustomAtlasCommandTimeout = 3000;
 
 void CustomAtlasQuery::task() {
-    /*
-    pool.clear();
+    auto& outgoing = services().child->outgoing();
+    auto pool = *services().pool;
+    auto query = services().query;
 
     fk_atlas_WireAtlasQuery queryMessage = fk_atlas_WireAtlasQuery_init_default;
     queryMessage.atlasCommand.command.funcs.decode = pb_decode_string;
     queryMessage.atlasCommand.command.arg = (void *)&pool;
 
     {
-        auto raw = (pb_data_t *)query.m().custom.message.arg;
+        auto raw = (pb_data_t *)query->m().custom.message.arg;
         auto stream = pb_istream_from_buffer((uint8_t *)raw->buffer, raw->length);
         if (!pb_decode(&stream, fk_atlas_WireAtlasQuery_fields, &queryMessage)) {
             log("Error decoding Atlas query (%d).", raw->length);
-            return TaskEval::error();
+            return; // TaskEval::error();
         }
     }
 
@@ -25,20 +26,20 @@ void CustomAtlasQuery::task() {
     replyMessage.type = fk_atlas_ReplyType_REPLY_ERROR;
 
     if (queryMessage.type == fk_atlas_QueryType_QUERY_ATLAS_COMMAND) {
-        auto sensor = getSensor(queryMessage.atlasCommand.sensor);
+        auto sensor = atlasServices().atlasSensors->getSensorByType(queryMessage.atlasCommand.sensor);
         auto command = (const char *)queryMessage.atlasCommand.command.arg;
 
-        sensor.singleCommand(command);
+        sensor->singleCommand(command);
 
         auto started = millis();
-        while (millis() - started < CustomAtlasCommandTimeout && !sensor.isIdle()) {
-            sensor.tick();
+        while (millis() - started < CustomAtlasCommandTimeout && !sensor->isIdle()) {
+            sensor->tick();
         }
 
-        if (sensor.isIdle()) {
+        if (sensor->isIdle()) {
             replyMessage.type = fk_atlas_ReplyType_REPLY_ATLAS_COMMAND;
             replyMessage.atlasReply.reply.funcs.encode = pb_encode_string;
-            replyMessage.atlasReply.reply.arg = (void *)sensor.lastReply();
+            replyMessage.atlasReply.reply.arg = (void *)sensor->lastReply();
         }
         else {
             log("Error getting reply from sensor");
@@ -66,10 +67,13 @@ void CustomAtlasQuery::task() {
 
     log("Replying with %d bytes", messageData->length);
 
+    ModuleReplyMessage reply(pool);
     reply.m().type = fk_module_ReplyType_REPLY_CUSTOM;
     reply.m().custom.message.funcs.encode = pb_encode_data;
     reply.m().custom.message.arg = (void *)messageData;
-    */
+
+    outgoing.write(reply);
+
     transit<fk::ModuleIdle>();
 }
 
