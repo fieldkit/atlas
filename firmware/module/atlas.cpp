@@ -1,6 +1,6 @@
 #include "atlas.h"
 #include "debug.h"
-#include "tuning.h"
+#include "configuration.h"
 
 namespace fk {
 
@@ -61,7 +61,7 @@ TickSlice AtlasReader::tick() {
         break;
     }
     case AtlasReaderState::LedsOn: {
-        if (fk_uptime() > LedsDisableAfter) {
+        if (fk_uptime() > configuration.common.leds.disable_after) {
             sendCommand("L,0");
         }
         else {
