@@ -88,7 +88,7 @@ TickSlice AtlasReader::tick() {
         case AtlasSensorType::Ec: {
             sendCommand("O,?");
             state = AtlasReaderState::WaitingOnReply;
-            postReplyState = AtlasReaderState::EnableParameter;
+            postReplyState = AtlasReaderState::ConfigureParameter;
             break;
         }
         default: {
@@ -98,7 +98,7 @@ TickSlice AtlasReader::tick() {
         }
         break;
     }
-    case AtlasReaderState::EnableParameter: {
+    case AtlasReaderState::ConfigureParameter: {
         if (parameter < 4) {
             switch (parameter) {
             case 0: sendCommand("O,EC,1"); break;
@@ -107,14 +107,41 @@ TickSlice AtlasReader::tick() {
             case 3: sendCommand("O,SG,1"); break;
             }
             state = AtlasReaderState::WaitingOnEmptyReply;
-            postReplyState = AtlasReaderState::EnableParameter;
+            postReplyState = AtlasReaderState::ConfigureParameter;
             parameter++;
         }
         else {
+            #if defined(FK_ATLAS_HARD_CODED_PROBE_TYPE)
+            state = AtlasReaderState::QueryProbeType;
+            #else
             state = AtlasReaderState::WantSleep;
+            #endif
         }
         break;
     }
+    #if defined(FK_ATLAS_HARD_CODED_PROBE_TYPE)
+    case AtlasReaderState::QueryProbeType: {
+        switch (type) {
+        case AtlasSensorType::Ec: {
+            sendCommand("K,?");
+            state = AtlasReaderState::WaitingOnReply;
+            postReplyState = AtlasReaderState::ConfigureProbeType;
+            break;
+        }
+        default: {
+            state = AtlasReaderState::WantSleep;
+            break;
+        }
+        }
+        break;
+    }
+    case AtlasReaderState::ConfigureProbeType: {
+        sendCommand("K," FK_ATLAS_HARD_CODED_PROBE_TYPE);
+        state = AtlasReaderState::WaitingOnEmptyReply;
+        postReplyState = AtlasReaderState::WantSleep;
+        break;
+    }
+    #endif
     case AtlasReaderState::WantSleep: {
         return TickSlice{ [&]() {
                 sleep();

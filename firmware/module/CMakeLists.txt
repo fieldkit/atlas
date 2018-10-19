@@ -50,6 +50,8 @@ if(FK_PROFILE_AMAZON)
   target_compile_options(fk-atlas-amazon PUBLIC -DFK_PROFILE_AMAZON)
   target_compile_options(fk-atlas-amazon PUBLIC -DFK_DISABLE_ATLAS_ORP)
 
+  target_compile_options(fk-atlas-amazon PUBLIC -DFK_ATLAS_HARD_CODED_PROBE_TYPE="0.1")
+
   if(FK_MODULE_WIRE11AND13)
     target_compile_options(fk-atlas-amazon PUBLIC -DFK_HARDWARE_WIRE11AND13_ENABLE)
     target_compile_options(fk-atlas-amazon PUBLIC -DFK_MODULE_WIRE11AND13)
