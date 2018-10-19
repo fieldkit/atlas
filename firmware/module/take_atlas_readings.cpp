@@ -1,4 +1,5 @@
 #include "take_atlas_readings.h"
+#include "reboot_device.h"
 
 namespace fk {
 
@@ -35,9 +36,16 @@ void TakeAtlasReadings::task() {
         atlasServices().compensation = Compensation{ values[size - 1] };
 
         atlasServices().attachedSensors->take(size);
-    }
 
-    transit<ModuleIdle>();
+        transit<ModuleIdle>();
+    }
+    else {
+        // We're rebooting here because we're not seeing all the values we're
+        // expecting. Rebooting will trigger a re-initialization. Sometimes this
+        // is because of the EC sensor output parameters or some other strange
+        // hiccup.
+        transit<RebootDevice>();
+    }
 }
 
 }
