@@ -80,7 +80,39 @@ TickSlice AtlasReader::tick() {
     case AtlasReaderState::Blink: {
         sendCommand("FIND");
         state = AtlasReaderState::WaitingOnEmptyReply;
-        postReplyState = AtlasReaderState::WantSleep;
+        postReplyState = AtlasReaderState::QueryParameters;
+        break;
+    }
+    case AtlasReaderState::QueryParameters: {
+        switch (type) {
+        case AtlasSensorType::Ec: {
+            sendCommand("O,?");
+            state = AtlasReaderState::WaitingOnReply;
+            postReplyState = AtlasReaderState::EnableParameter;
+            break;
+        }
+        default: {
+            state = AtlasReaderState::WantSleep;
+            break;
+        }
+        }
+        break;
+    }
+    case AtlasReaderState::EnableParameter: {
+        if (parameter < 4) {
+            switch (parameter) {
+            case 0: sendCommand("O,EC,1"); break;
+            case 1: sendCommand("O,TDS,1"); break;
+            case 2: sendCommand("O,S,1"); break;
+            case 3: sendCommand("O,SG,1"); break;
+            }
+            state = AtlasReaderState::WaitingOnEmptyReply;
+            postReplyState = AtlasReaderState::EnableParameter;
+            parameter++;
+        }
+        else {
+            state = AtlasReaderState::WantSleep;
+        }
         break;
     }
     case AtlasReaderState::WantSleep: {
@@ -104,7 +136,7 @@ TickSlice AtlasReader::tick() {
                 char command[20];
                 snprintf(command, sizeof(buffer), "T,%f", compensation.temperature);
                 sendCommand(command, ATLAS_DEFAULT_DELAY_COMMAND_READ);
-                state = AtlasReaderState::WaitingOnReply;
+                state = AtlasReaderState::WaitingOnEmptyReply;
                 postReplyState = AtlasReaderState::TakeReading;
                 break;
             }
@@ -167,7 +199,7 @@ AtlasResponseCode AtlasReader::singleCommand(const char *command) {
 }
 
 AtlasResponseCode AtlasReader::sendCommand(const char *str, uint32_t readDelay) {
-    loginfof(Log, "Atlas(0x%x) <- ('%s', %lu))", address, str, readDelay);
+    loginfof(Log, "Atlas(0x%x, %s) <- ('%s', %lu))", address, typeName(), str, readDelay);
 
     bus->send(address, str);
 
@@ -176,12 +208,25 @@ AtlasResponseCode AtlasReader::sendCommand(const char *str, uint32_t readDelay) 
 }
 
 static AtlasSensorType getSensorType(const char *buffer) {
-    if (strstr(buffer, "RTD") != nullptr)  return AtlasSensorType::Temp;
-    if (strstr(buffer, "pH") != nullptr)  return AtlasSensorType::Ph;
-    if (strstr(buffer, "DO") != nullptr)  return AtlasSensorType::Do;
-    if (strstr(buffer, "ORP") != nullptr)  return AtlasSensorType::Orp;
-    if (strstr(buffer, "EC") != nullptr)  return AtlasSensorType::Ec;
+    if (strstr(buffer, "RTD") != nullptr) return AtlasSensorType::Temp;
+    if (strstr(buffer, "pH") != nullptr) return AtlasSensorType::Ph;
+    if (strstr(buffer, "DO") != nullptr) return AtlasSensorType::Do;
+    if (strstr(buffer, "ORP") != nullptr) return AtlasSensorType::Orp;
+    if (strstr(buffer, "EC") != nullptr) return AtlasSensorType::Ec;
     return AtlasSensorType::Unknown;
+}
+
+const char *AtlasReader::typeName() {
+    switch (type) {
+    case AtlasSensorType::Unknown: return "Unknown";
+    case AtlasSensorType::Ph: return "PH";
+    case AtlasSensorType::Ec: return "EC";
+    case AtlasSensorType::Orp: return "ORP";
+    case AtlasSensorType::Do: return "DO";
+    case AtlasSensorType::Temp: return "TEMP";
+    default:
+        return "Invalid";
+    }
 }
 
 AtlasResponseCode AtlasReader::readReply(char *buffer, size_t length) {
@@ -190,6 +235,12 @@ AtlasResponseCode AtlasReader::readReply(char *buffer, size_t length) {
     auto code = static_cast<AtlasResponseCode>(bus->read());
     if (code == AtlasResponseCode::NotReady) {
         return AtlasResponseCode::NotReady;
+    }
+    if (code == AtlasResponseCode::NoData) {
+        if (buffer != nullptr) {
+            loginfof(Log, "Atlas(0x%x, %s) -> (code=0x%x)", address, typeName(), code);
+            return AtlasResponseCode::NotReady;
+        }
     }
 
     size_t i = 0;
@@ -206,7 +257,7 @@ AtlasResponseCode AtlasReader::readReply(char *buffer, size_t length) {
 
     if (buffer != nullptr) {
         buffer[i] = 0;
-        loginfof(Log, "Atlas(0x%x) -> ('%s') (code=0x%x)", address, buffer, code);
+        loginfof(Log, "Atlas(0x%x, %s) -> ('%s') (code=0x%x)", address, typeName(), buffer, code);
 
         if (type == AtlasSensorType::Unknown) {
             type = getSensorType(buffer);

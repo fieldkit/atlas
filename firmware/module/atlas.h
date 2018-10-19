@@ -35,6 +35,9 @@ enum class AtlasReaderState {
     Sleeping,
     Idle,
     ParseReading,
+    QueryParameters,
+    CheckParameters,
+    EnableParameter,
     ApplyCompensation,
     TakeReading,
     WaitingOnReply,
@@ -95,6 +98,7 @@ private:
     uint8_t tries{ 0 };
     bool sleepAfter{ true };
     Compensation compensation;
+    uint8_t parameter{ 0 };
 
 public:
     AtlasReader(TwoWireBus &bus, uint8_t theAddress);
@@ -116,6 +120,7 @@ public:
 private:
     AtlasResponseCode sendCommand(const char *str, uint32_t readDelay = ATLAS_DEFAULT_DELAY_COMMAND);
     AtlasResponseCode readReply(char *buffer, size_t length);
+    const char *typeName();
 
 };
 
