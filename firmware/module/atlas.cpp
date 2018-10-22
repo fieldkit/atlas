@@ -1,6 +1,7 @@
 #include "atlas.h"
 #include "debug.h"
 #include "configuration.h"
+#include "atlas_configuration.h"
 
 namespace fk {
 
@@ -256,19 +257,34 @@ const char *AtlasReader::typeName() {
     }
 }
 
+static bool shouldRetry(AtlasResponseCode code, char *buffer) {
+    if (code == AtlasResponseCode::NotReady) {
+        return true;
+    }
+    if (code == AtlasResponseCode::NoData) {
+        if (buffer != nullptr) {
+            return true;
+        }
+    }
+    return false;
+}
+
 AtlasResponseCode AtlasReader::readReply(char *buffer, size_t length) {
     bus->requestFrom(address, 1 + length, (uint8_t)1);
 
     auto code = static_cast<AtlasResponseCode>(bus->read());
-    if (code == AtlasResponseCode::NotReady) {
+    if (shouldRetry(code, buffer)) {
+        tries++;
+        loginfof(Log, "Atlas(0x%x, %s) -> (code=0x%x) (%d/%d)", address, typeName(), code,
+                 tries, atlas_configuration.maximum_atlas_retries);
+        if (tries == atlas_configuration.maximum_atlas_retries) {
+            tries = 0;
+            return AtlasResponseCode::Error;
+        }
         return AtlasResponseCode::NotReady;
     }
-    if (code == AtlasResponseCode::NoData) {
-        if (buffer != nullptr) {
-            loginfof(Log, "Atlas(0x%x, %s) -> (code=0x%x)", address, typeName(), code);
-            return AtlasResponseCode::NotReady;
-        }
-    }
+
+    tries = 0;
 
     size_t i = 0;
     while (bus->available()) {
@@ -316,10 +332,6 @@ AtlasResponseCode AtlasReader::readReply(char *buffer, size_t length) {
 
             if (numberOfValues == 0) {
                 loginfof(Log, "No values, retry?");
-                tries++;
-            }
-            else {
-                tries = 0;
             }
         }
     }
