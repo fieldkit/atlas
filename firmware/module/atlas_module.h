@@ -38,7 +38,7 @@ public:
     void tick() override;
 
 public:
-    fk::ModuleStates states() override {
+    ModuleStates states() override {
         return {
             fk::ModuleFsm::deferred<ConfigureAtlas>(),
             fk::ModuleFsm::deferred<TakeAtlasReadings>(),
