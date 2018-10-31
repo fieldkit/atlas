@@ -17,6 +17,13 @@ void setup() {
         delay(100);
     }
 
+    if (!Serial) {
+        // The call to end here seems to free up some memory.
+        Serial.end();
+        Serial5.begin(115200);
+        log_uart_set(Serial5);
+    }
+
     firmware_version_set(FIRMWARE_GIT_HASH);
     firmware_build_set(FIRMWARE_BUILD);
     firmware_compiled_set(DateTime(__DATE__, __TIME__).unixtime());
