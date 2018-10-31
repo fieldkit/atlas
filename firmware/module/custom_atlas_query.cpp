@@ -27,10 +27,7 @@ void CustomAtlasQuery::task() {
 
     if (queryMessage.type == fk_atlas_QueryType_QUERY_ATLAS_COMMAND) {
         auto sensorPower = atlasServices().sensorPower;
-        sensorPower->enable(AtlasCustomQueryMinimum);
-        while (simple_task_run(*sensorPower)) {
-            services().alive();
-        }
+        sensorPower->enable();
 
         auto sensor = atlasServices().atlasSensors->getSensorByType(queryMessage.atlasCommand.sensor);
         auto command = (const char *)queryMessage.atlasCommand.command.arg;

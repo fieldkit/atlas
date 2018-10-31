@@ -5,21 +5,21 @@
 
 namespace fk {
 
-constexpr uint32_t AtlasDefaultMinimum = 20 * Seconds;
-constexpr uint32_t AtlasCustomQueryMinimum = 5 * Minutes;
-constexpr uint32_t AtlasPowerOnTime = 2 * Seconds;
+constexpr uint32_t AtlasPowerOnTime = 1 * Seconds;
+constexpr uint32_t AtlasPowerOffTime = 5 * Seconds;
 
 class SensorPower : public Task {
 private:
     uint32_t last_powered_on_{ 0 };
-    uint32_t expire_at_{ 0 };
-    uint32_t minimum_{ 0 };
+    uint32_t turn_off_at_{ 0 };
 
 public:
     SensorPower();
 
 public:
-    void enable(uint32_t minimum);
+    void enable();
+    bool ready();
+    void busy();
 
 public:
     TaskEval task() override;

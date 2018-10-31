@@ -4,6 +4,7 @@
 #include <fk-atlas-protocol.h>
 
 #include "atlas.h"
+#include "sensor_power.h"
 
 #include <task.h>
 
@@ -25,6 +26,7 @@ private:
     static constexpr WireAddress ATLAS_SENSOR_DO_DEFAULT_ADDRESS = 0x61;
     static constexpr WireAddress ATLAS_SENSOR_ORP_DEFAULT_ADDRESS = 0x62;
 
+    SensorPower *sensorPower;
     TwoWireBus sensorBus{ Wire };
     AtlasReader ec{sensorBus, ATLAS_SENSOR_EC_DEFAULT_ADDRESS};
     AtlasReader ph{sensorBus, ATLAS_SENSOR_PH_DEFAULT_ADDRESS};
@@ -37,8 +39,9 @@ private:
     const size_t numberOfSensors { NumberOfSensors };
 
 public:
-    SensorModule() :
+    SensorModule(SensorPower &sensorPower) :
         Task("Sensors"),
+        sensorPower(&sensorPower),
         sensors {
             &ec,
             &ph,

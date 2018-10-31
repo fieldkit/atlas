@@ -12,7 +12,7 @@
 
 namespace fk {
 
-struct AtlasServices {
+struct AtlasServices : public ModuleHooks {
     SensorPower *sensorPower;
     SensorModule *atlasSensors;
     AttachedSensors *attachedSensors;
@@ -21,6 +21,8 @@ struct AtlasServices {
     AtlasServices(SensorPower *sensorPower, SensorModule *atlasSensors, AttachedSensors *attachedSensors)
         : sensorPower(sensorPower), atlasSensors(atlasSensors),  attachedSensors(attachedSensors) {
     }
+
+    void alive() override;
 };
 
 class AtlasModuleState : public ModuleServicesState {

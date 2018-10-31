@@ -22,7 +22,7 @@ private:
     #endif
 
     SensorPower sensorPower;
-    SensorModule atlasSensors;
+    SensorModule atlasSensors{ sensorPower };
     AttachedSensors attachedSensors{ moduleServices().readings };
     AtlasServices atlasServices{
         &sensorPower,
@@ -35,7 +35,9 @@ public:
 
 public:
     void begin() override;
-    void tick() override;
+    ModuleHooks *hooks() override {
+        return &atlasServices;
+    }
 
 public:
     ModuleStates states() override {

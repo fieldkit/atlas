@@ -17,6 +17,10 @@ bool SensorModule::setup() {
 }
 
 TaskEval SensorModule::task() {
+    if (!sensorPower->ready()) {
+        return TaskEval::busy();
+    }
+
     auto allWaiting = true;
     TickSlice slices[numberOfSensors];
     for (size_t i = 0; i < numberOfSensors; ++i) {
@@ -25,14 +29,18 @@ TaskEval SensorModule::task() {
             allWaiting = false;
         }
     }
+
     if (allWaiting) {
         for (size_t i = 0; i < numberOfSensors; ++i) {
             slices[i].free();
         }
     }
+
     if (isBusy()) {
+        sensorPower->busy();
         return TaskEval::busy();
     }
+
     return TaskEval::done();
 }
 

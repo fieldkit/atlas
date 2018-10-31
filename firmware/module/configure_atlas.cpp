@@ -4,16 +4,10 @@ namespace fk {
 
 void ConfigureAtlas::task() {
     auto sensorPower = atlasServices().sensorPower;
-    sensorPower->enable(AtlasDefaultMinimum);
-    while (simple_task_run(*sensorPower)) {
-        services().alive();
-    }
+    sensorPower->enable();
 
     auto atlasSensors = atlasServices().atlasSensors;
     atlasSensors->enqueued();
-    while (simple_task_run(*atlasSensors)) {
-        services().alive();
-    }
 
     transit<ModuleIdle>();
 }

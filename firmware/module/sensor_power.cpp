@@ -6,37 +6,37 @@ namespace fk {
 SensorPower::SensorPower() : Task("SensorPower") {
 }
 
-void SensorPower::enable(uint32_t minimum) {
-    minimum_ = minimum;
-
+void SensorPower::enable() {
     if (!enabled()) {
-        log("Powering up (%lums)", minimum_);
+        log("Powering up...");
 
         enabled(true);
 
-        expire_at_ = fk_uptime() + AtlasPowerOnTime;
         last_powered_on_ = fk_uptime();
     }
-    else {
-        expire_at_ = fk_uptime();
+
+    busy();
+}
+
+bool SensorPower::ready() {
+    if (last_powered_on_ == 0) {
+        return false;
     }
+
+    return fk_uptime() - last_powered_on_ > AtlasPowerOnTime;
+}
+
+void SensorPower::busy() {
+    turn_off_at_ = fk_uptime() + AtlasPowerOffTime;
 }
 
 TaskEval SensorPower::task() {
-    if (expire_at_ > 0) {
-        if (fk_uptime() > expire_at_) {
-            expire_at_ = 0;
-            return TaskEval::done();
-        }
-    }
-
     if (enabled()) {
-        auto elapsed = fk_uptime() - last_powered_on_;
-        if (elapsed > minimum_) {
+        if (fk_uptime() > turn_off_at_) {
             log("Powering down");
             enabled(false);
             last_powered_on_ = 0;
-            minimum_ = 0;
+            turn_off_at_ = 0;
         }
     }
 

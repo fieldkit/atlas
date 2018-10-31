@@ -17,9 +17,4 @@ void AtlasModule::begin() {
     AtlasModuleState::atlasServices(atlasServices);
 }
 
-void AtlasModule::tick() {
-    Module::tick();
-    sensorPower.task();
-}
-
 }
