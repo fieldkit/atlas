@@ -1,11 +1,11 @@
 EESchema-LIBRARY Version 2.4
 #encoding utf-8
 #
-# conservify:3V3
+# conservify_3V3
 #
-DEF conservify:3V3 #PWR 0 0 Y Y 1 F P
+DEF conservify_3V3 #PWR 0 0 Y Y 1 F P
 F0 "#PWR" 0 -150 50 H I C CNN
-F1 "conservify:3V3" 0 140 50 H V C CNN
+F1 "conservify_3V3" 0 140 50 H V C CNN
 F2 "" 0 0 60 H V C CNN
 F3 "" 0 0 60 H V C CNN
 DRAW
@@ -15,11 +15,11 @@ X 3V3 1 0 0 0 U 50 50 1 1 W N
 ENDDRAW
 ENDDEF
 #
-# conservify:5V0
+# conservify_5V0
 #
-DEF conservify:5V0 #PWR 0 0 Y Y 1 F P
+DEF conservify_5V0 #PWR 0 0 Y Y 1 F P
 F0 "#PWR" 0 -150 50 H I C CNN
-F1 "conservify:5V0" 0 140 50 H V C CNN
+F1 "conservify_5V0" 0 140 50 H V C CNN
 F2 "" 0 0 60 H V C CNN
 F3 "" 0 0 60 H V C CNN
 DRAW
@@ -29,11 +29,11 @@ X 5V0 1 0 0 0 U 50 50 1 1 W N
 ENDDRAW
 ENDDEF
 #
-# conservify:ADM3260
+# conservify_ADM3260
 #
-DEF conservify:ADM3260 U 0 40 Y Y 1 F N
+DEF conservify_ADM3260 U 0 40 Y Y 1 F N
 F0 "U" 0 -150 60 H V C CNN
-F1 "conservify:ADM3260" 0 0 60 H V C CNN
+F1 "conservify_ADM3260" 0 0 60 H V C CNN
 F2 "" 0 0 60 H I C CNN
 F3 "" 0 0 60 H I C CNN
 DRAW
@@ -61,11 +61,11 @@ X VIN 9 -750 300 200 R 50 50 1 1 I
 ENDDRAW
 ENDDEF
 #
-# conservify:ATLAS_SENSOR
+# conservify_ATLAS_SENSOR
 #
-DEF conservify:ATLAS_SENSOR U 0 40 Y Y 1 F N
+DEF conservify_ATLAS_SENSOR U 0 40 Y Y 1 F N
 F0 "U" -450 -350 60 H V C CNN
-F1 "conservify:ATLAS_SENSOR" 50 -50 60 H V C CNN
+F1 "conservify_ATLAS_SENSOR" 50 -50 60 H V C CNN
 F2 "" 0 0 60 H I C CNN
 F3 "" 0 0 60 H I C CNN
 DRAW
@@ -79,11 +79,11 @@ X PGND 6 900 0 200 L 50 50 1 1 I
 ENDDRAW
 ENDDEF
 #
-# conservify:ATLAS_WATER_PROBE
+# conservify_ATLAS_WATER_PROBE
 #
-DEF conservify:ATLAS_WATER_PROBE P 0 40 Y Y 1 F N
+DEF conservify_ATLAS_WATER_PROBE P 0 40 Y Y 1 F N
 F0 "P" 0 0 60 H V C CNN
-F1 "conservify:ATLAS_WATER_PROBE" 0 -100 60 H V C CNN
+F1 "conservify_ATLAS_WATER_PROBE" 0 -100 60 H V C CNN
 F2 "" 0 0 60 H I C CNN
 F3 "" 0 0 60 H I C CNN
 DRAW
@@ -91,11 +91,11 @@ S -450 150 450 -250 0 1 0 N
 ENDDRAW
 ENDDEF
 #
-# conservify:ATSAMD21G18A_AU
+# conservify_ATSAMD21G18A_AU
 #
-DEF conservify:ATSAMD21G18A_AU U 0 40 Y Y 1 F N
+DEF conservify_ATSAMD21G18A_AU U 0 40 Y Y 1 F N
 F0 "U" -650 1300 60 H V C CNN
-F1 "conservify:ATSAMD21G18A_AU" 0 0 60 H V C CNN
+F1 "conservify_ATSAMD21G18A_AU" 0 0 60 H V C CNN
 F2 "conservify:TQFP-48_7x7mm_Pitch0.5mm" 0 -1550 60 H I C CNN
 F3 "" 0 450 60 H V C CNN
 $FPLIST
@@ -154,11 +154,11 @@ X PA04 9 -850 750 150 R 40 40 1 1 B
 ENDDRAW
 ENDDEF
 #
-# conservify:CAPACITOR_CERAMIC
+# conservify_CAPACITOR_CERAMIC
 #
-DEF conservify:CAPACITOR_CERAMIC C 0 10 Y Y 1 F N
+DEF conservify_CAPACITOR_CERAMIC C 0 10 Y Y 1 F N
 F0 "C" 25 100 50 H V L CNN
-F1 "conservify:CAPACITOR_CERAMIC" 25 -100 50 H V L CNN
+F1 "conservify_CAPACITOR_CERAMIC" 25 -100 50 H V L CNN
 F2 "conservify:CAP-0603" 0 -200 30 H I C CNN
 F3 "" 0 0 60 H V C CNN
 $FPLIST
@@ -177,11 +177,11 @@ X ~ 2 0 -150 110 U 40 40 1 1 P
 ENDDRAW
 ENDDEF
 #
-# conservify:CONN_01x02
+# conservify_CONN_01x02
 #
-DEF conservify:CONN_01x02 J 0 40 Y N 1 F N
+DEF conservify_CONN_01x02 J 0 40 Y N 1 F N
 F0 "J" 0 100 50 H V C CNN
-F1 "conservify:CONN_01x02" 0 -200 50 H V C CNN
+F1 "conservify_CONN_01x02" 0 -200 50 H V C CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 $FPLIST
@@ -201,11 +201,11 @@ X Pin_2 2 -200 -100 150 R 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# conservify:CONN_01x03_SERIAL
+# conservify_CONN_01x03_SERIAL
 #
-DEF conservify:CONN_01x03_SERIAL J 0 0 N Y 1 F N
+DEF conservify_CONN_01x03_SERIAL J 0 0 N Y 1 F N
 F0 "J" 0 200 50 H V C CNN
-F1 "conservify:CONN_01x03_SERIAL" 0 -200 50 H V C CNN
+F1 "conservify_CONN_01x03_SERIAL" 0 -200 50 H V C CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 $FPLIST
@@ -227,11 +227,11 @@ X D30 3 -200 -100 150 R 50 39 1 1 P
 ENDDRAW
 ENDDEF
 #
-# conservify:CONN_01x04
+# conservify_CONN_01x04
 #
-DEF conservify:CONN_01x04 J 0 40 Y N 1 F N
+DEF conservify_CONN_01x04 J 0 40 Y N 1 F N
 F0 "J" 0 200 50 H V C CNN
-F1 "conservify:CONN_01x04" 0 -300 50 H V C CNN
+F1 "conservify_CONN_01x04" 0 -300 50 H V C CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 $FPLIST
@@ -255,11 +255,11 @@ X Pin_4 4 -200 -200 150 R 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# conservify:CONN_01x05
+# conservify_CONN_01x05
 #
-DEF conservify:CONN_01x05 J 0 40 Y N 1 F N
+DEF conservify_CONN_01x05 J 0 40 Y N 1 F N
 F0 "J" 0 300 50 H V C CNN
-F1 "conservify:CONN_01x05" 0 -300 50 H V C CNN
+F1 "conservify_CONN_01x05" 0 -300 50 H V C CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 $FPLIST
@@ -285,11 +285,11 @@ X Pin_5 5 -200 -200 150 R 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# conservify:CONN_02x05_SWD
+# conservify_CONN_02x05_SWD
 #
-DEF ~conservify:CONN_02x05_SWD J 0 40 Y N 1 F N
+DEF ~conservify_CONN_02x05_SWD J 0 40 Y N 1 F N
 F0 "J" 0 300 60 H V C CNN
-F1 "conservify:CONN_02x05_SWD" -50 -350 60 H I C CNN
+F1 "conservify_CONN_02x05_SWD" -50 -350 60 H I C CNN
 F2 "" 0 -450 60 H I C CNN
 F3 "" -50 -150 60 H V C CNN
 $FPLIST
@@ -325,11 +325,11 @@ X Pin_9 9 -250 -200 150 R 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# conservify:CRYSTAL
+# conservify_CRYSTAL
 #
-DEF conservify:CRYSTAL Y 0 40 N N 1 F N
+DEF conservify_CRYSTAL Y 0 40 N N 1 F N
 F0 "Y" 0 150 50 H V C CNN
-F1 "conservify:CRYSTAL" 0 -150 50 H V C CNN
+F1 "conservify_CRYSTAL" 0 -150 50 H V C CNN
 F2 "conservify:ABS07" 0 -250 60 H I C CNN
 F3 "" 0 0 60 H V C CNN
 $FPLIST
@@ -344,11 +344,11 @@ X 2 2 250 0 150 L 40 40 1 1 P
 ENDDRAW
 ENDDEF
 #
-# conservify:DIODE_DUAL_SCHOTTKY
+# conservify_DIODE_DUAL_SCHOTTKY
 #
-DEF conservify:DIODE_DUAL_SCHOTTKY D 0 40 N N 1 F N
+DEF conservify_DIODE_DUAL_SCHOTTKY D 0 40 N N 1 F N
 F0 "D" 0 250 50 H V C CNN
-F1 "conservify:DIODE_DUAL_SCHOTTKY" 0 -250 50 H V C CNN
+F1 "conservify_DIODE_DUAL_SCHOTTKY" 0 -250 50 H V C CNN
 F2 "conservify:SOT-1016" 0 -350 60 H I C CNN
 F3 "" 0 100 60 H V C CNN
 $FPLIST
@@ -371,11 +371,11 @@ X K 3 -300 0 150 R 50 50 1 1 w
 ENDDRAW
 ENDDEF
 #
-# conservify:FIDUCIAL
+# conservify_FIDUCIAL
 #
-DEF conservify:FIDUCIAL M 0 40 Y Y 1 F N
+DEF conservify_FIDUCIAL M 0 40 Y Y 1 F N
 F0 "M" 0 150 60 H V C CNN
-F1 "conservify:FIDUCIAL" 0 -225 60 H V C CNN
+F1 "conservify_FIDUCIAL" 0 -225 60 H V C CNN
 F2 "conservify:FIDUCIAL-1MM" 0 -300 60 H I C CNN
 F3 "" 0 0 60 H V C CNN
 DRAW
@@ -384,11 +384,11 @@ X ~ ~ 0 -150 150 U 50 50 1 1 I
 ENDDRAW
 ENDDEF
 #
-# conservify:FUSE
+# conservify_FUSE
 #
-DEF conservify:FUSE F 0 10 Y Y 1 F N
+DEF conservify_FUSE F 0 10 Y Y 1 F N
 F0 "F" 100 50 50 H V C CNN
-F1 "conservify:FUSE" -100 -50 50 H V C CNN
+F1 "conservify_FUSE" -100 -50 50 H V C CNN
 F2 "conservify:MF-PSMF020X" 0 -150 60 H I C CNN
 F3 "" 0 0 60 H V C CNN
 $FPLIST
@@ -402,11 +402,11 @@ X ~ 2 300 0 150 L 40 40 1 1 I
 ENDDRAW
 ENDDEF
 #
-# conservify:GND
+# conservify_GND
 #
-DEF ~conservify:GND #PWR 0 0 Y Y 1 F P
+DEF ~conservify_GND #PWR 0 0 Y Y 1 F P
 F0 "#PWR" 0 -250 50 H I C CNN
-F1 "conservify:GND" 0 -150 50 H I C CNN
+F1 "conservify_GND" 0 -150 50 H I C CNN
 F2 "" 0 0 60 H V C CNN
 F3 "" 0 0 60 H V C CNN
 DRAW
@@ -418,11 +418,11 @@ X GND 1 0 0 0 D 50 50 1 1 W N
 ENDDRAW
 ENDDEF
 #
-# conservify:INDUCTOR
+# conservify_INDUCTOR
 #
-DEF conservify:INDUCTOR L 0 40 N N 1 F N
+DEF conservify_INDUCTOR L 0 40 N N 1 F N
 F0 "L" 0 -50 50 H V C CNN
-F1 "conservify:INDUCTOR" 0 100 50 H V C CNN
+F1 "conservify_INDUCTOR" 0 100 50 H V C CNN
 F2 "conservify:IND-0603" 0 -150 60 H I C CNN
 F3 "" 0 0 60 V V C CNN
 $FPLIST
@@ -443,11 +443,11 @@ X 2 2 300 0 150 L 70 70 1 1 P
 ENDDRAW
 ENDDEF
 #
-# conservify:LED_SINGLE
+# conservify_LED_SINGLE
 #
-DEF conservify:LED_SINGLE D 0 40 Y N 1 F N
+DEF conservify_LED_SINGLE D 0 40 Y N 1 F N
 F0 "D" 0 100 50 H V C CNN
-F1 "conservify:LED_SINGLE" 0 -140 50 H V C CNN
+F1 "conservify_LED_SINGLE" 0 -140 50 H V C CNN
 F2 "conservify:LED-0603" 0 -250 60 H I C CNN
 F3 "" 0 0 60 H V C CNN
 $FPLIST
@@ -465,11 +465,11 @@ X A 2 200 0 150 L 40 40 1 1 P
 ENDDRAW
 ENDDEF
 #
-# conservify:MCP1700T-XXX2E
+# conservify_MCP1700T-XXX2E
 #
-DEF conservify:MCP1700T-XXX2E U 0 40 Y Y 1 F N
+DEF conservify_MCP1700T-XXX2E U 0 40 Y Y 1 F N
 F0 "U" 0 150 60 H V C CNN
-F1 "conservify:MCP1700T-XXX2E" 0 -550 60 H V C CNN
+F1 "conservify_MCP1700T-XXX2E" 0 -550 60 H V C CNN
 F2 "conservify:SOT-89" 0 -650 60 H I C CNN
 F3 "" -100 0 60 H V C CNN
 $FPLIST
@@ -483,11 +483,11 @@ X VOUT 3 350 0 150 L 50 50 1 1 w
 ENDDRAW
 ENDDEF
 #
-# conservify:MICRO_USB
+# conservify_MICRO_USB
 #
-DEF conservify:MICRO_USB J 0 40 Y Y 1 F N
+DEF conservify_MICRO_USB J 0 40 Y Y 1 F N
 F0 "J" 0 350 60 H V C CNN
-F1 "conservify:MICRO_USB" 0 -350 60 H V C CNN
+F1 "conservify_MICRO_USB" 0 -350 60 H V C CNN
 F2 "conservify:MICRO-USB" 0 -450 60 H I C CNN
 F3 "" 50 200 60 H V C CNN
 $FPLIST
@@ -507,11 +507,11 @@ X SHIELD 9 -400 100 150 R 40 40 1 1 I
 ENDDRAW
 ENDDEF
 #
-# conservify:MOSFET_N
+# conservify_MOSFET_N
 #
-DEF conservify:MOSFET_N Q 0 0 Y Y 1 F N
+DEF conservify_MOSFET_N Q 0 0 Y Y 1 F N
 F0 "Q" 250 50 50 H V R CNN
-F1 "conservify:MOSFET_N" 550 -50 50 H V R CNN
+F1 "conservify_MOSFET_N" 550 -50 50 H V R CNN
 F2 "conservify:SOT-23" 0 -300 29 H I C CNN
 F3 "" -100 0 60 H V C CNN
 $FPLIST
@@ -542,11 +542,11 @@ X D 3 0 250 150 D 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# conservify:MOUNT_HOLE
+# conservify_MOUNT_HOLE
 #
-DEF ~conservify:MOUNT_HOLE M 0 40 Y Y 1 F N
+DEF ~conservify_MOUNT_HOLE M 0 40 Y Y 1 F N
 F0 "M" 0 150 50 H V C CNN
-F1 "conservify:MOUNT_HOLE" 0 -150 50 H I C CNN
+F1 "conservify_MOUNT_HOLE" 0 -150 50 H I C CNN
 F2 "conservify:HOLE_PTH_3.2MM" 25 -225 50 H I C CNN
 F3 "" 0 0 50 H V C CNN
 $FPLIST
@@ -562,11 +562,11 @@ P 2 0 1 0 25 25 -25 -25 N
 ENDDRAW
 ENDDEF
 #
-# conservify:PRTR5V0U2X
+# conservify_PRTR5V0U2X
 #
-DEF conservify:PRTR5V0U2X D 0 40 Y Y 1 F N
+DEF conservify_PRTR5V0U2X D 0 40 Y Y 1 F N
 F0 "D" 50 350 60 H V C CNN
-F1 "conservify:PRTR5V0U2X" 0 -600 60 H V C CNN
+F1 "conservify_PRTR5V0U2X" 0 -600 60 H V C CNN
 F2 "conservify:SOT-143B" 0 -500 60 H I C CNN
 F3 "" -150 0 60 H V C CNN
 $FPLIST
@@ -607,11 +607,11 @@ X ~ 4 -150 400 150 D 50 50 1 1 I
 ENDDRAW
 ENDDEF
 #
-# conservify:PWR_FLAG
+# conservify_PWR_FLAG
 #
-DEF conservify:PWR_FLAG #FLG 0 0 N N 1 F P
+DEF conservify_PWR_FLAG #FLG 0 0 N N 1 F P
 F0 "#FLG" 0 75 50 H I C CNN
-F1 "conservify:PWR_FLAG" 0 150 50 H V C CNN
+F1 "conservify_PWR_FLAG" 0 150 50 H V C CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 DRAW
@@ -620,11 +620,11 @@ X pwr 1 0 0 0 U 50 50 0 0 w
 ENDDRAW
 ENDDEF
 #
-# conservify:R
+# conservify_R
 #
-DEF conservify:R R 0 0 N Y 1 F N
+DEF conservify_R R 0 0 N Y 1 F N
 F0 "R" 80 0 50 V V C CNN
-F1 "conservify:R" 0 0 50 V V C CNN
+F1 "conservify_R" 0 0 50 V V C CNN
 F2 "" -70 0 50 V I C CNN
 F3 "" 0 0 50 H I C CNN
 $FPLIST
@@ -638,11 +638,11 @@ X ~ 2 0 -150 50 U 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# conservify:RESISTOR
+# conservify_RESISTOR
 #
-DEF conservify:RESISTOR R 0 40 Y Y 1 F N
+DEF conservify_RESISTOR R 0 40 Y Y 1 F N
 F0 "R" 0 100 60 H V C CNN
-F1 "conservify:RESISTOR" 0 -100 60 H V C CNN
+F1 "conservify_RESISTOR" 0 -100 60 H V C CNN
 F2 "conservify:RES-0603" 0 -200 60 H I C CNN
 F3 "" 0 0 60 H V C CNN
 $FPLIST
@@ -657,11 +657,11 @@ X ~ 2 250 0 100 L 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# conservify:S25FL1xxK0XM
+# conservify_S25FL1xxK0XM
 #
-DEF conservify:S25FL1xxK0XM U 0 40 Y Y 1 F N
+DEF conservify_S25FL1xxK0XM U 0 40 Y Y 1 F N
 F0 "U" 0 300 60 H V C CNN
-F1 "conservify:S25FL1xxK0XM" 0 -300 60 H V C CNN
+F1 "conservify_S25FL1xxK0XM" 0 -300 60 H V C CNN
 F2 "conservify:SOIC-8-N" 0 -400 60 H I C CNN
 F3 "" -200 50 60 H V C CNN
 $FPLIST
@@ -680,11 +680,11 @@ X VCC 8 550 150 150 L 50 50 1 1 W
 ENDDRAW
 ENDDEF
 #
-# conservify:SK6812
+# conservify_SK6812
 #
-DEF conservify:SK6812 U 0 40 Y Y 1 F N
+DEF conservify_SK6812 U 0 40 Y Y 1 F N
 F0 "U" 0 -50 60 H V C CNN
-F1 "conservify:SK6812" 0 250 60 H V C CNN
+F1 "conservify_SK6812" 0 250 60 H V C CNN
 F2 "" 0 300 60 H I C CNN
 F3 "" 0 300 60 H I C CNN
 DRAW
@@ -710,11 +710,11 @@ X NC 4 150 -400 200 U 50 50 1 1 N
 ENDDRAW
 ENDDEF
 #
-# conservify:SWITCH_CONN_02
+# conservify_SWITCH_CONN_02
 #
-DEF conservify:SWITCH_CONN_02 SW 0 40 Y Y 1 F N
+DEF conservify_SWITCH_CONN_02 SW 0 40 Y Y 1 F N
 F0 "SW" 0 150 60 H V C CNN
-F1 "conservify:SWITCH_CONN_02" 50 -100 60 H V C CNN
+F1 "conservify_SWITCH_CONN_02" 50 -100 60 H V C CNN
 F2 "conservify:TS-107A" 0 -200 60 H I C CNN
 F3 "" 0 0 60 H V C CNN
 $FPLIST
@@ -733,28 +733,31 @@ X ~ 2 250 0 125 L 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# conservify:TPS2051B
+# conservify_TPS2052B
 #
-DEF conservify:TPS2051B U 0 40 Y Y 1 F N
-F0 "U" -400 -300 60 H V C CNN
-F1 "conservify:TPS2051B" 0 0 60 H V C CNN
-F2 "" 0 0 60 H I C CNN
-F3 "" 0 0 60 H I C CNN
+DEF conservify_TPS2052B U 0 40 Y Y 1 F N
+F0 "U" -400 -450 60 H V C CNN
+F1 "conservify_TPS2052B" 0 0 60 H V C CNN
+F2 "" 0 200 60 H I C CNN
+F3 "" 0 200 60 H I C CNN
 DRAW
-S -500 350 500 -350 0 1 0 N
-X OUT 1 700 100 200 L 50 50 1 1 w
-X GND 2 -700 -150 200 R 50 50 1 1 W
-X OC 3 700 -50 200 L 50 50 1 1 O
-X EN 4 -700 0 200 R 50 50 1 1 I
-X IN 5 -700 150 200 R 50 50 1 1 W
+S -500 550 500 -550 0 1 0 N
+X GND 1 -700 -300 200 R 50 50 1 1 W
+X IN 2 -700 350 200 R 50 50 1 1 W
+X EN1 3 -700 200 200 R 50 50 1 1 I
+X EN2 4 -700 100 200 R 50 50 1 1 I
+X OC2 5 700 -50 200 L 50 50 1 1 O
+X OUT2 6 700 50 200 L 50 50 1 1 w
+X OUT1 7 700 350 200 L 50 50 1 1 w
+X OC1 8 700 250 200 L 50 50 1 1 O
 ENDDRAW
 ENDDEF
 #
-# conservify:VBUS
+# conservify_VBUS
 #
-DEF conservify:VBUS #PWR 0 0 Y Y 1 F P
+DEF conservify_VBUS #PWR 0 0 Y Y 1 F P
 F0 "#PWR" 0 -150 50 H I C CNN
-F1 "conservify:VBUS" 0 140 50 H V C CNN
+F1 "conservify_VBUS" 0 140 50 H V C CNN
 F2 "" 0 0 60 H V C CNN
 F3 "" 0 0 60 H V C CNN
 DRAW
@@ -764,11 +767,11 @@ X VBUS 1 0 0 0 U 50 50 1 1 W N
 ENDDRAW
 ENDDEF
 #
-# conservify:VCC
+# conservify_VCC
 #
-DEF conservify:VCC #PWR 0 0 Y Y 1 F P
+DEF conservify_VCC #PWR 0 0 Y Y 1 F P
 F0 "#PWR" 0 -150 50 H I C CNN
-F1 "conservify:VCC" 0 140 50 H V C CNN
+F1 "conservify_VCC" 0 140 50 H V C CNN
 F2 "" 0 0 60 H V C CNN
 F3 "" 0 0 60 H V C CNN
 DRAW
@@ -778,11 +781,11 @@ X VCC 1 0 0 0 U 50 50 1 1 W N
 ENDDRAW
 ENDDEF
 #
-# conservify:VIN
+# conservify_VIN
 #
-DEF conservify:VIN #PWR 0 0 Y Y 1 F P
+DEF conservify_VIN #PWR 0 0 Y Y 1 F P
 F0 "#PWR" 0 -150 50 H I C CNN
-F1 "conservify:VIN" 0 140 50 H V C CNN
+F1 "conservify_VIN" 0 140 50 H V C CNN
 F2 "" 0 0 60 H V C CNN
 F3 "" 0 0 60 H V C CNN
 DRAW
@@ -792,11 +795,11 @@ X VIN 1 0 0 0 U 50 50 1 1 W N
 ENDDRAW
 ENDDEF
 #
-# conservify:VUSB
+# conservify_VUSB
 #
-DEF conservify:VUSB #PWR 0 0 Y Y 1 F P
+DEF conservify_VUSB #PWR 0 0 Y Y 1 F P
 F0 "#PWR" 0 -150 50 H I C CNN
-F1 "conservify:VUSB" 0 140 50 H V C CNN
+F1 "conservify_VUSB" 0 140 50 H V C CNN
 F2 "" 0 0 60 H V C CNN
 F3 "" 0 0 60 H V C CNN
 DRAW
