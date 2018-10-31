@@ -39,6 +39,8 @@ enum class AtlasReaderState {
     ConfigureParameter,
     QueryProbeType,
     ConfigureProbeType,
+    QueryProtocolLock,
+    LockProtocol,
     ApplyCompensation,
     TakeReading,
     WaitingOnReply,
@@ -92,10 +94,12 @@ private:
     AtlasSensorType type { AtlasSensorType::Unknown };
     AtlasReaderState state { AtlasReaderState::Start };
     AtlasReaderState postReplyState { AtlasReaderState::Idle };
+    AtlasReaderState retryState { AtlasReaderState::Idle };
     uint32_t nextCheckAt { 0 };
     float values[ATLAS_MAXIMUM_NUMBER_OF_VALUES];
     size_t numberOfValues { 0 };
     char buffer[ATLAS_MAXIMUM_COMMAND_LENGTH];
+    uint8_t commandAttempts{ 0 };
     uint8_t tries{ 0 };
     bool sleepAfter{ true };
     Compensation compensation;

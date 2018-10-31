@@ -79,7 +79,19 @@ TickSlice AtlasReader::tick() {
         break;
     }
     case AtlasReaderState::Blink: {
-        sendCommand("FIND");
+        sendCommand("Find");
+        state = AtlasReaderState::WaitingOnEmptyReply;
+        postReplyState = AtlasReaderState::QueryProtocolLock;
+        break;
+    }
+    case AtlasReaderState::QueryProtocolLock: {
+        sendCommand("Plock,?");
+        state = AtlasReaderState::WaitingOnReply;
+        postReplyState = AtlasReaderState::LockProtocol;
+        break;
+    }
+    case AtlasReaderState::LockProtocol: {
+        sendCommand("Plock,1");
         state = AtlasReaderState::WaitingOnEmptyReply;
         postReplyState = AtlasReaderState::QueryParameters;
         break;
@@ -195,19 +207,51 @@ TickSlice AtlasReader::tick() {
         break;
     }
     case AtlasReaderState::WaitingOnEmptyReply: {
-        if (readReply(nullptr, 0) == AtlasResponseCode::NotReady) {
+        switch (readReply(nullptr, 0 )) {
+        case AtlasResponseCode::NotReady: {
             nextCheckAt = millis() + ATLAS_DEFAULT_DELAY_NOT_READY;
             break;
         }
-        state = postReplyState;
+        case AtlasResponseCode::Error: {
+            if (commandAttempts == 3) {
+                state = postReplyState;
+            }
+            else {
+                nextCheckAt = millis() + ATLAS_DEFAULT_DELAY_NOT_READY;
+                state = retryState;
+                commandAttempts++;
+            }
+            break;
+        }
+        default: {
+            state = postReplyState;
+            break;
+        }
+        }
         break;
     }
     case AtlasReaderState::WaitingOnReply: {
-        if (readReply(buffer, sizeof(buffer)) == AtlasResponseCode::NotReady) {
+        switch (readReply(buffer, sizeof(buffer))) {
+        case AtlasResponseCode::NotReady: {
             nextCheckAt = millis() + ATLAS_DEFAULT_DELAY_NOT_READY;
             break;
         }
-        state = postReplyState;
+        case AtlasResponseCode::Error: {
+            if (commandAttempts == 3) {
+                state = postReplyState;
+            }
+            else {
+                nextCheckAt = millis() + ATLAS_DEFAULT_DELAY_NOT_READY;
+                state = retryState;
+                commandAttempts++;
+            }
+            break;
+        }
+        default: {
+            state = postReplyState;
+            break;
+        }
+        }
         break;
     }
     case AtlasReaderState::Sleeping: {
@@ -227,11 +271,16 @@ AtlasResponseCode AtlasReader::singleCommand(const char *command) {
 }
 
 AtlasResponseCode AtlasReader::sendCommand(const char *str, uint32_t readDelay) {
-    loginfof(Log, "Atlas(0x%x, %s) <- ('%s', %lu))", address, typeName(), str, readDelay);
-
     bus->send(address, str);
 
+    if (retryState != state) {
+        retryState = state;
+        commandAttempts = 0;
+    }
     nextCheckAt  = millis() + readDelay;
+
+    loginfof(Log, "Atlas(0x%x, %s) <- ('%s', %lu) (ca=%d)", address, typeName(), str, readDelay, commandAttempts);
+
     return AtlasResponseCode::NotReady;
 }
 
@@ -273,6 +322,11 @@ AtlasResponseCode AtlasReader::readReply(char *buffer, size_t length) {
     bus->requestFrom(address, 1 + length, (uint8_t)1);
 
     auto code = static_cast<AtlasResponseCode>(bus->read());
+    if (code == AtlasResponseCode::Error) {
+        loginfof(Log, "Atlas(0x%x, %s) -> (code=0x%x) (%d/%d)", address, typeName(), code,
+                 tries, atlas_configuration.maximum_atlas_retries);
+        return code;
+    }
     if (shouldRetry(code, buffer)) {
         tries++;
         loginfof(Log, "Atlas(0x%x, %s) -> (code=0x%x) (%d/%d)", address, typeName(), code,
@@ -334,6 +388,9 @@ AtlasResponseCode AtlasReader::readReply(char *buffer, size_t length) {
                 loginfof(Log, "No values, retry?");
             }
         }
+    }
+    else {
+        loginfof(Log, "Atlas(0x%x, %s) -> (code=0x%x)", address, typeName(), code);
     }
 
     return code;
