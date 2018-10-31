@@ -21,7 +21,7 @@ private:
     TwoWireBus moduleBus{ Wire4and3 };
     #endif
 
-    SensorPower sensorPower;
+    SensorPower sensorPower{ *moduleServices().hardware };
     SensorModule atlasSensors{ sensorPower };
     AttachedSensors attachedSensors{ moduleServices().readings };
     AtlasServices atlasServices{

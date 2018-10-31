@@ -3,15 +3,12 @@
 
 namespace fk {
 
-SensorPower::SensorPower() : Task("SensorPower") {
+SensorPower::SensorPower(ModuleHardware &hardware) : Task("SensorPower"), hardware_(&hardware) {
 }
 
 void SensorPower::enable() {
-    if (!enabled()) {
-        log("Powering up...");
-
-        enabled(true);
-
+    if (last_powered_on_ == 0) {
+        hardware_->flash_take();
         last_powered_on_ = fk_uptime();
     }
 
@@ -31,24 +28,15 @@ void SensorPower::busy() {
 }
 
 TaskEval SensorPower::task() {
-    if (enabled()) {
+    if (last_powered_on_ > 0) {
         if (fk_uptime() > turn_off_at_) {
-            log("Powering down");
-            enabled(false);
+            hardware_->flash_release();
             last_powered_on_ = 0;
             turn_off_at_ = 0;
         }
     }
 
     return TaskEval::idle();
-}
-
-bool SensorPower::enabled() const {
-    return digitalRead(FK_ATLAS_PIN_PERIPH_ENABLE);
-}
-
-void SensorPower::enabled(bool enabled) {
-    digitalWrite(FK_ATLAS_PIN_PERIPH_ENABLE, enabled ? HIGH : LOW);
 }
 
 }

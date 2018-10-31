@@ -10,11 +10,12 @@ constexpr uint32_t AtlasPowerOffTime = 5 * Seconds;
 
 class SensorPower : public Task {
 private:
+    ModuleHardware *hardware_;
     uint32_t last_powered_on_{ 0 };
     uint32_t turn_off_at_{ 0 };
 
 public:
-    SensorPower();
+    SensorPower(ModuleHardware &hardware);
 
 public:
     void enable();
@@ -23,10 +24,6 @@ public:
 
 public:
     TaskEval task() override;
-
-private:
-    bool enabled() const;
-    void enabled(bool enabled);
 
 };
 
