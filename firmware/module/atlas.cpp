@@ -102,6 +102,7 @@ TickSlice AtlasReader::tick() {
             sendCommand("O,?");
             state = AtlasReaderState::WaitingOnReply;
             postReplyState = AtlasReaderState::ConfigureParameter;
+            parameter = 0;
             break;
         }
         default: {
@@ -121,7 +122,6 @@ TickSlice AtlasReader::tick() {
             }
             state = AtlasReaderState::WaitingOnEmptyReply;
             postReplyState = AtlasReaderState::ConfigureParameter;
-            parameter++;
         }
         else {
             #if defined(FK_ATLAS_HARD_CODED_PROBE_TYPE)
@@ -224,6 +224,9 @@ TickSlice AtlasReader::tick() {
             break;
         }
         default: {
+            if (postReplyState == AtlasReaderState::ConfigureParameter) {
+                parameter++;
+            }
             state = postReplyState;
             break;
         }
