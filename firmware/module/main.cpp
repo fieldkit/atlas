@@ -70,7 +70,9 @@ void setup() {
         "Atlas",
         "fk-atlas",
         sensors,
-        readings
+        readings,
+        0,
+        fk_module_RequiredUptime_READINGS_ONLY,
     };
 
     fk::AtlasModule module(info);
