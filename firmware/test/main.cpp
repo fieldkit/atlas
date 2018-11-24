@@ -6,6 +6,7 @@
 
 #define FK_ATLAS_OEM
 
+const uint8_t PIN_ATLAS_ENABLE = 6;
 const uint8_t PIN_PERIPH_ENABLE = 12;
 const uint8_t PIN_FLASH_CS = 5;
 
@@ -334,9 +335,13 @@ public:
         //  TODO: Investigate. I would see hangs if I used a slower speed.
         // Wire.setClock(400000);
 
+        pinMode(PIN_ATLAS_ENABLE, OUTPUT);
+        digitalWrite(PIN_ATLAS_ENABLE, LOW);
+
         pinMode(PIN_PERIPH_ENABLE, OUTPUT);
         digitalWrite(PIN_PERIPH_ENABLE, LOW);
         delay(1000);
+        digitalWrite(PIN_ATLAS_ENABLE, HIGH);
         digitalWrite(PIN_PERIPH_ENABLE, HIGH);
         delay(1000);
     }
