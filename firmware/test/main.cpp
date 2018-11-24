@@ -23,6 +23,7 @@ class AtlasScientificBoard {
     virtual bool info() = 0;
     virtual bool ledsOn() = 0;
     virtual bool ledsOff() = 0;
+    virtual bool configure() = 0;
 };
 
 class AtlasScientificOemBoard : public AtlasScientificBoard {
@@ -147,6 +148,20 @@ public:
         return get_register(cfg.active_register) == 0;
     }
 
+    bool configure() override {
+        uint16_t type = (uint16_t)(0.1 * 100);
+
+        Wire.beginTransmission(address_);
+        Wire.write(0x08);
+        Wire.write((type >> 8) & 0xff);
+        Wire.write((type) & 0xff);
+        Wire.endTransmission();
+
+        delay(100);
+
+        return true;
+    }
+
     bool reading() override {
         auto cfg = config();
 
@@ -175,7 +190,7 @@ public:
             float value = data.u32;
             value /= cfg.divisor;
 
-            loginfof("Module", "%s: %f", cfg.name, value);
+            loginfof("Module", "%s: %f (raw=%lu)", cfg.name, value, data.u32);
         }
 
 
@@ -223,6 +238,14 @@ public:
 class AtlasScientificPrototypeBoard : public AtlasScientificBoard {
 private:
     uint8_t address_;
+    uint8_t type_;
+
+private:
+    static constexpr uint8_t TYPE_EC = 4;
+    static constexpr uint8_t TYPE_PH = 1;
+    static constexpr uint8_t TYPE_DO = 3;
+    static constexpr uint8_t TYPE_TEMP = 5;
+    static constexpr uint8_t TYPE_ORP = 2; // Double check this.
 
 private:
     uint8_t readResponse(const char *str, char *buffer, size_t length, uint32_t read_delay = 200) {
@@ -268,12 +291,46 @@ public:
     bool begin() override {
         char buffer[20];
         uint8_t value = readResponse("I", buffer, sizeof(buffer));
-        return value != 0xff;
+        if (value == 0xff) {
+            return false;
+        }
+
+        if (strstr(buffer, "EC") != nullptr) {
+            type_ = TYPE_EC;
+        }
+        else if (strstr(buffer, "DO") != nullptr) {
+            type_ = TYPE_DO;
+        }
+        else if (strstr(buffer, "ORP") != nullptr) {
+            type_ = TYPE_ORP;
+        }
+        else if (strstr(buffer, "pH") != nullptr) {
+            type_ = TYPE_PH;
+        }
+        else if (strstr(buffer, "RTD") != nullptr) {
+            type_ = TYPE_TEMP;
+        }
+        else {
+            return false;
+        }
+
+        return true;
+    }
+
+    bool configure() override {
+        return true;
     }
 
     bool reading() override {
         char buffer[20];
         uint8_t value = readResponse("R", buffer, sizeof(buffer));
+        switch (type_) {
+        case TYPE_EC: Serial.print("EC: "); break;
+        case TYPE_PH: Serial.print("PH: "); break;
+        case TYPE_DO: Serial.print("DO: "); break;
+        case TYPE_TEMP: Serial.print("TEMP: "); break;
+        case TYPE_ORP: Serial.print("ORP: "); break;
+        }
         Serial.println(buffer);
         return value == 0x1;
     }
@@ -473,6 +530,9 @@ void setup() {
             for (auto &board : boards) {
                 if (!board.begin()) {
                     initialized = false;
+                }
+                else {
+                    board.configure();
                 }
             }
 
