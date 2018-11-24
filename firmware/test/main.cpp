@@ -4,7 +4,7 @@
 
 #include "debug.h"
 
-#define FK_ATLAS_OEM
+// #define FK_ATLAS_OEM
 
 const uint8_t PIN_ATLAS_ENABLE = 6;
 const uint8_t PIN_PERIPH_ENABLE = 12;
