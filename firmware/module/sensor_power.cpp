@@ -8,6 +8,7 @@ SensorPower::SensorPower(ModuleHardware &hardware) : Task("SensorPower"), hardwa
 
 void SensorPower::enable() {
     if (last_powered_on_ == 0) {
+        digitalWrite(FK_ATLAS_PIN_ATLAS_ENABLE, HIGH);
         hardware_->flash_take();
         last_powered_on_ = fk_uptime();
     }
@@ -31,6 +32,7 @@ TaskEval SensorPower::task() {
     if (last_powered_on_ > 0) {
         if (fk_uptime() > turn_off_at_) {
             hardware_->flash_release();
+            digitalWrite(FK_ATLAS_PIN_ATLAS_ENABLE, LOW);
             last_powered_on_ = 0;
             turn_off_at_ = 0;
         }

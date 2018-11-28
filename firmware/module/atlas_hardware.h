@@ -7,6 +7,7 @@ namespace fk {
 
 constexpr uint8_t FK_ATLAS_PIN_FLASH = 5;
 constexpr uint8_t FK_ATLAS_PIN_PERIPH_ENABLE = 12;
+constexpr uint8_t FK_ATLAS_PIN_ATLAS_ENABLE = 6;
 
 /**
  * Minimum time we can enable the peripherals for. This is to avoid Atlas module
