@@ -12,6 +12,7 @@ all: $(BUILD) gitdeps
 gitdeps:
 	simple-deps --config firmware/module/dependencies.sd
 	simple-deps --config firmware/test/dependencies.sd
+	simple-deps --config firmware/calibration/dependencies.sd
 
 clean:
 	rm -rf $(BUILD)
