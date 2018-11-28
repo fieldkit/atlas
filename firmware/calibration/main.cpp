@@ -22,6 +22,7 @@ class AtlasScientificBoard {
     virtual bool ledsOn() = 0;
     virtual bool ledsOff() = 0;
     virtual bool configure() = 0;
+    virtual bool raw(String command) = 0;
 };
 
 class AtlasScientificOemBoard : public AtlasScientificBoard {
@@ -144,6 +145,10 @@ public:
         delay(100);
 
         return get_register(cfg.active_register) == 0;
+    }
+
+    bool raw(String command) override {
+        return false;
     }
 
     bool configure() override {
@@ -315,6 +320,20 @@ public:
         return true;
     }
 
+    bool raw(String command) override {
+        char buffer[20];
+        uint8_t value = readResponse(command.c_str(), buffer, sizeof(buffer));
+        switch (type_) {
+        case TYPE_EC: Serial.print("EC: "); break;
+        case TYPE_PH: Serial.print("PH: "); break;
+        case TYPE_DO: Serial.print("DO: "); break;
+        case TYPE_TEMP: Serial.print("TEMP: "); break;
+        case TYPE_ORP: Serial.print("ORP: "); break;
+        }
+        Serial.println(buffer);
+        return value == 0x1;
+    }
+
     bool configure() override {
         return true;
     }
@@ -475,35 +494,87 @@ public:
 
 };
 
+class Repl {
+private:
+    bool initialized{ false };
+    AtlasBoardType boards[4] = {
+        ATLAS_SENSOR_EC_DEFAULT_ADDRESS,
+        ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS,
+        ATLAS_SENSOR_PH_DEFAULT_ADDRESS,
+        ATLAS_SENSOR_DO_DEFAULT_ADDRESS
+    };
+    AtlasBoardType *active{ nullptr };
+
+public:
+    Repl() {
+    }
+
+public:
+    void begin() {
+        for (auto &board : boards) {
+            if (!board.begin()) {
+                initialized = false;
+            }
+            else {
+                board.configure();
+            }
+        }
+    }
+
+    void execute(String &c) {
+        if (c.equals("ph")) {
+            Serial.println("Selected pH");
+            active = &boards[2];
+            return;
+        }
+
+        if (c.equals("temp")) {
+            Serial.println("Selected Temp");
+            active = &boards[1];
+            return;
+        }
+
+        if (c.equals("ec")) {
+            Serial.println("Selected EC");
+            active = &boards[0];
+            return;
+        }
+
+        if (c.equals("do")) {
+            Serial.println("Selected DO");
+            active = &boards[3];
+            return;
+        }
+
+        if (active != nullptr) {
+            if (c.equals("")) {
+                active->reading();
+            }
+            else {
+                active->raw(c);
+            }
+        }
+        else {
+            Serial.println("No active board.");
+        }
+    }
+
+};
+
 void setup() {
     Serial.begin(115200);
 
     Check check;
     check.setup();
 
-    pinMode(13, OUTPUT);
-    pinMode(A3, OUTPUT);
-    pinMode(A4, OUTPUT);
-    pinMode(A5, OUTPUT);
-
-    digitalWrite(13, HIGH);
-    digitalWrite(A3, HIGH);
-    digitalWrite(A4, HIGH);
-    digitalWrite(A5, HIGH);
-
-    while (!Serial /*&& millis() < 2 * 1000*/) {
+    while (!Serial) {
         delay(100);
     }
 
     auto takeReadings = true;
 
     while (true) {
-        digitalWrite(13, LOW);
-        digitalWrite(A3, LOW);
-        digitalWrite(A4, LOW);
-        digitalWrite(A5, LOW);
-
-        Serial.println("test: Begin");
+        Serial.println("calibration: Begin");
 
         auto success = true;
 
@@ -517,44 +588,37 @@ void setup() {
         #endif
 
         if (takeReadings && success) {
-            AtlasBoardType boards[] = {
-                ATLAS_SENSOR_EC_DEFAULT_ADDRESS,
-                ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS,
-                ATLAS_SENSOR_PH_DEFAULT_ADDRESS,
-                ATLAS_SENSOR_DO_DEFAULT_ADDRESS
-            };
+            Repl repl;
 
             auto initialized = true;
-            for (auto &board : boards) {
-                if (!board.begin()) {
-                    initialized = false;
-                }
-                else {
-                    board.configure();
-                }
-            }
+            repl.begin();
 
             if (initialized) {
+                String command = "";
+
                 while (true) {
-                    loginfof("Atlas", "-------------------");
+                    if (Serial.available() > 0) {
+                        auto incoming = Serial.read();
 
-                    for (auto &board : boards) {
-                        board.ledsOn();
-                        board.reading();
-                        board.ledsOff();
+                        if (incoming == '\r') {
+                            command.trim();
+
+                            Serial.println();
+
+                            repl.execute(command);
+
+                            command = "";
+                        }
+                        else {
+                            command += (char)incoming;
+                            Serial.print((char)incoming);
+                        }
                     }
-
-                    delay(1000);
                 }
             }
         }
 
-        Serial.println("test: Done");
-
-        digitalWrite(13, HIGH);
-        digitalWrite(A3, HIGH);
-        digitalWrite(A4, HIGH);
-        digitalWrite(A5, HIGH);
+        Serial.println("calibration: Done");
 
         digitalWrite(PIN_PERIPH_ENABLE, LOW);
         delay(5000);

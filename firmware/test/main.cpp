@@ -483,28 +483,13 @@ void setup() {
     Check check;
     check.setup();
 
-    pinMode(13, OUTPUT);
-    pinMode(A3, OUTPUT);
-    pinMode(A4, OUTPUT);
-    pinMode(A5, OUTPUT);
-
-    digitalWrite(13, HIGH);
-    digitalWrite(A3, HIGH);
-    digitalWrite(A4, HIGH);
-    digitalWrite(A5, HIGH);
-
-    while (!Serial /*&& millis() < 2 * 1000*/) {
+    while (!Serial) {
         delay(100);
     }
 
     auto takeReadings = true;
 
     while (true) {
-        digitalWrite(13, LOW);
-        digitalWrite(A3, LOW);
-        digitalWrite(A4, LOW);
-        digitalWrite(A5, LOW);
-
         Serial.println("test: Begin");
 
         auto success = true;
@@ -552,11 +537,6 @@ void setup() {
         }
 
         Serial.println("test: Done");
-
-        digitalWrite(13, HIGH);
-        digitalWrite(A3, HIGH);
-        digitalWrite(A4, HIGH);
-        digitalWrite(A5, HIGH);
 
         digitalWrite(PIN_PERIPH_ENABLE, LOW);
         delay(5000);
