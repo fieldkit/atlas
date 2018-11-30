@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source /home/jlewallen/fieldkit/atlas/hardware/fk-atlas.sch)
-    (date "Thu 29 Nov 2018 05:34:13 PM PST")
+    (date "Fri 30 Nov 2018 10:10:30 AM PST")
     (tool "Eeschema 5.0.1-33cea8e~67~ubuntu18.04.1")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
@@ -735,7 +735,7 @@
       (tstamp 5A587855))
     (comp (ref M1)
       (value MOUNT_HOLE)
-      (footprint conservify:HOLE_NPTH_2.54MM)
+      (footprint conservify:HOLE_NPTH_2.7MM)
       (fields
         (field (name Critical) " ")
         (field (name MFN) " ")
@@ -751,7 +751,7 @@
       (tstamp 5AECF822))
     (comp (ref M2)
       (value MOUNT_HOLE)
-      (footprint conservify:HOLE_NPTH_2.54MM)
+      (footprint conservify:HOLE_NPTH_2.7MM)
       (fields
         (field (name Critical) " ")
         (field (name MFN) " ")
@@ -767,7 +767,7 @@
       (tstamp 5AECF823))
     (comp (ref M3)
       (value MOUNT_HOLE)
-      (footprint conservify:HOLE_NPTH_2.54MM)
+      (footprint conservify:HOLE_NPTH_2.7MM)
       (fields
         (field (name Critical) " ")
         (field (name MFN) " ")
@@ -783,7 +783,7 @@
       (tstamp 5AECF824))
     (comp (ref M4)
       (value MOUNT_HOLE)
-      (footprint conservify:HOLE_NPTH_2.54MM)
+      (footprint conservify:HOLE_NPTH_2.7MM)
       (fields
         (field (name Critical) " ")
         (field (name MFN) " ")
