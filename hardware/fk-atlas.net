@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source /home/jlewallen/fieldkit/atlas/hardware/fk-atlas.sch)
-    (date "Wed 07 Nov 2018 11:54:46 AM PST")
+    (date "Thu 29 Nov 2018 05:34:13 PM PST")
     (tool "Eeschema 5.0.1-33cea8e~67~ubuntu18.04.1")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
@@ -1350,7 +1350,7 @@
       (tstamp 594C2D1E))
     (comp (ref U202)
       (value ATLAS_EC)
-      (footprint conservify:ATLAS_SENSOR_BOARD_COMBO)
+      (footprint conservify:ATLAS_SENSOR_BOARD_OEM)
       (fields
         (field (name Critical) " ")
         (field (name MFN) " ")
@@ -1615,7 +1615,7 @@
       (tstamp 5948E4EE))
     (comp (ref U302)
       (value ATLAS_RTD)
-      (footprint conservify:ATLAS_SENSOR_BOARD_RTD_COMBO)
+      (footprint conservify:ATLAS_SENSOR_BOARD_RTD_OEM)
       (fields
         (field (name Critical) " ")
         (field (name MFN) " ")
@@ -1880,7 +1880,7 @@
       (tstamp 594C2D1B))
     (comp (ref U402)
       (value ATLAS_PH)
-      (footprint conservify:ATLAS_SENSOR_BOARD_COMBO)
+      (footprint conservify:ATLAS_SENSOR_BOARD_OEM)
       (fields
         (field (name Critical) " ")
         (field (name MFN) " ")
@@ -2145,7 +2145,7 @@
       (tstamp 594C2D1D))
     (comp (ref U502)
       (value ATLAS_DO)
-      (footprint conservify:ATLAS_SENSOR_BOARD_COMBO)
+      (footprint conservify:ATLAS_SENSOR_BOARD_OEM)
       (fields
         (field (name Critical) " ")
         (field (name MFN) " ")
@@ -2410,7 +2410,7 @@
       (tstamp 594C2D1C))
     (comp (ref U602)
       (value ATLAS_ORP)
-      (footprint conservify:ATLAS_SENSOR_BOARD_COMBO)
+      (footprint conservify:ATLAS_SENSOR_BOARD_OEM)
       (fields
         (field (name Critical) " ")
         (field (name MFN) " ")
