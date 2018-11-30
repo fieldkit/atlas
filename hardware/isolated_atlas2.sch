@@ -579,4 +579,46 @@ Connection ~ 6000 3800
 Connection ~ 6900 2500
 NoConn ~ 3650 3000
 NoConn ~ 5200 3000
+Text Label 8350 4500 0    60   ~ 0
+ISO_GND
+Text Label 8350 4400 0    60   ~ 0
+ISO_VCC
+Text Label 8350 4150 0    60   ~ 0
+ISO_SCL
+Text Label 8350 4250 0    60   ~ 0
+ISO_SDA
+Wire Wire Line
+	8350 4150 8750 4150
+Wire Wire Line
+	8750 4250 8350 4250
+Wire Wire Line
+	8350 4400 8750 4400
+Wire Wire Line
+	8750 4500 8350 4500
+$Comp
+L conservify:CONN_01x02 J?
+U 1 1 5C0ECD1F
+P 8950 4150
+AR Path="/594C282A/5C0ECD1F" Ref="J?"  Part="1" 
+AR Path="/594C282D/5C0ECD1F" Ref="J13"  Part="1" 
+F 0 "J13" H 9029 4142 50  0000 L CNN
+F 1 "CONN_01x02" H 9029 4051 50  0000 L CNN
+F 2 "conservify:TP_Pads_D1.5mm_1x2" H 8950 4150 50  0001 C CNN
+F 3 "" H 8950 4150 50  0001 C CNN
+	1    8950 4150
+	1    0    0    -1  
+$EndComp
+$Comp
+L conservify:CONN_01x02 J?
+U 1 1 5C0ECD26
+P 8950 4400
+AR Path="/594C282A/5C0ECD26" Ref="J?"  Part="1" 
+AR Path="/594C282D/5C0ECD26" Ref="J14"  Part="1" 
+F 0 "J14" H 9029 4392 50  0000 L CNN
+F 1 "CONN_01x02" H 9029 4301 50  0000 L CNN
+F 2 "conservify:TP_Pads_D1.5mm_1x2" H 8950 4400 50  0001 C CNN
+F 3 "" H 8950 4400 50  0001 C CNN
+	1    8950 4400
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
