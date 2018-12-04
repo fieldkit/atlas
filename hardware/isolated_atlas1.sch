@@ -372,6 +372,50 @@ F 3 "~" H 7400 4850 50  0001 C CNN
 	1    7400 4850
 	1    0    0    -1  
 $EndComp
+$Comp
+L conservify:CONN_01x02 J?
+U 1 1 5C0E925B
+P 8950 4100
+AR Path="/594C282A/5C0E925B" Ref="J?"  Part="1" 
+AR Path="/594C3094/5C0E925B" Ref="J11"  Part="1" 
+F 0 "J11" H 9029 4092 50  0000 L CNN
+F 1 "CONN_01x02" H 9029 4001 50  0000 L CNN
+F 2 "conservify:TP_Pads_D1.5mm_1x2" H 8950 4100 50  0001 C CNN
+F 3 "" H 8950 4100 50  0001 C CNN
+F 4 " " H 9029 4192 50  0001 C CNN "Critical"
+F 5 " " H 9029 4192 50  0001 C CNN "MFN"
+F 6 " " H 9029 4192 50  0001 C CNN "MFP"
+F 7 " " H 9029 4192 50  0001 C CNN "Notes"
+F 8 " " H 9029 4192 50  0001 C CNN "Package"
+F 9 " " H 9029 4192 50  0001 C CNN "SPN1"
+F 10 "ANY" H 9029 4192 50  0001 C CNN "Source"
+F 11 " " H 9029 4192 50  0001 C CNN "Subsystem"
+F 12 " " H 9029 4192 50  0001 C CNN "Supplier1"
+	1    8950 4100
+	1    0    0    -1  
+$EndComp
+$Comp
+L conservify:CONN_01x02 J?
+U 1 1 5C0E9262
+P 8950 4350
+AR Path="/594C282A/5C0E9262" Ref="J?"  Part="1" 
+AR Path="/594C3094/5C0E9262" Ref="J12"  Part="1" 
+F 0 "J12" H 9029 4342 50  0000 L CNN
+F 1 "CONN_01x02" H 9029 4251 50  0000 L CNN
+F 2 "conservify:TP_Pads_D1.5mm_1x2" H 8950 4350 50  0001 C CNN
+F 3 "" H 8950 4350 50  0001 C CNN
+F 4 " " H 9029 4442 50  0001 C CNN "Critical"
+F 5 " " H 9029 4442 50  0001 C CNN "MFN"
+F 6 " " H 9029 4442 50  0001 C CNN "MFP"
+F 7 " " H 9029 4442 50  0001 C CNN "Notes"
+F 8 " " H 9029 4442 50  0001 C CNN "Package"
+F 9 " " H 9029 4442 50  0001 C CNN "SPN1"
+F 10 "ANY" H 9029 4442 50  0001 C CNN "Source"
+F 11 " " H 9029 4442 50  0001 C CNN "Subsystem"
+F 12 " " H 9029 4442 50  0001 C CNN "Supplier1"
+	1    8950 4350
+	1    0    0    -1  
+$EndComp
 Text Label 7000 2500 0    60   ~ 0
 ISO_VCC
 Text Label 6400 3600 0    60   ~ 0
@@ -396,6 +440,14 @@ Text Label 7400 3000 0    60   ~ 0
 ISO_VCC
 Text Label 9450 2900 0    60   ~ 0
 RTD_PGND
+Text Label 8350 4450 0    60   ~ 0
+ISO_GND
+Text Label 8350 4350 0    60   ~ 0
+ISO_VCC
+Text Label 8350 4100 0    60   ~ 0
+ISO_SCL
+Text Label 8350 4200 0    60   ~ 0
+ISO_SDA
 Wire Wire Line
 	5200 3300 5350 3300
 Wire Wire Line
@@ -552,6 +604,14 @@ Wire Wire Line
 	6000 3800 6000 4100
 Wire Wire Line
 	6900 2500 7400 2500
+Wire Wire Line
+	8350 4100 8750 4100
+Wire Wire Line
+	8750 4200 8350 4200
+Wire Wire Line
+	8350 4350 8750 4350
+Wire Wire Line
+	8750 4450 8350 4450
 Connection ~ 5350 3500
 Connection ~ 5350 3400
 Connection ~ 5350 3600
@@ -579,46 +639,4 @@ Connection ~ 6000 3800
 Connection ~ 6900 2500
 NoConn ~ 3650 3000
 NoConn ~ 5200 3000
-Text Label 8350 4450 0    60   ~ 0
-ISO_GND
-Text Label 8350 4350 0    60   ~ 0
-ISO_VCC
-Text Label 8350 4100 0    60   ~ 0
-ISO_SCL
-Text Label 8350 4200 0    60   ~ 0
-ISO_SDA
-Wire Wire Line
-	8350 4100 8750 4100
-Wire Wire Line
-	8750 4200 8350 4200
-Wire Wire Line
-	8350 4350 8750 4350
-Wire Wire Line
-	8750 4450 8350 4450
-$Comp
-L conservify:CONN_01x02 J?
-U 1 1 5C0E925B
-P 8950 4100
-AR Path="/594C282A/5C0E925B" Ref="J?"  Part="1" 
-AR Path="/594C3094/5C0E925B" Ref="J11"  Part="1" 
-F 0 "J11" H 9029 4092 50  0000 L CNN
-F 1 "CONN_01x02" H 9029 4001 50  0000 L CNN
-F 2 "conservify:TP_Pads_D1.5mm_1x2" H 8950 4100 50  0001 C CNN
-F 3 "" H 8950 4100 50  0001 C CNN
-	1    8950 4100
-	1    0    0    -1  
-$EndComp
-$Comp
-L conservify:CONN_01x02 J?
-U 1 1 5C0E9262
-P 8950 4350
-AR Path="/594C282A/5C0E9262" Ref="J?"  Part="1" 
-AR Path="/594C3094/5C0E9262" Ref="J12"  Part="1" 
-F 0 "J12" H 9029 4342 50  0000 L CNN
-F 1 "CONN_01x02" H 9029 4251 50  0000 L CNN
-F 2 "conservify:TP_Pads_D1.5mm_1x2" H 8950 4350 50  0001 C CNN
-F 3 "" H 8950 4350 50  0001 C CNN
-	1    8950 4350
-	1    0    0    -1  
-$EndComp
 $EndSCHEMATC
