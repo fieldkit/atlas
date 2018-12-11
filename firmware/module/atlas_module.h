@@ -15,12 +15,7 @@ namespace fk {
 
 class AtlasModule : public Module<MinimumFlashState> {
 private:
-    #ifdef FK_MODULE_WIRE11AND13
-    TwoWireBus moduleBus{ Wire11and13 };
-    #else
     TwoWireBus moduleBus{ Wire4and3 };
-    #endif
-
     SensorPower sensorPower{ *moduleServices().hardware };
     SensorModule atlasSensors{ sensorPower };
     AttachedSensors attachedSensors{ moduleServices().readings };

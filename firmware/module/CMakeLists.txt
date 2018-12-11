@@ -17,15 +17,6 @@ fk_configure_module(fk-atlas-standard)
 target_link_libraries(fk-atlas-standard atlas-protocol)
 target_link_libraries(fk-atlas-standard SparkFun_MS5803-14BA_Breakout_Arduino_Library)
 
-option(FK_MODULE_WIRE11AND13 "Use TwoWire11And13 for Module to Core communications." OFF)
-if(FK_MODULE_WIRE11AND13)
-  target_compile_options(fk-atlas-standard PUBLIC -DFK_HARDWARE_WIRE11AND13_ENABLE)
-  target_compile_options(firmware-common PUBLIC -DFK_HARDWARE_WIRE11AND13_ENABLE)
-
-  target_compile_options(fk-atlas-standard PUBLIC -DFK_MODULE_WIRE11AND13)
-  target_compile_options(firmware-common PUBLIC -DFK_MODULE_WIRE11AND13)
-endif(FK_MODULE_WIRE11AND13)
-
 option(FK_ENABLE_ATLAS_ORP "Enable/disable ORP sensor." ON)
 if(FK_ENABLE_ATLAS_ORP)
   target_compile_options(fk-atlas-standard PUBLIC -DFK_ENABLE_ATLAS_ORP)
@@ -53,13 +44,7 @@ if(FK_PROFILE_AMAZON)
 
   target_compile_options(fk-atlas-amazon PUBLIC -DFK_PROFILE_AMAZON)
   target_compile_options(fk-atlas-amazon PUBLIC -DFK_DISABLE_ATLAS_ORP)
-
   target_compile_options(fk-atlas-amazon PUBLIC -DFK_ATLAS_HARD_CODED_PROBE_TYPE="0.1")
-
-  if(FK_MODULE_WIRE11AND13)
-    target_compile_options(fk-atlas-amazon PUBLIC -DFK_HARDWARE_WIRE11AND13_ENABLE)
-    target_compile_options(fk-atlas-amazon PUBLIC -DFK_MODULE_WIRE11AND13)
-  endif(FK_MODULE_WIRE11AND13)
 
   add_arduino_firmware(fk-atlas-amazon)
 endif(FK_PROFILE_AMAZON)

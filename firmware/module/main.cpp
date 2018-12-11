@@ -39,9 +39,6 @@ void setup() {
     #ifdef FK_DISABLE_ATLAS_ORP
     loginfof("Module", "FK_DISABLE_ATLAS_ORP");
     #endif
-    #ifdef FK_MODULE_WIRE11AND13
-    loginfof("Module", "FK_MODULE_WIRE11AND13");
-    #endif
 
     fk::SensorInfo sensors[fk::NumberOfReadings] = {
         {"ec", "µS/cm",},
