@@ -12,6 +12,11 @@ void setup() {
 
     pinMode(fk::FK_ATLAS_PIN_PERIPH_ENABLE, OUTPUT);
     digitalWrite(fk::FK_ATLAS_PIN_PERIPH_ENABLE, LOW);
+    pinMode(fk::FK_ATLAS_PIN_ATLAS_ENABLE, OUTPUT);
+    digitalWrite(fk::FK_ATLAS_PIN_ATLAS_ENABLE, LOW);
+
+    TwoWire bus1{ Wire };
+    bus1.end();
 
     while (!Serial && millis() < 2000) {
         delay(100);
