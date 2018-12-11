@@ -2,13 +2,15 @@ include(Arduino)
 
 enable_arduino_toolchain()
 
-file(GLOB sources *.cpp)
+file(GLOB sources *.cpp ../common/*.cpp)
 
 find_package(FkModule)
 find_package(atlas-protocol)
 find_package(SparkFun_MS5803)
 
 add_arduino_library(fk-atlas-standard "${sources}")
+
+target_include_directories(fk-atlas-standard PRIVATE "../common")
 
 fk_configure_module(fk-atlas-standard)
 
@@ -41,6 +43,8 @@ endif(FK_ENABLE_MS5803)
 option(FK_PROFILE_AMAZON "Amazon Profile" ON)
 if(FK_PROFILE_AMAZON)
   add_arduino_library(fk-atlas-amazon "${sources}")
+
+  target_include_directories(fk-atlas-amazon PRIVATE "../common")
 
   fk_configure_module(fk-atlas-amazon)
 

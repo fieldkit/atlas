@@ -3,12 +3,9 @@
 #include <SerialFlash.h>
 
 #include "debug.h"
+#include "board_definition.h"
 
 #define FK_ATLAS_OEM
-
-const uint8_t PIN_ATLAS_ENABLE = 6;
-const uint8_t PIN_PERIPH_ENABLE = 12;
-const uint8_t PIN_FLASH_CS = 5;
 
 const uint8_t ATLAS_RESPONSE_CODE_NO_DATA = 0xff;
 const uint8_t ATLAS_RESPONSE_CODE_NOT_READY = 0xfe;
@@ -417,23 +414,6 @@ using AtlasBoardType = AtlasScientificPrototypeBoard;
 
 class Check {
 public:
-    void setup() {
-        Wire.begin();
-
-        //  TODO: Investigate. I would see hangs if I used a slower speed.
-        // Wire.setClock(400000);
-
-        pinMode(PIN_ATLAS_ENABLE, OUTPUT);
-        digitalWrite(PIN_ATLAS_ENABLE, LOW);
-
-        pinMode(PIN_PERIPH_ENABLE, OUTPUT);
-        digitalWrite(PIN_PERIPH_ENABLE, LOW);
-        delay(1000);
-        digitalWrite(PIN_ATLAS_ENABLE, HIGH);
-        digitalWrite(PIN_PERIPH_ENABLE, HIGH);
-        delay(1000);
-    }
-
     bool test(uint8_t address, const char *name) {
         AtlasBoardType sensor(address);
         if (!sensor.begin()) {
@@ -484,7 +464,7 @@ public:
     bool flashMemory() {
         Serial.println("test: Checking flash memory...");
 
-        if (!SerialFlash.begin(PIN_FLASH_CS)) {
+        if (!SerialFlash.begin(fk::FK_ATLAS_PIN_FLASH_CS)) {
             Serial.println("test: Flash memory FAILED");
             return false;
         }
@@ -511,8 +491,7 @@ public:
 void setup() {
     Serial.begin(115200);
 
-    Check check;
-    check.setup();
+    fk::board.disable_everything();
 
     while (!Serial) {
         delay(100);
@@ -522,6 +501,15 @@ void setup() {
 
     while (true) {
         Serial.println("test: Begin");
+
+        fk::board.enable_everything();
+
+        SPI.begin();
+        Wire.begin();
+
+        delay(300);
+
+        Check check;
 
         auto success = true;
 
@@ -569,9 +557,6 @@ void setup() {
 
         Serial.println("test: Done");
 
-        digitalWrite(PIN_PERIPH_ENABLE, LOW);
-        delay(5000);
-        digitalWrite(PIN_PERIPH_ENABLE, HIGH);
         delay(1000);
     }
 

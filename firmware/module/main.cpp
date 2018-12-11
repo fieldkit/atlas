@@ -4,19 +4,14 @@
 #include <fk-module.h>
 
 #include "atlas_module.h"
+#include "board_definition.h"
 
 extern "C" {
 
 void setup() {
     Serial.begin(115200);
 
-    pinMode(fk::FK_ATLAS_PIN_PERIPH_ENABLE, OUTPUT);
-    digitalWrite(fk::FK_ATLAS_PIN_PERIPH_ENABLE, LOW);
-    pinMode(fk::FK_ATLAS_PIN_ATLAS_ENABLE, OUTPUT);
-    digitalWrite(fk::FK_ATLAS_PIN_ATLAS_ENABLE, LOW);
-
-    TwoWire bus1{ Wire };
-    bus1.end();
+    fk::board.disable_everything();
 
     while (!Serial && millis() < 2000) {
         delay(100);
