@@ -4,7 +4,7 @@
 
 #include "debug.h"
 
-// #define FK_ATLAS_OEM
+#define FK_ATLAS_OEM
 
 const uint8_t PIN_ATLAS_ENABLE = 6;
 const uint8_t PIN_PERIPH_ENABLE = 12;
@@ -149,13 +149,44 @@ public:
     }
 
     bool configure() override {
+        if (type_ != OEM_TYPE_EC) {
+            return true;
+        }
+
+        loginfof("Atlas", "Setting EC probe type...");
+
         uint16_t type = (uint16_t)(0.1 * 100);
 
         Wire.beginTransmission(address_);
         Wire.write(0x08);
         Wire.write((type >> 8) & 0xff);
+        Wire.endTransmission();
+
+        Wire.beginTransmission(address_);
+        Wire.write(0x09);
         Wire.write((type) & 0xff);
         Wire.endTransmission();
+
+        union data_t {
+            uint8_t bytes[2];
+            uint16_t u16;
+        };
+
+        data_t data;
+        Wire.beginTransmission(address_);
+        Wire.write(0x08);
+        Wire.endTransmission();
+
+        Wire.requestFrom(address_, 2);
+        for (auto i = 2; i > 0; --i) {
+            data.bytes[i - 1] = Wire.read();
+        }
+        Wire.endTransmission();
+
+        float value = data.u16;
+        value /= 100.0f;
+
+        loginfof("Atlas", "Current probe type: %f", value);
 
         delay(100);
 
