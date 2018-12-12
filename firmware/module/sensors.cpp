@@ -1,18 +1,16 @@
 #include "sensors.h"
-#include "atlas_hardware.h"
 
 namespace fk {
 
 bool SensorModule::setup() {
-    pinMode(FK_ATLAS_PIN_PERIPH_ENABLE, OUTPUT);
-
+    /*
     // TODO: Investigate. I would see hangs if I used a slower speed.
     sensorBus.begin(400000);
 
     for (size_t i = 0; i < numberOfSensors; ++i) {
         sensors[i]->setup();
     }
-
+    */
     return true;
 }
 
@@ -21,6 +19,7 @@ TaskEval SensorModule::task() {
         return TaskEval::busy();
     }
 
+    /*
     auto allWaiting = true;
     TickSlice slices[numberOfSensors];
     for (size_t i = 0; i < numberOfSensors; ++i) {
@@ -40,10 +39,11 @@ TaskEval SensorModule::task() {
         sensorPower->busy();
         return TaskEval::busy();
     }
-
+    */
     return TaskEval::done();
 }
 
+/*
 bool SensorModule::isBusy() const {
     return !isIdle();
 }
@@ -91,8 +91,10 @@ size_t SensorModule::readAll(float *values) {
 
     return total;
 }
+*/
 
 AtlasReader *SensorModule::getSensorByType(fk_atlas_SensorType type) {
+    /*
     switch (type) {
     case fk_atlas_SensorType_PH: return &ph;
     case fk_atlas_SensorType_TEMP: return &temp;
@@ -102,6 +104,7 @@ AtlasReader *SensorModule::getSensorByType(fk_atlas_SensorType type) {
     case fk_atlas_SensorType_DO: return &dissolvedOxygen;
     case fk_atlas_SensorType_EC: return &ec;
     }
+    */
 
     fk_assert(false);
     return nullptr;

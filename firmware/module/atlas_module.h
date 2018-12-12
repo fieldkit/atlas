@@ -4,9 +4,6 @@
 #include <fk-module.h>
 #include <fk-atlas-protocol.h>
 
-#include "atlas_hardware.h"
-#include "atlas.h"
-
 #include "configure_atlas.h"
 #include "custom_atlas_query.h"
 #include "take_atlas_readings.h"

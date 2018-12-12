@@ -7,6 +7,7 @@ void TakeAtlasReadings::task() {
     auto sensorPower = atlasServices().sensorPower;
     sensorPower->enable();
 
+    /*
     auto atlasSensors = atlasServices().atlasSensors;
     atlasSensors->compensate(atlasServices().compensation);
     atlasSensors->beginReading(services().readings->remaining() <= 1);
@@ -20,7 +21,6 @@ void TakeAtlasReadings::task() {
     log("NumberOfReadingsReady: %d", atlasSensors->numberOfReadingsReady());
 
     if (atlasSensors->numberOfReadingsReady() == NumberOfAtlasReadings) {
-        // Order: Ec1,2,3,4,pH,Do,ORP,Temp
         float values[atlasSensors->numberOfReadingsReady()];
         auto size = atlasSensors->readAll(values);
         auto now = clock.getTime();
@@ -43,6 +43,7 @@ void TakeAtlasReadings::task() {
         // hiccup.
         transit<RebootDevice>();
     }
+    */
 }
 
 }

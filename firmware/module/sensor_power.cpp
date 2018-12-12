@@ -1,5 +1,5 @@
 #include "sensor_power.h"
-#include "atlas_hardware.h"
+#include "board_definition.h"
 
 namespace fk {
 

@@ -4,8 +4,6 @@
 #include <fk-module.h>
 #include <fk-atlas-protocol.h>
 
-#include "atlas_hardware.h"
-#include "atlas.h"
 #include "sensors.h"
 #include "sensor_power.h"
 #include "attached_sensors.h"

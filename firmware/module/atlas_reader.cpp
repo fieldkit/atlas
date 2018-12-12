@@ -1,4 +1,4 @@
-#include "atlas.h"
+#include "atlas_reader.h"
 #include "debug.h"
 #include "configuration.h"
 #include "atlas_configuration.h"
