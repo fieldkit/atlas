@@ -7,39 +7,26 @@ SensorPower::SensorPower(ModuleHardware &hardware) : Task("SensorPower"), hardwa
 }
 
 void SensorPower::enable() {
-    if (last_powered_on_ == 0) {
-        // digitalWrite(FK_ATLAS_PIN_ATLAS_ENABLE, HIGH);
-        // TwoWire bus1{ Wire };
-        // bus1.begin();
-        // hardware_->flash_take();
-        last_powered_on_ = fk_uptime();
+    if (atlas_power_.take()) {
+        log("Atlas on");
+        board.enable_atlas_modules();
     }
 
-    busy();
+    atlas_power_.touch();
 }
 
 bool SensorPower::ready() {
-    if (last_powered_on_ == 0) {
-        return false;
-    }
-
-    return fk_uptime() - last_powered_on_ > AtlasPowerOnTime;
+    return atlas_power_.has_been_on_for(AtlasPowerOnTime);
 }
 
 void SensorPower::busy() {
-    turn_off_at_ = fk_uptime() + AtlasPowerOffTime;
+    atlas_power_.touch();
 }
 
 TaskEval SensorPower::task() {
-    if (last_powered_on_ > 0) {
-        if (fk_uptime() > turn_off_at_) {
-            // hardware_->flash_release();
-            // TwoWire bus1{ Wire };
-            // bus1.end();
-            // digitalWrite(FK_ATLAS_PIN_ATLAS_ENABLE, LOW);
-            last_powered_on_ = 0;
-            turn_off_at_ = 0;
-        }
+    if (atlas_power_.release()) {
+        log("Atlas off");
+        board.disable_atlas_modules();
     }
 
     return TaskEval::idle();

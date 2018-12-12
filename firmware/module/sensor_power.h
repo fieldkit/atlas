@@ -5,14 +5,14 @@
 
 namespace fk {
 
-constexpr uint32_t AtlasPowerOnTime = 1 * Seconds;
-constexpr uint32_t AtlasPowerOffTime = 5 * Seconds;
-
 class SensorPower : public Task {
 private:
+    static constexpr uint32_t AtlasPowerOnTime = 1 * Seconds;
+    static constexpr uint32_t AtlasPowerMinimumOnTime = 5 * Seconds;
+
+private:
     ModuleHardware *hardware_;
-    uint32_t last_powered_on_{ 0 };
-    uint32_t turn_off_at_{ 0 };
+    PowerSwitch atlas_power_{ AtlasPowerMinimumOnTime };
 
 public:
     SensorPower(ModuleHardware &hardware);
