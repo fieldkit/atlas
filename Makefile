@@ -7,7 +7,7 @@ $(BUILD):
 
 all: $(BUILD) gitdeps
 	cd $(BUILD) && cmake ../
-	cd $(BUILD) && make
+	$(MAKE) -C $(BUILD)
 
 gitdeps:
 	simple-deps --config firmware/module/dependencies.sd
