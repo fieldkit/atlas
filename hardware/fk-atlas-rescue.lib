@@ -1,11 +1,11 @@
 EESchema-LIBRARY Version 2.4
 #encoding utf-8
 #
-# fk-atlas-rescue:3V3-conservify
+# 3V3-conservify
 #
-DEF fk-atlas-rescue:3V3-conservify #PWR 0 0 Y Y 1 F P
+DEF 3V3-conservify #PWR 0 0 Y Y 1 F P
 F0 "#PWR" 0 -150 50 H I C CNN
-F1 "fk-atlas-rescue:3V3-conservify" 0 140 50 H V C CNN
+F1 "3V3-conservify" 0 140 50 H V C CNN
 F2 "" 0 0 60 H V C CNN
 F3 "" 0 0 60 H V C CNN
 DRAW
@@ -15,11 +15,11 @@ X 3V3 1 0 0 0 U 50 50 1 1 W N
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:5V0-conservify
+# 5V0-conservify
 #
-DEF fk-atlas-rescue:5V0-conservify #PWR 0 0 Y Y 1 F P
+DEF 5V0-conservify #PWR 0 0 Y Y 1 F P
 F0 "#PWR" 0 -150 50 H I C CNN
-F1 "fk-atlas-rescue:5V0-conservify" 0 140 50 H V C CNN
+F1 "5V0-conservify" 0 140 50 H V C CNN
 F2 "" 0 0 60 H V C CNN
 F3 "" 0 0 60 H V C CNN
 DRAW
@@ -29,11 +29,11 @@ X 5V0 1 0 0 0 U 50 50 1 1 W N
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:ADM3260-conservify
+# ADM3260-conservify
 #
-DEF fk-atlas-rescue:ADM3260-conservify U 0 40 Y Y 1 F N
+DEF ADM3260-conservify U 0 40 Y Y 1 F N
 F0 "U" 0 -150 60 H V C CNN
-F1 "fk-atlas-rescue:ADM3260-conservify" 0 0 60 H V C CNN
+F1 "ADM3260-conservify" 0 0 60 H V C CNN
 F2 "" 0 0 60 H I C CNN
 F3 "" 0 0 60 H I C CNN
 DRAW
@@ -61,11 +61,11 @@ X VIN 9 -750 300 200 R 50 50 1 1 I
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:ATLAS_SENSOR-conservify
+# ATLAS_SENSOR-conservify
 #
-DEF fk-atlas-rescue:ATLAS_SENSOR-conservify U 0 40 Y Y 1 F N
+DEF ATLAS_SENSOR-conservify U 0 40 Y Y 1 F N
 F0 "U" -450 -350 60 H V C CNN
-F1 "fk-atlas-rescue:ATLAS_SENSOR-conservify" 50 -50 60 H V C CNN
+F1 "ATLAS_SENSOR-conservify" 50 -50 60 H V C CNN
 F2 "" 0 0 60 H I C CNN
 F3 "" 0 0 60 H I C CNN
 DRAW
@@ -79,11 +79,11 @@ X PGND 6 900 0 200 L 50 50 1 1 I
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:ATLAS_WATER_PROBE-conservify
+# ATLAS_WATER_PROBE-conservify
 #
-DEF fk-atlas-rescue:ATLAS_WATER_PROBE-conservify P 0 40 Y Y 1 F N
+DEF ATLAS_WATER_PROBE-conservify P 0 40 Y Y 1 F N
 F0 "P" 0 0 60 H V C CNN
-F1 "fk-atlas-rescue:ATLAS_WATER_PROBE-conservify" 0 -100 60 H V C CNN
+F1 "ATLAS_WATER_PROBE-conservify" 0 -100 60 H V C CNN
 F2 "" 0 0 60 H I C CNN
 F3 "" 0 0 60 H I C CNN
 DRAW
@@ -91,11 +91,11 @@ S -450 150 450 -250 0 1 0 N
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:ATSAMD21G18A_AU-conservify
+# ATSAMD21G18A_AU-conservify
 #
-DEF fk-atlas-rescue:ATSAMD21G18A_AU-conservify U 0 40 Y Y 1 F N
+DEF ATSAMD21G18A_AU-conservify U 0 40 Y Y 1 F N
 F0 "U" -650 1300 60 H V C CNN
-F1 "fk-atlas-rescue:ATSAMD21G18A_AU-conservify" 0 0 60 H V C CNN
+F1 "ATSAMD21G18A_AU-conservify" 0 0 60 H V C CNN
 F2 "conservify:TQFP-48_7x7mm_Pitch0.5mm" 0 -1550 60 H I C CNN
 F3 "" 0 450 60 H V C CNN
 $FPLIST
@@ -154,11 +154,11 @@ X PA04 9 -850 750 150 R 40 40 1 1 B
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:CAPACITOR_CERAMIC-conservify
+# CAPACITOR_CERAMIC-conservify
 #
-DEF fk-atlas-rescue:CAPACITOR_CERAMIC-conservify C 0 10 Y Y 1 F N
+DEF CAPACITOR_CERAMIC-conservify C 0 10 Y Y 1 F N
 F0 "C" 25 100 50 H V L CNN
-F1 "fk-atlas-rescue:CAPACITOR_CERAMIC-conservify" 25 -100 50 H V L CNN
+F1 "CAPACITOR_CERAMIC-conservify" 25 -100 50 H V L CNN
 F2 "conservify:CAP-0603" 0 -200 30 H I C CNN
 F3 "" 0 0 60 H V C CNN
 $FPLIST
@@ -177,11 +177,11 @@ X ~ 2 0 -150 110 U 40 40 1 1 P
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:CONN_01x02-conservify
+# CONN_01x02-conservify
 #
-DEF fk-atlas-rescue:CONN_01x02-conservify J 0 40 Y N 1 F N
+DEF CONN_01x02-conservify J 0 40 Y N 1 F N
 F0 "J" 0 100 50 H V C CNN
-F1 "fk-atlas-rescue:CONN_01x02-conservify" 0 -200 50 H V C CNN
+F1 "CONN_01x02-conservify" 0 -200 50 H V C CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 $FPLIST
@@ -201,11 +201,11 @@ X Pin_2 2 -200 -100 150 R 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:CONN_01x03_SERIAL-conservify
+# CONN_01x03_SERIAL-conservify
 #
-DEF fk-atlas-rescue:CONN_01x03_SERIAL-conservify J 0 0 N Y 1 F N
+DEF CONN_01x03_SERIAL-conservify J 0 0 N Y 1 F N
 F0 "J" 0 200 50 H V C CNN
-F1 "fk-atlas-rescue:CONN_01x03_SERIAL-conservify" 0 -200 50 H V C CNN
+F1 "CONN_01x03_SERIAL-conservify" 0 -200 50 H V C CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 $FPLIST
@@ -227,11 +227,11 @@ X D30 3 -200 -100 150 R 50 39 1 1 P
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:CONN_01x04-conservify
+# CONN_01x04-conservify
 #
-DEF fk-atlas-rescue:CONN_01x04-conservify J 0 40 Y N 1 F N
+DEF CONN_01x04-conservify J 0 40 Y N 1 F N
 F0 "J" 0 200 50 H V C CNN
-F1 "fk-atlas-rescue:CONN_01x04-conservify" 0 -300 50 H V C CNN
+F1 "CONN_01x04-conservify" 0 -300 50 H V C CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 $FPLIST
@@ -255,11 +255,11 @@ X Pin_4 4 -200 -200 150 R 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:CONN_01x05-conservify
+# CONN_01x05-conservify
 #
-DEF fk-atlas-rescue:CONN_01x05-conservify J 0 40 Y N 1 F N
+DEF CONN_01x05-conservify J 0 40 Y N 1 F N
 F0 "J" 0 300 50 H V C CNN
-F1 "fk-atlas-rescue:CONN_01x05-conservify" 0 -300 50 H V C CNN
+F1 "CONN_01x05-conservify" 0 -300 50 H V C CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 $FPLIST
@@ -285,11 +285,11 @@ X Pin_5 5 -200 -200 150 R 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:CONN_02x05_SWD-conservify
+# CONN_02x05_SWD-conservify
 #
-DEF ~fk-atlas-rescue:CONN_02x05_SWD-conservify J 0 40 Y N 1 F N
+DEF ~CONN_02x05_SWD-conservify J 0 40 Y N 1 F N
 F0 "J" 0 300 60 H V C CNN
-F1 "fk-atlas-rescue:CONN_02x05_SWD-conservify" -50 -350 60 H I C CNN
+F1 "CONN_02x05_SWD-conservify" -50 -350 60 H I C CNN
 F2 "" 0 -450 60 H I C CNN
 F3 "" -50 -150 60 H V C CNN
 $FPLIST
@@ -325,11 +325,11 @@ X Pin_9 9 -250 -200 150 R 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:CRYSTAL-conservify
+# CRYSTAL-conservify
 #
-DEF fk-atlas-rescue:CRYSTAL-conservify Y 0 40 N N 1 F N
+DEF CRYSTAL-conservify Y 0 40 N N 1 F N
 F0 "Y" 0 150 50 H V C CNN
-F1 "fk-atlas-rescue:CRYSTAL-conservify" 0 -150 50 H V C CNN
+F1 "CRYSTAL-conservify" 0 -150 50 H V C CNN
 F2 "conservify:ABS07" 0 -250 60 H I C CNN
 F3 "" 0 0 60 H V C CNN
 $FPLIST
@@ -344,11 +344,11 @@ X 2 2 250 0 150 L 40 40 1 1 P
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:DIODE_DUAL_SCHOTTKY-conservify
+# DIODE_DUAL_SCHOTTKY-conservify
 #
-DEF fk-atlas-rescue:DIODE_DUAL_SCHOTTKY-conservify D 0 40 N N 1 F N
+DEF DIODE_DUAL_SCHOTTKY-conservify D 0 40 N N 1 F N
 F0 "D" 0 250 50 H V C CNN
-F1 "fk-atlas-rescue:DIODE_DUAL_SCHOTTKY-conservify" 0 -250 50 H V C CNN
+F1 "DIODE_DUAL_SCHOTTKY-conservify" 0 -250 50 H V C CNN
 F2 "conservify:SOT-1016" 0 -350 60 H I C CNN
 F3 "" 0 100 60 H V C CNN
 $FPLIST
@@ -371,11 +371,11 @@ X K 3 -300 0 150 R 50 50 1 1 w
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:FIDUCIAL-conservify
+# FIDUCIAL-conservify
 #
-DEF fk-atlas-rescue:FIDUCIAL-conservify M 0 40 Y Y 1 F N
+DEF FIDUCIAL-conservify M 0 40 Y Y 1 F N
 F0 "M" 0 150 60 H V C CNN
-F1 "fk-atlas-rescue:FIDUCIAL-conservify" 0 -225 60 H V C CNN
+F1 "FIDUCIAL-conservify" 0 -225 60 H V C CNN
 F2 "conservify:FIDUCIAL-1MM" 0 -300 60 H I C CNN
 F3 "" 0 0 60 H V C CNN
 DRAW
@@ -384,11 +384,11 @@ X ~ ~ 0 -150 150 U 50 50 1 1 I
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:FUSE-conservify
+# FUSE-conservify
 #
-DEF fk-atlas-rescue:FUSE-conservify F 0 10 Y Y 1 F N
+DEF FUSE-conservify F 0 10 Y Y 1 F N
 F0 "F" 100 50 50 H V C CNN
-F1 "fk-atlas-rescue:FUSE-conservify" -100 -50 50 H V C CNN
+F1 "FUSE-conservify" -100 -50 50 H V C CNN
 F2 "conservify:MF-PSMF020X" 0 -150 60 H I C CNN
 F3 "" 0 0 60 H V C CNN
 $FPLIST
@@ -402,11 +402,11 @@ X ~ 2 300 0 150 L 40 40 1 1 I
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:GND-conservify
+# GND-conservify
 #
-DEF ~fk-atlas-rescue:GND-conservify #PWR 0 0 Y Y 1 F P
+DEF ~GND-conservify #PWR 0 0 Y Y 1 F P
 F0 "#PWR" 0 -250 50 H I C CNN
-F1 "fk-atlas-rescue:GND-conservify" 0 -150 50 H I C CNN
+F1 "GND-conservify" 0 -150 50 H I C CNN
 F2 "" 0 0 60 H V C CNN
 F3 "" 0 0 60 H V C CNN
 DRAW
@@ -418,11 +418,11 @@ X GND 1 0 0 0 D 50 50 1 1 W N
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:INDUCTOR-conservify
+# INDUCTOR-conservify
 #
-DEF fk-atlas-rescue:INDUCTOR-conservify L 0 40 N N 1 F N
+DEF INDUCTOR-conservify L 0 40 N N 1 F N
 F0 "L" 0 -50 50 H V C CNN
-F1 "fk-atlas-rescue:INDUCTOR-conservify" 0 100 50 H V C CNN
+F1 "INDUCTOR-conservify" 0 100 50 H V C CNN
 F2 "conservify:IND-0603" 0 -150 60 H I C CNN
 F3 "" 0 0 60 V V C CNN
 $FPLIST
@@ -443,11 +443,11 @@ X 2 2 300 0 150 L 70 70 1 1 P
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:LED_SINGLE-conservify
+# LED_SINGLE-conservify
 #
-DEF fk-atlas-rescue:LED_SINGLE-conservify D 0 40 Y N 1 F N
+DEF LED_SINGLE-conservify D 0 40 Y N 1 F N
 F0 "D" 0 100 50 H V C CNN
-F1 "fk-atlas-rescue:LED_SINGLE-conservify" 0 -140 50 H V C CNN
+F1 "LED_SINGLE-conservify" 0 -140 50 H V C CNN
 F2 "conservify:LED-0603" 0 -250 60 H I C CNN
 F3 "" 0 0 60 H V C CNN
 $FPLIST
@@ -465,11 +465,11 @@ X A 2 200 0 150 L 40 40 1 1 P
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:MCP1700T-XXX2E-conservify
+# MCP1700T-XXX2E-conservify
 #
-DEF fk-atlas-rescue:MCP1700T-XXX2E-conservify U 0 40 Y Y 1 F N
+DEF MCP1700T-XXX2E-conservify U 0 40 Y Y 1 F N
 F0 "U" 0 150 60 H V C CNN
-F1 "fk-atlas-rescue:MCP1700T-XXX2E-conservify" 0 -550 60 H V C CNN
+F1 "MCP1700T-XXX2E-conservify" 0 -550 60 H V C CNN
 F2 "conservify:SOT-89" 0 -650 60 H I C CNN
 F3 "" -100 0 60 H V C CNN
 $FPLIST
@@ -483,11 +483,11 @@ X VOUT 3 350 0 150 L 50 50 1 1 w
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:MICRO_USB-conservify
+# MICRO_USB-conservify
 #
-DEF fk-atlas-rescue:MICRO_USB-conservify J 0 40 Y Y 1 F N
+DEF MICRO_USB-conservify J 0 40 Y Y 1 F N
 F0 "J" 0 350 60 H V C CNN
-F1 "fk-atlas-rescue:MICRO_USB-conservify" 0 -350 60 H V C CNN
+F1 "MICRO_USB-conservify" 0 -350 60 H V C CNN
 F2 "conservify:MICRO-USB" 0 -450 60 H I C CNN
 F3 "" 50 200 60 H V C CNN
 $FPLIST
@@ -507,11 +507,11 @@ X SHIELD 9 -400 100 150 R 40 40 1 1 I
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:MOSFET_N-conservify
+# MOSFET_N-conservify
 #
-DEF fk-atlas-rescue:MOSFET_N-conservify Q 0 0 Y Y 1 F N
+DEF MOSFET_N-conservify Q 0 0 Y Y 1 F N
 F0 "Q" 250 50 50 H V R CNN
-F1 "fk-atlas-rescue:MOSFET_N-conservify" 550 -50 50 H V R CNN
+F1 "MOSFET_N-conservify" 550 -50 50 H V R CNN
 F2 "conservify:SOT-23" 0 -300 29 H I C CNN
 F3 "" -100 0 60 H V C CNN
 $FPLIST
@@ -542,11 +542,11 @@ X D 3 0 250 150 D 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:MOUNT_HOLE-conservify
+# MOUNT_HOLE-conservify
 #
-DEF ~fk-atlas-rescue:MOUNT_HOLE-conservify M 0 40 Y Y 1 F N
+DEF ~MOUNT_HOLE-conservify M 0 40 Y Y 1 F N
 F0 "M" 0 150 50 H V C CNN
-F1 "fk-atlas-rescue:MOUNT_HOLE-conservify" 0 -150 50 H I C CNN
+F1 "MOUNT_HOLE-conservify" 0 -150 50 H I C CNN
 F2 "conservify:HOLE_PTH_3.2MM" 25 -225 50 H I C CNN
 F3 "" 0 0 50 H V C CNN
 $FPLIST
@@ -562,11 +562,11 @@ P 2 0 1 0 25 25 -25 -25 N
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:PRTR5V0U2X-conservify
+# PRTR5V0U2X-conservify
 #
-DEF fk-atlas-rescue:PRTR5V0U2X-conservify D 0 40 Y Y 1 F N
+DEF PRTR5V0U2X-conservify D 0 40 Y Y 1 F N
 F0 "D" 50 350 60 H V C CNN
-F1 "fk-atlas-rescue:PRTR5V0U2X-conservify" 0 -600 60 H V C CNN
+F1 "PRTR5V0U2X-conservify" 0 -600 60 H V C CNN
 F2 "conservify:SOT-143B" 0 -500 60 H I C CNN
 F3 "" -150 0 60 H V C CNN
 $FPLIST
@@ -607,11 +607,11 @@ X ~ 4 -150 400 150 D 50 50 1 1 I
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:PWR_FLAG-conservify
+# PWR_FLAG-conservify
 #
-DEF fk-atlas-rescue:PWR_FLAG-conservify #FLG 0 0 N N 1 F P
+DEF PWR_FLAG-conservify #FLG 0 0 N N 1 F P
 F0 "#FLG" 0 75 50 H I C CNN
-F1 "fk-atlas-rescue:PWR_FLAG-conservify" 0 150 50 H V C CNN
+F1 "PWR_FLAG-conservify" 0 150 50 H V C CNN
 F2 "" 0 0 50 H I C CNN
 F3 "" 0 0 50 H I C CNN
 DRAW
@@ -620,11 +620,11 @@ X pwr 1 0 0 0 U 50 50 0 0 w
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:R-conservify
+# R-conservify
 #
-DEF fk-atlas-rescue:R-conservify R 0 0 N Y 1 F N
+DEF R-conservify R 0 0 N Y 1 F N
 F0 "R" 80 0 50 V V C CNN
-F1 "fk-atlas-rescue:R-conservify" 0 0 50 V V C CNN
+F1 "R-conservify" 0 0 50 V V C CNN
 F2 "" -70 0 50 V I C CNN
 F3 "" 0 0 50 H I C CNN
 $FPLIST
@@ -638,11 +638,11 @@ X ~ 2 0 -150 50 U 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:RESISTOR-conservify
+# RESISTOR-conservify
 #
-DEF fk-atlas-rescue:RESISTOR-conservify R 0 40 Y Y 1 F N
+DEF RESISTOR-conservify R 0 40 Y Y 1 F N
 F0 "R" 0 100 60 H V C CNN
-F1 "fk-atlas-rescue:RESISTOR-conservify" 0 -100 60 H V C CNN
+F1 "RESISTOR-conservify" 0 -100 60 H V C CNN
 F2 "conservify:RES-0603" 0 -200 60 H I C CNN
 F3 "" 0 0 60 H V C CNN
 $FPLIST
@@ -657,11 +657,11 @@ X ~ 2 250 0 100 L 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:S25FL1xxK0XM-conservify
+# S25FL1xxK0XM-conservify
 #
-DEF fk-atlas-rescue:S25FL1xxK0XM-conservify U 0 40 Y Y 1 F N
+DEF S25FL1xxK0XM-conservify U 0 40 Y Y 1 F N
 F0 "U" 0 300 60 H V C CNN
-F1 "fk-atlas-rescue:S25FL1xxK0XM-conservify" 0 -300 60 H V C CNN
+F1 "S25FL1xxK0XM-conservify" 0 -300 60 H V C CNN
 F2 "conservify:SOIC-8-N" 0 -400 60 H I C CNN
 F3 "" -200 50 60 H V C CNN
 $FPLIST
@@ -680,11 +680,11 @@ X VCC 8 550 150 150 L 50 50 1 1 W
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:SK6812-conservify
+# SK6812-conservify
 #
-DEF fk-atlas-rescue:SK6812-conservify U 0 40 Y Y 1 F N
+DEF SK6812-conservify U 0 40 Y Y 1 F N
 F0 "U" 0 -50 60 H V C CNN
-F1 "fk-atlas-rescue:SK6812-conservify" 0 250 60 H V C CNN
+F1 "SK6812-conservify" 0 250 60 H V C CNN
 F2 "" 0 300 60 H I C CNN
 F3 "" 0 300 60 H I C CNN
 DRAW
@@ -710,11 +710,11 @@ X NC 4 150 -400 200 U 50 50 1 1 N
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:SWITCH_CONN_02-conservify
+# SWITCH_CONN_02-conservify
 #
-DEF fk-atlas-rescue:SWITCH_CONN_02-conservify SW 0 40 Y Y 1 F N
+DEF SWITCH_CONN_02-conservify SW 0 40 Y Y 1 F N
 F0 "SW" 0 150 60 H V C CNN
-F1 "fk-atlas-rescue:SWITCH_CONN_02-conservify" 50 -100 60 H V C CNN
+F1 "SWITCH_CONN_02-conservify" 50 -100 60 H V C CNN
 F2 "conservify:TS-107A" 0 -200 60 H I C CNN
 F3 "" 0 0 60 H V C CNN
 $FPLIST
@@ -733,11 +733,11 @@ X ~ 2 250 0 125 L 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:TPS2052B-conservify
+# TPS2052B-conservify
 #
-DEF fk-atlas-rescue:TPS2052B-conservify U 0 40 Y Y 1 F N
+DEF TPS2052B-conservify U 0 40 Y Y 1 F N
 F0 "U" -400 -450 60 H V C CNN
-F1 "fk-atlas-rescue:TPS2052B-conservify" 0 0 60 H V C CNN
+F1 "TPS2052B-conservify" 0 0 60 H V C CNN
 F2 "" 0 200 60 H I C CNN
 F3 "" 0 200 60 H I C CNN
 DRAW
@@ -753,11 +753,11 @@ X OC1 8 700 250 200 L 50 50 1 1 O
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:VBUS-conservify
+# VBUS-conservify
 #
-DEF fk-atlas-rescue:VBUS-conservify #PWR 0 0 Y Y 1 F P
+DEF VBUS-conservify #PWR 0 0 Y Y 1 F P
 F0 "#PWR" 0 -150 50 H I C CNN
-F1 "fk-atlas-rescue:VBUS-conservify" 0 140 50 H V C CNN
+F1 "VBUS-conservify" 0 140 50 H V C CNN
 F2 "" 0 0 60 H V C CNN
 F3 "" 0 0 60 H V C CNN
 DRAW
@@ -767,11 +767,11 @@ X VBUS 1 0 0 0 U 50 50 1 1 W N
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:VCC-conservify
+# VCC-conservify
 #
-DEF fk-atlas-rescue:VCC-conservify #PWR 0 0 Y Y 1 F P
+DEF VCC-conservify #PWR 0 0 Y Y 1 F P
 F0 "#PWR" 0 -150 50 H I C CNN
-F1 "fk-atlas-rescue:VCC-conservify" 0 140 50 H V C CNN
+F1 "VCC-conservify" 0 140 50 H V C CNN
 F2 "" 0 0 60 H V C CNN
 F3 "" 0 0 60 H V C CNN
 DRAW
@@ -781,11 +781,11 @@ X VCC 1 0 0 0 U 50 50 1 1 W N
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:VIN-conservify
+# VIN-conservify
 #
-DEF fk-atlas-rescue:VIN-conservify #PWR 0 0 Y Y 1 F P
+DEF VIN-conservify #PWR 0 0 Y Y 1 F P
 F0 "#PWR" 0 -150 50 H I C CNN
-F1 "fk-atlas-rescue:VIN-conservify" 0 140 50 H V C CNN
+F1 "VIN-conservify" 0 140 50 H V C CNN
 F2 "" 0 0 60 H V C CNN
 F3 "" 0 0 60 H V C CNN
 DRAW
@@ -795,11 +795,11 @@ X VIN 1 0 0 0 U 50 50 1 1 W N
 ENDDRAW
 ENDDEF
 #
-# fk-atlas-rescue:VUSB-conservify
+# VUSB-conservify
 #
-DEF fk-atlas-rescue:VUSB-conservify #PWR 0 0 Y Y 1 F P
+DEF VUSB-conservify #PWR 0 0 Y Y 1 F P
 F0 "#PWR" 0 -150 50 H I C CNN
-F1 "fk-atlas-rescue:VUSB-conservify" 0 140 50 H V C CNN
+F1 "VUSB-conservify" 0 140 50 H V C CNN
 F2 "" 0 0 60 H V C CNN
 F3 "" 0 0 60 H V C CNN
 DRAW

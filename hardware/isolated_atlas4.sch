@@ -15,7 +15,7 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L conservify:ADM3260 U601
+L fk-atlas-rescue:ADM3260-conservify U601
 U 1 1 594C2CEF
 P 4400 2900
 F 0 "U601" H 4400 2750 60  0000 C CNN
@@ -36,7 +36,7 @@ F 13 "584-ADM3260ARSZ" H 0   0   50  0001 C CNN "spn1"
 	1    0    0    -1  
 $EndComp
 $Comp
-L conservify:CAPACITOR_CERAMIC C603
+L fk-atlas-rescue:CAPACITOR_CERAMIC-conservify C603
 U 1 1 5948D4BD
 P 5650 3800
 F 0 "C603" H 5675 3900 50  0000 L CNN
@@ -58,7 +58,7 @@ F 14 "mouser" H 0   0   50  0001 C CNN "spn2"
 	0    -1   -1   0   
 $EndComp
 $Comp
-L conservify:CAPACITOR_CERAMIC C604
+L fk-atlas-rescue:CAPACITOR_CERAMIC-conservify C604
 U 1 1 594C2CFA
 P 5650 4100
 F 0 "C604" H 5675 4200 50  0000 L CNN
@@ -80,7 +80,7 @@ F 14 "mouser" H 0   0   50  0001 C CNN "spn2"
 	0    -1   -1   0   
 $EndComp
 $Comp
-L conservify:CAPACITOR_CERAMIC C605
+L fk-atlas-rescue:CAPACITOR_CERAMIC-conservify C605
 U 1 1 594C2CFD
 P 5650 4400
 F 0 "C605" H 5675 4500 50  0000 L CNN
@@ -102,7 +102,7 @@ F 14 "mouser" H 0   0   50  0001 C CNN "spn2"
 	0    -1   -1   0   
 $EndComp
 $Comp
-L conservify:CAPACITOR_CERAMIC C606
+L fk-atlas-rescue:CAPACITOR_CERAMIC-conservify C606
 U 1 1 5948D5D0
 P 5650 4650
 F 0 "C606" H 5675 4750 50  0000 L CNN
@@ -124,7 +124,7 @@ F 14 "mouser" H 0   0   50  0001 C CNN "spn2"
 	0    -1   -1   0   
 $EndComp
 $Comp
-L conservify:CAPACITOR_CERAMIC C601
+L fk-atlas-rescue:CAPACITOR_CERAMIC-conservify C601
 U 1 1 594C2D05
 P 2900 3800
 F 0 "C601" H 2925 3900 50  0000 L CNN
@@ -146,7 +146,7 @@ F 14 "mouser" H 0   0   50  0001 C CNN "spn2"
 	0    -1   -1   0   
 $EndComp
 $Comp
-L conservify:CAPACITOR_CERAMIC C602
+L fk-atlas-rescue:CAPACITOR_CERAMIC-conservify C602
 U 1 1 594C2D0A
 P 2900 4100
 F 0 "C602" H 2925 4200 50  0000 L CNN
@@ -168,7 +168,7 @@ F 14 "mouser" H 0   0   50  0001 C CNN "spn2"
 	0    -1   -1   0   
 $EndComp
 $Comp
-L conservify:R R601
+L fk-atlas-rescue:R-conservify R601
 U 1 1 5948D6B5
 P 5650 3300
 F 0 "R601" V 5730 3300 50  0000 C CNN
@@ -190,7 +190,7 @@ F 14 "mouser" H 0   0   50  0001 C CNN "spn2"
 	0    1    1    0   
 $EndComp
 $Comp
-L conservify:R R602
+L fk-atlas-rescue:R-conservify R602
 U 1 1 5948E326
 P 6250 2700
 F 0 "R602" V 6330 2700 50  0000 C CNN
@@ -212,7 +212,7 @@ F 14 "mouser" H 0   0   50  0001 C CNN "spn2"
 	0    -1   -1   0   
 $EndComp
 $Comp
-L conservify:R R604
+L fk-atlas-rescue:R-conservify R604
 U 1 1 594C2D13
 P 6700 2700
 F 0 "R604" V 6780 2700 50  0000 C CNN
@@ -234,7 +234,7 @@ F 14 "mouser" H 0   0   50  0001 C CNN "spn2"
 	0    -1   -1   0   
 $EndComp
 $Comp
-L conservify:R R603
+L fk-atlas-rescue:R-conservify R603
 U 1 1 594C2D18
 P 6300 3250
 F 0 "R603" V 6380 3250 50  0000 C CNN
@@ -256,7 +256,7 @@ F 14 "mouser" H 0   0   50  0001 C CNN "spn2"
 	1    0    0    -1  
 $EndComp
 $Comp
-L conservify:R R605
+L fk-atlas-rescue:R-conservify R605
 U 1 1 594C2D1C
 P 6800 3250
 F 0 "R605" V 6880 3250 50  0000 C CNN
@@ -278,7 +278,7 @@ F 14 "mouser" H 0   0   50  0001 C CNN "spn2"
 	1    0    0    -1  
 $EndComp
 $Comp
-L conservify:VCC #PWR065
+L fk-atlas-rescue:VCC-conservify #PWR065
 U 1 1 594C2D25
 P 2450 3750
 F 0 "#PWR065" H 2450 3600 50  0001 C CNN
@@ -289,7 +289,7 @@ F 3 "" H 2450 3750 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L conservify:VCC #PWR066
+L fk-atlas-rescue:VCC-conservify #PWR066
 U 1 1 594C2D27
 P 2450 2350
 F 0 "#PWR066" H 2450 2200 50  0001 C CNN
@@ -300,12 +300,12 @@ F 3 "" H 2450 2350 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L conservify:ATLAS_SENSOR U602
+L fk-atlas-rescue:ATLAS_SENSOR-conservify U602
 U 1 1 594C1D09
 P 8550 2900
 F 0 "U602" H 8100 2550 60  0000 C CNN
 F 1 "ATLAS_ORP" H 8600 2850 60  0000 C CNN
-F 2 "conservify:ATLAS_SENSOR_BOARD_OEM" H 8550 2900 60  0001 C CNN
+F 2 "conservify:ATLAS_SENSOR_BOARD_COMBO" H 8550 2900 60  0001 C CNN
 F 3 "" H 8550 2900 60  0001 C CNN
 F 4 " " H 8100 2650 50  0001 C CNN "Critical"
 F 5 " " H 8100 2650 50  0001 C CNN "MFN"
@@ -321,7 +321,7 @@ F 13 "0" H 8100 2650 50  0001 C CNN "price"
 	1    0    0    -1  
 $EndComp
 $Comp
-L conservify:CONN_01x02 J601
+L fk-atlas-rescue:CONN_01x02-conservify J601
 U 1 1 59A1BC7E
 P 10200 2900
 F 0 "J601" H 10200 3050 50  0000 C CNN
@@ -342,7 +342,7 @@ F 13 "523-31-5431" H 350 -50 50  0001 C CNN "spn1"
 	1    0    0    -1  
 $EndComp
 $Comp
-L conservify:ATLAS_WATER_PROBE P6
+L fk-atlas-rescue:ATLAS_WATER_PROBE-conservify P6
 U 1 1 59D2AB5D
 P 8800 3600
 F 0 "P6" H 8800 3600 60  0000 C CNN
@@ -362,7 +362,7 @@ F 12 " " H 8800 3700 50  0001 C CNN "Supplier1"
 	1    0    0    -1  
 $EndComp
 $Comp
-L conservify:PWR_FLAG #FLG0109
+L fk-atlas-rescue:PWR_FLAG-conservify #FLG0109
 U 1 1 5BCDD0A6
 P 7400 4900
 F 0 "#FLG0109" H 7400 4975 50  0001 C CNN
@@ -370,50 +370,6 @@ F 1 "PWR_FLAG" H 7400 5050 50  0000 C CNN
 F 2 "" H 7400 4900 50  0001 C CNN
 F 3 "~" H 7400 4900 50  0001 C CNN
 	1    7400 4900
-	1    0    0    -1  
-$EndComp
-$Comp
-L conservify:CONN_01x02 J?
-U 1 1 5C0F4248
-P 8950 4150
-AR Path="/594C282A/5C0F4248" Ref="J?"  Part="1" 
-AR Path="/594C282B/5C0F4248" Ref="J17"  Part="1" 
-F 0 "J17" H 9029 4142 50  0000 L CNN
-F 1 "CONN_01x02" H 9029 4051 50  0000 L CNN
-F 2 "conservify:TP_Pads_D1.5mm_1x2" H 8950 4150 50  0001 C CNN
-F 3 "" H 8950 4150 50  0001 C CNN
-F 4 " " H 9029 4242 50  0001 C CNN "Critical"
-F 5 " " H 9029 4242 50  0001 C CNN "MFN"
-F 6 " " H 9029 4242 50  0001 C CNN "MFP"
-F 7 " " H 9029 4242 50  0001 C CNN "Notes"
-F 8 " " H 9029 4242 50  0001 C CNN "Package"
-F 9 " " H 9029 4242 50  0001 C CNN "SPN1"
-F 10 "ANY" H 9029 4242 50  0001 C CNN "Source"
-F 11 " " H 9029 4242 50  0001 C CNN "Subsystem"
-F 12 " " H 9029 4242 50  0001 C CNN "Supplier1"
-	1    8950 4150
-	1    0    0    -1  
-$EndComp
-$Comp
-L conservify:CONN_01x02 J?
-U 1 1 5C0F424F
-P 8950 4400
-AR Path="/594C282A/5C0F424F" Ref="J?"  Part="1" 
-AR Path="/594C282B/5C0F424F" Ref="J18"  Part="1" 
-F 0 "J18" H 9029 4392 50  0000 L CNN
-F 1 "CONN_01x02" H 9029 4301 50  0000 L CNN
-F 2 "conservify:TP_Pads_D1.5mm_1x2" H 8950 4400 50  0001 C CNN
-F 3 "" H 8950 4400 50  0001 C CNN
-F 4 " " H 9029 4492 50  0001 C CNN "Critical"
-F 5 " " H 9029 4492 50  0001 C CNN "MFN"
-F 6 " " H 9029 4492 50  0001 C CNN "MFP"
-F 7 " " H 9029 4492 50  0001 C CNN "Notes"
-F 8 " " H 9029 4492 50  0001 C CNN "Package"
-F 9 " " H 9029 4492 50  0001 C CNN "SPN1"
-F 10 "ANY" H 9029 4492 50  0001 C CNN "Source"
-F 11 " " H 9029 4492 50  0001 C CNN "Subsystem"
-F 12 " " H 9029 4492 50  0001 C CNN "Supplier1"
-	1    8950 4400
 	1    0    0    -1  
 $EndComp
 Text Label 7000 2500 0    60   ~ 0
@@ -440,14 +396,6 @@ Text Label 7400 3000 0    60   ~ 0
 ISO_VCC
 Text Label 9500 2900 0    60   ~ 0
 ORP_PGND
-Text Label 8350 4500 0    60   ~ 0
-ISO_GND
-Text Label 8350 4400 0    60   ~ 0
-ISO_VCC
-Text Label 8350 4150 0    60   ~ 0
-ISO_SCL
-Text Label 8350 4250 0    60   ~ 0
-ISO_SDA
 Wire Wire Line
 	5200 3300 5350 3300
 Wire Wire Line
@@ -604,14 +552,6 @@ Wire Wire Line
 	6900 2500 7400 2500
 Wire Wire Line
 	7400 4900 7400 5000
-Wire Wire Line
-	8350 4150 8750 4150
-Wire Wire Line
-	8750 4250 8350 4250
-Wire Wire Line
-	8350 4400 8750 4400
-Wire Wire Line
-	8750 4500 8350 4500
 Connection ~ 5350 3500
 Connection ~ 5350 3400
 Connection ~ 5350 3600
