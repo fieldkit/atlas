@@ -1,8 +1,8 @@
-#include "sensors.h"
+#include "atlas_sensor_collection.h"
 
 namespace fk {
 
-bool SensorModule::setup() {
+bool AtlasSensorCollection::setup() {
     // TODO: Investigate. I would see hangs if I used a slower speed.
     sensorBus.begin(400000);
 
@@ -13,7 +13,7 @@ bool SensorModule::setup() {
     return true;
 }
 
-TaskEval SensorModule::task() {
+TaskEval AtlasSensorCollection::task() {
     if (!sensorPower->ready()) {
         return TaskEval::busy();
     }
@@ -40,11 +40,11 @@ TaskEval SensorModule::task() {
     return TaskEval::done();
 }
 
-bool SensorModule::isBusy() const {
+bool AtlasSensorCollection::isBusy() const {
     return !isIdle();
 }
 
-bool SensorModule::isIdle() const {
+bool AtlasSensorCollection::isIdle() const {
     for (size_t i = 0; i < numberOfSensors; ++i) {
         if (!sensors[i]->isIdle()) {
             return false;
@@ -53,19 +53,19 @@ bool SensorModule::isIdle() const {
     return true;
 }
 
-void SensorModule::compensate(Compensation compensation) {
+void AtlasSensorCollection::compensate(Compensation compensation) {
     for (size_t i = 0; i < numberOfSensors; ++i) {
         sensors[i]->compensate(compensation);
     }
 }
 
-void SensorModule::beginReading(bool sleep) {
+void AtlasSensorCollection::beginReading(bool sleep) {
     for (size_t i = 0; i < numberOfSensors; ++i) {
         sensors[i]->beginReading(sleep);
     }
 }
 
-size_t SensorModule::numberOfReadingsReady() const {
+size_t AtlasSensorCollection::numberOfReadingsReady() const {
     size_t total = 0;
     for (size_t i = 0; i < numberOfSensors; ++i) {
         size_t number = sensors[i]->numberOfReadingsReady();
@@ -77,7 +77,7 @@ size_t SensorModule::numberOfReadingsReady() const {
     return total;
 }
 
-size_t SensorModule::readAll(float *values) {
+size_t AtlasSensorCollection::readAll(float *values) {
     size_t total = 0;
     for (size_t i = 0; i < numberOfSensors; ++i) {
         size_t number = sensors[i]->readAll(values);
@@ -88,7 +88,7 @@ size_t SensorModule::readAll(float *values) {
     return total;
 }
 
-AtlasReader *SensorModule::getSensorByType(fk_atlas_SensorType type) {
+AtlasReader *AtlasSensorCollection::getSensorByType(fk_atlas_SensorType type) {
     switch (type) {
     case fk_atlas_SensorType_PH: return &ph;
     case fk_atlas_SensorType_TEMP: return &temp;

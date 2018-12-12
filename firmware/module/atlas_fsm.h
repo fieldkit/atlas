@@ -4,19 +4,19 @@
 #include <fk-module.h>
 #include <fk-atlas-protocol.h>
 
-#include "sensors.h"
 #include "sensor_power.h"
+#include "atlas_sensor_collection.h"
 #include "attached_sensors.h"
 
 namespace fk {
 
 struct AtlasServices : public ModuleHooks {
     SensorPower *sensorPower;
-    SensorModule *atlasSensors;
+    AtlasSensorCollection *atlasSensors;
     AttachedSensors *attachedSensors;
     Compensation compensation;
 
-    AtlasServices(SensorPower *sensorPower, SensorModule *atlasSensors, AttachedSensors *attachedSensors)
+    AtlasServices(SensorPower *sensorPower, AtlasSensorCollection *atlasSensors, AttachedSensors *attachedSensors)
         : sensorPower(sensorPower), atlasSensors(atlasSensors),  attachedSensors(attachedSensors) {
     }
 

@@ -14,7 +14,7 @@ class AtlasModule : public Module<MinimumFlashState> {
 private:
     TwoWireBus moduleBus{ Wire4and3 };
     SensorPower sensorPower{ *moduleServices().hardware };
-    SensorModule atlasSensors{ sensorPower };
+    AtlasSensorCollection atlasSensors{ sensorPower };
     AttachedSensors attachedSensors{ moduleServices().readings };
     AtlasServices atlasServices{
         &sensorPower,

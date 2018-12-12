@@ -1,5 +1,5 @@
-#ifndef SENSORS_H_INCLUDED
-#define SENSORS_H_INCLUDED
+#ifndef FK_SENSOR_COLLECTION_H_INCLUDED
+#define FK_SENSOR_COLLECTION_H_INCLUDED
 
 #include <task.h>
 #include <fk-atlas-protocol.h>
@@ -15,7 +15,7 @@ constexpr size_t NumberOfSensors = 4
     #endif
     ;
 
-class SensorModule : public Task {
+class AtlasSensorCollection : public Task {
 private:
     SensorPower *sensorPower;
 
@@ -39,8 +39,8 @@ private:
     const size_t numberOfSensors { NumberOfSensors };
 
 public:
-    SensorModule(SensorPower &sensorPower) :
-        Task("Sensors"),
+    AtlasSensorCollection(SensorPower &sensorPower) :
+        Task("ASC"),
         sensorPower(&sensorPower),
         sensors {
             &ec,
