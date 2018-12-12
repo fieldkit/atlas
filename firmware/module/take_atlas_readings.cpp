@@ -7,7 +7,6 @@ void TakeAtlasReadings::task() {
     auto sensorPower = atlasServices().sensorPower;
     sensorPower->enable();
 
-    /*
     auto atlasSensors = atlasServices().atlasSensors;
     atlasSensors->compensate(atlasServices().compensation);
     atlasSensors->beginReading(services().readings->remaining() <= 1);
@@ -43,7 +42,6 @@ void TakeAtlasReadings::task() {
         // hiccup.
         transit<RebootDevice>();
     }
-    */
 }
 
 }

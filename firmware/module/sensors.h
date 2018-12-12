@@ -8,17 +8,17 @@
 #include "sensor_power.h"
 
 namespace fk {
-/*
+
 constexpr size_t NumberOfSensors = 4
     #ifdef FK_ENABLE_ATLAS_ORP
     + 1
     #endif
     ;
-*/
+
 class SensorModule : public Task {
 private:
     SensorPower *sensorPower;
-    /*
+
     using WireAddress = uint8_t;
 
     static constexpr WireAddress ATLAS_SENSOR_EC_DEFAULT_ADDRESS = 0x64;
@@ -37,12 +37,11 @@ private:
     AtlasReader temp{sensorBus, ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS};
     AtlasReader *sensors[NumberOfSensors];
     const size_t numberOfSensors { NumberOfSensors };
-    */
 
 public:
     SensorModule(SensorPower &sensorPower) :
         Task("Sensors"),
-        sensorPower(&sensorPower)/*,
+        sensorPower(&sensorPower),
         sensors {
             &ec,
             &ph,
@@ -51,7 +50,7 @@ public:
             &orp,
             #endif
             &temp
-            }*/ {
+            } {
     }
 
 
@@ -59,7 +58,6 @@ public:
     bool setup();
     TaskEval task() override;
 
-    /*
     void compensate(Compensation compensation);
     void beginReading(bool sleep);
     size_t readAll(float *values);
@@ -71,7 +69,6 @@ public:
     AtlasReader *getSensor(size_t index) {
         return sensors[index];
     }
-    */
 
     AtlasReader *getSensorByType(fk_atlas_SensorType type);
 
