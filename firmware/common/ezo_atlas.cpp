@@ -17,12 +17,12 @@ bool EzoAtlas::setup() {
 
 void EzoAtlas::sleep() {
     switch (state_) {
-    case AtlasReaderState::WantSleep: {
-        state_ = AtlasReaderState::Sleep;
+    case State::WantSleep: {
+        state_ = State::Sleep;
         break;
     }
     default: {
-        state_ = AtlasReaderState::WantSleep;
+        state_ = State::WantSleep;
         break;
     }
     }
@@ -30,7 +30,7 @@ void EzoAtlas::sleep() {
 
 bool EzoAtlas::beginReading(bool sleep) {
     sleepAfter_ = sleep;
-    state_ = AtlasReaderState::ApplyCompensation;
+    state_ = State::ApplyCompensation;
     return true;
 }
 
@@ -39,7 +39,7 @@ size_t EzoAtlas::numberOfReadingsReady() const {
 }
 
 bool EzoAtlas::isIdle() const {
-    return state_ == AtlasReaderState::Idle || state_ == AtlasReaderState::Sleeping;
+    return state_ == State::Idle || state_ == State::Sleeping;
 }
 
 TickSlice EzoAtlas::tick() {
@@ -52,67 +52,67 @@ TickSlice EzoAtlas::tick() {
     }
 
     switch (state_) {
-    case AtlasReaderState::Start: {
+    case State::Start: {
         sendCommand("I");
-        state_ = AtlasReaderState::WaitingOnReply;
-        postReplyState_ = AtlasReaderState::LedsOn;
+        state_ = State::WaitingOnReply;
+        postReplyState_ = State::LedsOn;
         for (size_t i = 0; i < ATLAS_MAXIMUM_NUMBER_OF_VALUES; ++i) {
             values_[i] = 0.0f;
         }
         break;
     }
-    case AtlasReaderState::LedsOn: {
+    case State::LedsOn: {
         if (fk_uptime() > configuration.common.leds.disable_after) {
             sendCommand("L,0");
         }
         else {
             sendCommand("L,1");
         }
-        state_ = AtlasReaderState::WaitingOnEmptyReply;
-        postReplyState_ = AtlasReaderState::Status;
+        state_ = State::WaitingOnEmptyReply;
+        postReplyState_ = State::Status;
         break;
     }
-    case AtlasReaderState::Status: {
+    case State::Status: {
         sendCommand("STATUS");
-        state_ = AtlasReaderState::WaitingOnReply;
-        postReplyState_ = AtlasReaderState::Blink;
+        state_ = State::WaitingOnReply;
+        postReplyState_ = State::Blink;
         break;
     }
-    case AtlasReaderState::Blink: {
+    case State::Blink: {
         sendCommand("Find");
-        state_ = AtlasReaderState::WaitingOnEmptyReply;
-        postReplyState_ = AtlasReaderState::QueryProtocolLock;
+        state_ = State::WaitingOnEmptyReply;
+        postReplyState_ = State::QueryProtocolLock;
         break;
     }
-    case AtlasReaderState::QueryProtocolLock: {
+    case State::QueryProtocolLock: {
         sendCommand("Plock,?");
-        state_ = AtlasReaderState::WaitingOnReply;
-        postReplyState_ = AtlasReaderState::LockProtocol;
+        state_ = State::WaitingOnReply;
+        postReplyState_ = State::LockProtocol;
         break;
     }
-    case AtlasReaderState::LockProtocol: {
+    case State::LockProtocol: {
         sendCommand("Plock,1");
-        state_ = AtlasReaderState::WaitingOnEmptyReply;
-        postReplyState_ = AtlasReaderState::QueryParameters;
+        state_ = State::WaitingOnEmptyReply;
+        postReplyState_ = State::QueryParameters;
         break;
     }
-    case AtlasReaderState::QueryParameters: {
+    case State::QueryParameters: {
         switch (type_) {
         case AtlasSensorType::Ec: {
             sendCommand("O,?");
-            state_ = AtlasReaderState::WaitingOnReply;
-            postReplyState_ = AtlasReaderState::ConfigureParameter;
+            state_ = State::WaitingOnReply;
+            postReplyState_ = State::ConfigureParameter;
             parameter_ = 0;
             break;
         }
         default: {
-            state_ = AtlasReaderState::WantSleep;
+            state_ = State::WantSleep;
             break;
         }
         }
         break;
     }
-    case AtlasReaderState::ConfigureParameter: {
+    case State::ConfigureParameter: {
         if (parameter_ < 4) {
             switch (parameter_) {
             case 0: sendCommand("O,EC,1"); break;
@@ -120,53 +120,53 @@ TickSlice EzoAtlas::tick() {
             case 2: sendCommand("O,S,1"); break;
             case 3: sendCommand("O,SG,1"); break;
             }
-            state_ = AtlasReaderState::WaitingOnEmptyReply;
-            postReplyState_ = AtlasReaderState::ConfigureParameter;
+            state_ = State::WaitingOnEmptyReply;
+            postReplyState_ = State::ConfigureParameter;
         }
         else {
             #if defined(FK_ATLAS_HARD_CODED_PROBE_TYPE)
-            state_ = AtlasReaderState::QueryProbeType;
+            state_ = State::QueryProbeType;
             #else
-            state_ = AtlasReaderState::WantSleep;
+            state_ = State::WantSleep;
             #endif
         }
         break;
     }
     #if defined(FK_ATLAS_HARD_CODED_PROBE_TYPE)
-    case AtlasReaderState::QueryProbeType: {
+    case State::QueryProbeType: {
         switch (type_) {
         case AtlasSensorType::Ec: {
             sendCommand("K,?");
-            state_ = AtlasReaderState::WaitingOnReply;
-            postReplyState_ = AtlasReaderState::ConfigureProbeType;
+            state_ = State::WaitingOnReply;
+            postReplyState_ = State::ConfigureProbeType;
             break;
         }
         default: {
-            state_ = AtlasReaderState::WantSleep;
+            state_ = State::WantSleep;
             break;
         }
         }
         break;
     }
-    case AtlasReaderState::ConfigureProbeType: {
+    case State::ConfigureProbeType: {
         sendCommand("K," FK_ATLAS_HARD_CODED_PROBE_TYPE);
-        state_ = AtlasReaderState::WaitingOnEmptyReply;
-        postReplyState_ = AtlasReaderState::WantSleep;
+        state_ = State::WaitingOnEmptyReply;
+        postReplyState_ = State::WantSleep;
         break;
     }
     #endif
-    case AtlasReaderState::WantSleep: {
+    case State::WantSleep: {
         return TickSlice{ [&]() {
                 sleep();
             }
         };
     }
-    case AtlasReaderState::Sleep: {
+    case State::Sleep: {
         sendCommand("SLEEP");
-        state_ = AtlasReaderState::Sleeping;
+        state_ = State::Sleeping;
         break;
     }
-    case AtlasReaderState::ApplyCompensation: {
+    case State::ApplyCompensation: {
         if (compensation_) {
             // NOTE: I wish we could use RT,n, need newer firmware though.
             switch (type_) {
@@ -176,43 +176,43 @@ TickSlice EzoAtlas::tick() {
                 char command[20];
                 snprintf(command, sizeof(buffer_), "T,%f", compensation_.temperature);
                 sendCommand(command, ATLAS_DEFAULT_DELAY_COMMAND_READ);
-                state_ = AtlasReaderState::WaitingOnEmptyReply;
-                postReplyState_ = AtlasReaderState::TakeReading;
+                state_ = State::WaitingOnEmptyReply;
+                postReplyState_ = State::TakeReading;
                 break;
             }
             default: {
-                state_ = AtlasReaderState::TakeReading;
+                state_ = State::TakeReading;
                 break;
             }
             }
         }
         else {
-            state_ = AtlasReaderState::TakeReading;
+            state_ = State::TakeReading;
         }
         break;
     }
-    case AtlasReaderState::TakeReading: {
+    case State::TakeReading: {
         sendCommand("R", ATLAS_DEFAULT_DELAY_COMMAND_READ);
-        state_ = AtlasReaderState::WaitingOnReply;
-        postReplyState_ = AtlasReaderState::ParseReading;
+        state_ = State::WaitingOnReply;
+        postReplyState_ = State::ParseReading;
         break;
     }
-    case AtlasReaderState::ParseReading: {
+    case State::ParseReading: {
         if (sleepAfter_) {
-            state_ = AtlasReaderState::Sleep;
+            state_ = State::Sleep;
         }
         else {
-            state_ = AtlasReaderState::Idle;
+            state_ = State::Idle;
         }
         break;
     }
-    case AtlasReaderState::WaitingOnEmptyReply: {
+    case State::WaitingOnEmptyReply: {
         switch (readReply(nullptr, 0 )) {
-        case AtlasResponseCode::NotReady: {
+        case ResponseCode::NotReady: {
             nextCheckAt_ = millis() + ATLAS_DEFAULT_DELAY_NOT_READY;
             break;
         }
-        case AtlasResponseCode::Error: {
+        case ResponseCode::Error: {
             if (commandAttempts_ == 3) {
                 state_ = postReplyState_;
             }
@@ -224,7 +224,7 @@ TickSlice EzoAtlas::tick() {
             break;
         }
         default: {
-            if (postReplyState_ == AtlasReaderState::ConfigureParameter) {
+            if (postReplyState_ == State::ConfigureParameter) {
                 parameter_++;
             }
             state_ = postReplyState_;
@@ -233,13 +233,13 @@ TickSlice EzoAtlas::tick() {
         }
         break;
     }
-    case AtlasReaderState::WaitingOnReply: {
+    case State::WaitingOnReply: {
         switch (readReply(buffer_, sizeof(buffer_))) {
-        case AtlasResponseCode::NotReady: {
+        case ResponseCode::NotReady: {
             nextCheckAt_ = millis() + ATLAS_DEFAULT_DELAY_NOT_READY;
             break;
         }
-        case AtlasResponseCode::Error: {
+        case ResponseCode::Error: {
             if (commandAttempts_ == 3) {
                 state_ = postReplyState_;
             }
@@ -257,23 +257,31 @@ TickSlice EzoAtlas::tick() {
         }
         break;
     }
-    case AtlasReaderState::Sleeping: {
+    case State::Sleeping: {
         break;
     }
-    case AtlasReaderState::Idle: {
+    case State::Idle: {
         break;
     }
     }
     return TickSlice{};
 }
 
-AtlasResponseCode EzoAtlas::singleCommand(const char *command) {
-    postReplyState_ = AtlasReaderState::Sleep;
-    state_ = AtlasReaderState::WaitingOnReply;
-    return sendCommand(command, 300);
+bool EzoAtlas::singleCommand(const char *command) {
+    postReplyState_ = State::Sleep;
+    state_ = State::WaitingOnReply;
+
+    switch (sendCommand(command, 300)) {
+    case ResponseCode::NoData: return true;
+    case ResponseCode::NotReady: return false;
+    case ResponseCode::Error: return false;
+    case ResponseCode::Success: return true;
+    }
+
+    return false;
 }
 
-AtlasResponseCode EzoAtlas::sendCommand(const char *str, uint32_t readDelay) {
+EzoAtlas::ResponseCode EzoAtlas::sendCommand(const char *str, uint32_t readDelay) {
     bus_->send(address_, str);
 
     if (retryState_ != state_) {
@@ -284,7 +292,7 @@ AtlasResponseCode EzoAtlas::sendCommand(const char *str, uint32_t readDelay) {
 
     loginfof(Log, "Atlas(0x%x, %s) <- ('%s', %lu) (ca=%d)", address_, typeName(), str, readDelay, commandAttempts_);
 
-    return AtlasResponseCode::NotReady;
+    return ResponseCode::NotReady;
 }
 
 static AtlasSensorType getSensorType(const char *buffer) {
@@ -309,11 +317,11 @@ const char *EzoAtlas::typeName() {
     }
 }
 
-static bool shouldRetry(AtlasResponseCode code, char *buffer) {
-    if (code == AtlasResponseCode::NotReady) {
+bool EzoAtlas::shouldRetry(EzoAtlas::ResponseCode code, char *buffer) {
+    if (code == ResponseCode::NotReady) {
         return true;
     }
-    if (code == AtlasResponseCode::NoData) {
+    if (code == ResponseCode::NoData) {
         if (buffer != nullptr) {
             return true;
         }
@@ -321,11 +329,11 @@ static bool shouldRetry(AtlasResponseCode code, char *buffer) {
     return false;
 }
 
-AtlasResponseCode EzoAtlas::readReply(char *buffer, size_t length) {
+EzoAtlas::ResponseCode EzoAtlas::readReply(char *buffer, size_t length) {
     bus_->requestFrom(address_, 1 + length, (uint8_t)1);
 
-    auto code = static_cast<AtlasResponseCode>(bus_->read());
-    if (code == AtlasResponseCode::Error) {
+    auto code = static_cast<ResponseCode>(bus_->read());
+    if (code == ResponseCode::Error) {
         loginfof(Log, "Atlas(0x%x, %s) -> (code=0x%x) (%d/%d)", address_, typeName(), code,
                  tries_, atlas_configuration.maximum_atlas_retries);
         return code;
@@ -336,9 +344,9 @@ AtlasResponseCode EzoAtlas::readReply(char *buffer, size_t length) {
                  tries_, atlas_configuration.maximum_atlas_retries);
         if (tries_ == atlas_configuration.maximum_atlas_retries) {
             tries_ = 0;
-            return AtlasResponseCode::Error;
+            return ResponseCode::Error;
         }
-        return AtlasResponseCode::NotReady;
+        return ResponseCode::NotReady;
     }
 
     tries_ = 0;
@@ -363,7 +371,7 @@ AtlasResponseCode EzoAtlas::readReply(char *buffer, size_t length) {
             type_ = getSensorType(buffer);
         }
 
-        if (postReplyState_ == AtlasReaderState::ParseReading) {
+        if (postReplyState_ == State::ParseReading) {
             String line = buffer;
             int16_t position = 0;
 
