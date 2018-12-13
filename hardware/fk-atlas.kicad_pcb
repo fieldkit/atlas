@@ -1,4 +1,4 @@
-(kicad_pcb (version 20171130) (host pcbnew "(5.0.0)")
+(kicad_pcb (version 20171130) (host pcbnew 5.0.1-33cea8e~67~ubuntu18.04.1)
 
   (general
     (thickness 1.6)
@@ -6232,7 +6232,7 @@
   (gr_text EC (at 166.243 59.944) (layer F.SilkS)
     (effects (font (size 1.5 1.5) (thickness 0.25)))
   )
-  (gr_text "FieldKit Sonar v0.11" (at 132.461 59.055) (layer F.SilkS)
+  (gr_text "FieldKit Atlas v0.11" (at 132.461 59.055) (layer F.SilkS)
     (effects (font (size 1 1) (thickness 0.2)))
   )
   (gr_line (start 115.7478 136.3218) (end 115.7478 58.7502) (layer Edge.Cuts) (width 0.15))
