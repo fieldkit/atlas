@@ -60,6 +60,8 @@ void AtlasSensorCollection::compensate(Compensation compensation) {
 }
 
 void AtlasSensorCollection::beginReading(bool sleep) {
+    sensorPower->enable();
+
     for (size_t i = 0; i < numberOfSensors; ++i) {
         sensors[i]->beginReading(sleep);
     }

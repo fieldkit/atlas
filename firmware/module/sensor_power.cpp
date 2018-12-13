@@ -16,9 +16,6 @@ void SensorPower::enable() {
 }
 
 bool SensorPower::ready() {
-    if (!atlas_power_.on()) {
-        enable();
-    }
     return atlas_power_.has_been_on_for(AtlasPowerOnTime);
 }
 

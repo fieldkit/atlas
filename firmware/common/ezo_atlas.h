@@ -72,8 +72,6 @@ public:
     size_t numberOfReadingsReady() const;
     bool isIdle() const;
     bool singleCommand(const char *command);
-
-public:
     void compensate(Compensation c) {
         compensation_ = c;
     }
