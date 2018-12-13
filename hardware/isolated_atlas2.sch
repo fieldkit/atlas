@@ -485,11 +485,11 @@ Wire Wire Line
 Wire Wire Line
 	2450 3800 2450 3750
 Wire Wire Line
-	1750 2800 3650 2800
+	1750 2800 1975 2800
 Wire Wire Line
-	1750 2900 3650 2900
+	1750 2900 2150 2900
 Wire Wire Line
-	1750 2450 2450 2450
+	1750 2450 1975 2450
 Wire Wire Line
 	5350 5000 7400 5000
 Wire Wire Line
@@ -579,4 +579,68 @@ Connection ~ 6000 3800
 Connection ~ 6900 2500
 NoConn ~ 3650 3000
 NoConn ~ 5200 3000
+$Comp
+L fk-atlas-rescue:R-conservify R24
+U 1 1 5C7FF88D
+P 1975 2625
+F 0 "R24" V 2055 2625 50  0000 C CNN
+F 1 "4.7K" V 1975 2625 50  0000 C CNN
+F 2 "conservify:RES-0603" V 1905 2625 50  0001 C CNN
+F 3 "" H 1975 2625 50  0001 C CNN
+F 4 " " H 2055 2725 50  0001 C CNN "Critical"
+F 5 "Yageo" H 2055 2725 50  0001 C CNN "MFN"
+F 6 "AF0603JR-074K7L" H 2055 2725 50  0001 C CNN "MFP"
+F 7 " " H 2055 2725 50  0001 C CNN "Notes"
+F 8 " " H 2055 2725 50  0001 C CNN "Package"
+F 9 "ANY" H 2055 2725 50  0001 C CNN "Source"
+F 10 " " H 2055 2725 50  0001 C CNN "Subsystem"
+F 11 "mouser" H 2055 2725 50  0001 C CNN "Supplier1"
+F 12 "0" H 2055 2725 50  0001 C CNN "price"
+F 13 "603-AF0603JR-074K7L" H -4325 -625 50  0001 C CNN "spn1"
+F 14 "mouser" H -4325 -625 50  0001 C CNN "spn2"
+	1    1975 2625
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1975 2475 1975 2450
+Connection ~ 1975 2450
+Wire Wire Line
+	1975 2450 2150 2450
+Wire Wire Line
+	1975 2775 1975 2800
+Connection ~ 1975 2800
+Wire Wire Line
+	1975 2800 3650 2800
+$Comp
+L fk-atlas-rescue:R-conservify R25
+U 1 1 5C803402
+P 2150 2625
+F 0 "R25" V 2230 2625 50  0000 C CNN
+F 1 "4.7K" V 2150 2625 50  0000 C CNN
+F 2 "conservify:RES-0603" V 2080 2625 50  0001 C CNN
+F 3 "" H 2150 2625 50  0001 C CNN
+F 4 " " H 2230 2725 50  0001 C CNN "Critical"
+F 5 "Yageo" H 2230 2725 50  0001 C CNN "MFN"
+F 6 "AF0603JR-074K7L" H 2230 2725 50  0001 C CNN "MFP"
+F 7 " " H 2230 2725 50  0001 C CNN "Notes"
+F 8 " " H 2230 2725 50  0001 C CNN "Package"
+F 9 "ANY" H 2230 2725 50  0001 C CNN "Source"
+F 10 " " H 2230 2725 50  0001 C CNN "Subsystem"
+F 11 "mouser" H 2230 2725 50  0001 C CNN "Supplier1"
+F 12 "0" H 2230 2725 50  0001 C CNN "price"
+F 13 "603-AF0603JR-074K7L" H -4150 -625 50  0001 C CNN "spn1"
+F 14 "mouser" H -4150 -625 50  0001 C CNN "spn2"
+	1    2150 2625
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2150 2475 2150 2450
+Connection ~ 2150 2450
+Wire Wire Line
+	2150 2450 2450 2450
+Wire Wire Line
+	2150 2775 2150 2900
+Connection ~ 2150 2900
+Wire Wire Line
+	2150 2900 3650 2900
 $EndSCHEMATC

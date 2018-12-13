@@ -485,11 +485,9 @@ Wire Wire Line
 Wire Wire Line
 	2450 3800 2450 3750
 Wire Wire Line
-	1750 2800 3650 2800
+	1750 2800 2125 2800
 Wire Wire Line
-	1750 2900 3650 2900
-Wire Wire Line
-	1750 2450 2450 2450
+	1750 2900 1950 2900
 Wire Wire Line
 	5350 5000 7400 5000
 Wire Wire Line
@@ -579,4 +577,70 @@ Connection ~ 6000 3800
 Connection ~ 6900 2500
 NoConn ~ 3650 3000
 NoConn ~ 5200 3000
+$Comp
+L fk-atlas-rescue:R-conservify R20
+U 1 1 5C7EA0D7
+P 1950 2625
+F 0 "R20" V 2030 2625 50  0000 C CNN
+F 1 "4.7K" V 1950 2625 50  0000 C CNN
+F 2 "conservify:RES-0603" V 1880 2625 50  0001 C CNN
+F 3 "" H 1950 2625 50  0001 C CNN
+F 4 " " H 2030 2725 50  0001 C CNN "Critical"
+F 5 "Yageo" H 2030 2725 50  0001 C CNN "MFN"
+F 6 "AF0603JR-074K7L" H 2030 2725 50  0001 C CNN "MFP"
+F 7 " " H 2030 2725 50  0001 C CNN "Notes"
+F 8 " " H 2030 2725 50  0001 C CNN "Package"
+F 9 "ANY" H 2030 2725 50  0001 C CNN "Source"
+F 10 " " H 2030 2725 50  0001 C CNN "Subsystem"
+F 11 "mouser" H 2030 2725 50  0001 C CNN "Supplier1"
+F 12 "0" H 2030 2725 50  0001 C CNN "price"
+F 13 "603-AF0603JR-074K7L" H -4350 -625 50  0001 C CNN "spn1"
+F 14 "mouser" H -4350 -625 50  0001 C CNN "spn2"
+	1    1950 2625
+	1    0    0    -1  
+$EndComp
+$Comp
+L fk-atlas-rescue:R-conservify R21
+U 1 1 5C7EA1CF
+P 2125 2625
+F 0 "R21" V 2205 2625 50  0000 C CNN
+F 1 "4.7K" V 2125 2625 50  0000 C CNN
+F 2 "conservify:RES-0603" V 2055 2625 50  0001 C CNN
+F 3 "" H 2125 2625 50  0001 C CNN
+F 4 " " H 2205 2725 50  0001 C CNN "Critical"
+F 5 "Yageo" H 2205 2725 50  0001 C CNN "MFN"
+F 6 "AF0603JR-074K7L" H 2205 2725 50  0001 C CNN "MFP"
+F 7 " " H 2205 2725 50  0001 C CNN "Notes"
+F 8 " " H 2205 2725 50  0001 C CNN "Package"
+F 9 "ANY" H 2205 2725 50  0001 C CNN "Source"
+F 10 " " H 2205 2725 50  0001 C CNN "Subsystem"
+F 11 "mouser" H 2205 2725 50  0001 C CNN "Supplier1"
+F 12 "0" H 2205 2725 50  0001 C CNN "price"
+F 13 "603-AF0603JR-074K7L" H -4175 -625 50  0001 C CNN "spn1"
+F 14 "mouser" H -4175 -625 50  0001 C CNN "spn2"
+	1    2125 2625
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1950 2475 1950 2450
+Wire Wire Line
+	1750 2450 1950 2450
+Connection ~ 1950 2450
+Wire Wire Line
+	1950 2450 2125 2450
+Wire Wire Line
+	2125 2475 2125 2450
+Connection ~ 2125 2450
+Wire Wire Line
+	2125 2450 2450 2450
+Wire Wire Line
+	2125 2775 2125 2800
+Connection ~ 2125 2800
+Wire Wire Line
+	2125 2800 3650 2800
+Wire Wire Line
+	1950 2775 1950 2900
+Connection ~ 1950 2900
+Wire Wire Line
+	1950 2900 3650 2900
 $EndSCHEMATC
