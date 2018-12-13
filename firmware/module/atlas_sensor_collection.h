@@ -7,6 +7,7 @@
 #include "sensor_power.h"
 
 #include "ezo_atlas.h"
+#include "oem_atlas.h"
 
 namespace fk {
 
@@ -15,6 +16,8 @@ constexpr size_t NumberOfSensors = 4
     + 1
     #endif
     ;
+
+using AtlasSensor = EzoAtlas;
 
 class AtlasSensorCollection : public Task {
 private:
@@ -29,14 +32,14 @@ private:
     static constexpr WireAddress ATLAS_SENSOR_ORP_DEFAULT_ADDRESS = 0x62;
 
     TwoWireBus sensorBus{ Wire };
-    EzoAtlas ec{sensorBus, ATLAS_SENSOR_EC_DEFAULT_ADDRESS};
-    EzoAtlas ph{sensorBus, ATLAS_SENSOR_PH_DEFAULT_ADDRESS};
-    EzoAtlas dissolvedOxygen{sensorBus, ATLAS_SENSOR_DO_DEFAULT_ADDRESS};
+    AtlasSensor ec{sensorBus, ATLAS_SENSOR_EC_DEFAULT_ADDRESS};
+    AtlasSensor ph{sensorBus, ATLAS_SENSOR_PH_DEFAULT_ADDRESS};
+    AtlasSensor dissolvedOxygen{sensorBus, ATLAS_SENSOR_DO_DEFAULT_ADDRESS};
     #ifdef FK_ENABLE_ATLAS_ORP
-    EzoAtlas orp{sensorBus, ATLAS_SENSOR_ORP_DEFAULT_ADDRESS};
+    AtlasSensor orp{sensorBus, ATLAS_SENSOR_ORP_DEFAULT_ADDRESS};
     #endif
-    EzoAtlas temp{sensorBus, ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS};
-    EzoAtlas *sensors[NumberOfSensors];
+    AtlasSensor temp{sensorBus, ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS};
+    AtlasSensor *sensors[NumberOfSensors];
     const size_t numberOfSensors { NumberOfSensors };
 
 public:
@@ -67,11 +70,11 @@ public:
     bool isIdle() const;
     size_t numberOfReadingsReady() const;
 
-    EzoAtlas *getSensor(size_t index) {
+    AtlasSensor *getSensor(size_t index) {
         return sensors[index];
     }
 
-    EzoAtlas *getSensorByType(fk_atlas_SensorType type);
+    AtlasSensor *getSensorByType(fk_atlas_SensorType type);
 
 };
 
