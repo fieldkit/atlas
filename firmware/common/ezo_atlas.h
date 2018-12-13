@@ -67,7 +67,7 @@ struct Compensation {
 };
 
 struct TickSlice {
-    bool waitingOnSiblings { false };
+    bool waitingOnSiblings{ false };
     std::function<void()> onFree;
 
     TickSlice() {
@@ -83,21 +83,21 @@ struct TickSlice {
 
 class EzoAtlas {
 private:
-    TwoWireBus *bus;
-    uint8_t address { 0 };
-    AtlasSensorType type { AtlasSensorType::Unknown };
-    AtlasReaderState state { AtlasReaderState::Start };
-    AtlasReaderState postReplyState { AtlasReaderState::Idle };
-    AtlasReaderState retryState { AtlasReaderState::Idle };
-    uint32_t nextCheckAt { 0 };
-    float values[ATLAS_MAXIMUM_NUMBER_OF_VALUES];
-    size_t numberOfValues { 0 };
-    char buffer[ATLAS_MAXIMUM_COMMAND_LENGTH];
-    uint8_t commandAttempts{ 0 };
-    uint8_t tries{ 0 };
-    bool sleepAfter{ true };
-    Compensation compensation;
-    uint8_t parameter{ 0 };
+    TwoWireBus *bus_;
+    uint8_t address_{ 0 };
+    AtlasSensorType type_{ AtlasSensorType::Unknown };
+    AtlasReaderState state_{ AtlasReaderState::Start };
+    AtlasReaderState postReplyState_{ AtlasReaderState::Idle };
+    AtlasReaderState retryState_{ AtlasReaderState::Idle };
+    uint32_t nextCheckAt_{ 0 };
+    float values_[ATLAS_MAXIMUM_NUMBER_OF_VALUES];
+    size_t numberOfValues_{ 0 };
+    char buffer_[ATLAS_MAXIMUM_COMMAND_LENGTH];
+    uint8_t commandAttempts_{ 0 };
+    uint8_t tries_{ 0 };
+    bool sleepAfter_{ true };
+    Compensation compensation_;
+    uint8_t parameter_{ 0 };
 
 public:
     EzoAtlas(TwoWireBus &bus, uint8_t theAddress);
@@ -106,7 +106,7 @@ public:
     bool setup();
     TickSlice tick();
     void compensate(Compensation c) {
-        compensation = c;
+        compensation_ = c;
     }
     bool beginReading(bool sleep);
     size_t readAll(float *values);
@@ -115,7 +115,7 @@ public:
     void sleep();
     AtlasResponseCode singleCommand(const char *command);
     const char *lastReply() {
-        return buffer;
+        return buffer_;
     }
 
 private:

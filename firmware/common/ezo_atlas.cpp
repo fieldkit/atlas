@@ -8,7 +8,7 @@ namespace fk {
 constexpr char Log[] = "Atlas";
 
 EzoAtlas::EzoAtlas(TwoWireBus &bus, uint8_t theAddress)
-    : bus(&bus), address(theAddress) {
+    : bus_(&bus), address_(theAddress) {
 }
 
 bool EzoAtlas::setup() {
@@ -16,48 +16,48 @@ bool EzoAtlas::setup() {
 }
 
 void EzoAtlas::sleep() {
-    switch (state) {
+    switch (state_) {
     case AtlasReaderState::WantSleep: {
-        state = AtlasReaderState::Sleep;
+        state_ = AtlasReaderState::Sleep;
         break;
     }
     default: {
-        state = AtlasReaderState::WantSleep;
+        state_ = AtlasReaderState::WantSleep;
         break;
     }
     }
 }
 
 bool EzoAtlas::beginReading(bool sleep) {
-    sleepAfter = sleep;
-    state = AtlasReaderState::ApplyCompensation;
+    sleepAfter_ = sleep;
+    state_ = AtlasReaderState::ApplyCompensation;
     return true;
 }
 
 size_t EzoAtlas::numberOfReadingsReady() const {
-    return numberOfValues;
+    return numberOfValues_;
 }
 
 bool EzoAtlas::isIdle() const {
-    return state == AtlasReaderState::Idle || state == AtlasReaderState::Sleeping;
+    return state_ == AtlasReaderState::Idle || state_ == AtlasReaderState::Sleeping;
 }
 
 TickSlice EzoAtlas::tick() {
-    if (nextCheckAt > 0) {
-        if (nextCheckAt > millis()) {
+    if (nextCheckAt_ > 0) {
+        if (nextCheckAt_ > millis()) {
             return TickSlice{};
         }
 
-        nextCheckAt = 0;
+        nextCheckAt_ = 0;
     }
 
-    switch (state) {
+    switch (state_) {
     case AtlasReaderState::Start: {
         sendCommand("I");
-        state = AtlasReaderState::WaitingOnReply;
-        postReplyState = AtlasReaderState::LedsOn;
+        state_ = AtlasReaderState::WaitingOnReply;
+        postReplyState_ = AtlasReaderState::LedsOn;
         for (size_t i = 0; i < ATLAS_MAXIMUM_NUMBER_OF_VALUES; ++i) {
-            values[i] = 0.0f;
+            values_[i] = 0.0f;
         }
         break;
     }
@@ -68,81 +68,81 @@ TickSlice EzoAtlas::tick() {
         else {
             sendCommand("L,1");
         }
-        state = AtlasReaderState::WaitingOnEmptyReply;
-        postReplyState = AtlasReaderState::Status;
+        state_ = AtlasReaderState::WaitingOnEmptyReply;
+        postReplyState_ = AtlasReaderState::Status;
         break;
     }
     case AtlasReaderState::Status: {
         sendCommand("STATUS");
-        state = AtlasReaderState::WaitingOnReply;
-        postReplyState = AtlasReaderState::Blink;
+        state_ = AtlasReaderState::WaitingOnReply;
+        postReplyState_ = AtlasReaderState::Blink;
         break;
     }
     case AtlasReaderState::Blink: {
         sendCommand("Find");
-        state = AtlasReaderState::WaitingOnEmptyReply;
-        postReplyState = AtlasReaderState::QueryProtocolLock;
+        state_ = AtlasReaderState::WaitingOnEmptyReply;
+        postReplyState_ = AtlasReaderState::QueryProtocolLock;
         break;
     }
     case AtlasReaderState::QueryProtocolLock: {
         sendCommand("Plock,?");
-        state = AtlasReaderState::WaitingOnReply;
-        postReplyState = AtlasReaderState::LockProtocol;
+        state_ = AtlasReaderState::WaitingOnReply;
+        postReplyState_ = AtlasReaderState::LockProtocol;
         break;
     }
     case AtlasReaderState::LockProtocol: {
         sendCommand("Plock,1");
-        state = AtlasReaderState::WaitingOnEmptyReply;
-        postReplyState = AtlasReaderState::QueryParameters;
+        state_ = AtlasReaderState::WaitingOnEmptyReply;
+        postReplyState_ = AtlasReaderState::QueryParameters;
         break;
     }
     case AtlasReaderState::QueryParameters: {
-        switch (type) {
+        switch (type_) {
         case AtlasSensorType::Ec: {
             sendCommand("O,?");
-            state = AtlasReaderState::WaitingOnReply;
-            postReplyState = AtlasReaderState::ConfigureParameter;
-            parameter = 0;
+            state_ = AtlasReaderState::WaitingOnReply;
+            postReplyState_ = AtlasReaderState::ConfigureParameter;
+            parameter_ = 0;
             break;
         }
         default: {
-            state = AtlasReaderState::WantSleep;
+            state_ = AtlasReaderState::WantSleep;
             break;
         }
         }
         break;
     }
     case AtlasReaderState::ConfigureParameter: {
-        if (parameter < 4) {
-            switch (parameter) {
+        if (parameter_ < 4) {
+            switch (parameter_) {
             case 0: sendCommand("O,EC,1"); break;
             case 1: sendCommand("O,TDS,1"); break;
             case 2: sendCommand("O,S,1"); break;
             case 3: sendCommand("O,SG,1"); break;
             }
-            state = AtlasReaderState::WaitingOnEmptyReply;
-            postReplyState = AtlasReaderState::ConfigureParameter;
+            state_ = AtlasReaderState::WaitingOnEmptyReply;
+            postReplyState_ = AtlasReaderState::ConfigureParameter;
         }
         else {
             #if defined(FK_ATLAS_HARD_CODED_PROBE_TYPE)
-            state = AtlasReaderState::QueryProbeType;
+            state_ = AtlasReaderState::QueryProbeType;
             #else
-            state = AtlasReaderState::WantSleep;
+            state_ = AtlasReaderState::WantSleep;
             #endif
         }
         break;
     }
     #if defined(FK_ATLAS_HARD_CODED_PROBE_TYPE)
     case AtlasReaderState::QueryProbeType: {
-        switch (type) {
+        switch (type_) {
         case AtlasSensorType::Ec: {
             sendCommand("K,?");
-            state = AtlasReaderState::WaitingOnReply;
-            postReplyState = AtlasReaderState::ConfigureProbeType;
+            state_ = AtlasReaderState::WaitingOnReply;
+            postReplyState_ = AtlasReaderState::ConfigureProbeType;
             break;
         }
         default: {
-            state = AtlasReaderState::WantSleep;
+            state_ = AtlasReaderState::WantSleep;
             break;
         }
         }
@@ -150,8 +150,8 @@ TickSlice EzoAtlas::tick() {
     }
     case AtlasReaderState::ConfigureProbeType: {
         sendCommand("K," FK_ATLAS_HARD_CODED_PROBE_TYPE);
-        state = AtlasReaderState::WaitingOnEmptyReply;
-        postReplyState = AtlasReaderState::WantSleep;
+        state_ = AtlasReaderState::WaitingOnEmptyReply;
+        postReplyState_ = AtlasReaderState::WantSleep;
         break;
     }
     #endif
@@ -163,95 +163,95 @@ TickSlice EzoAtlas::tick() {
     }
     case AtlasReaderState::Sleep: {
         sendCommand("SLEEP");
-        state = AtlasReaderState::Sleeping;
+        state_ = AtlasReaderState::Sleeping;
         break;
     }
     case AtlasReaderState::ApplyCompensation: {
-        if (compensation) {
+        if (compensation_) {
             // NOTE: I wish we could use RT,n, need newer firmware though.
-            switch (type) {
+            switch (type_) {
             case AtlasSensorType::Ph:
             case AtlasSensorType::Do:
             case AtlasSensorType::Ec: {
                 char command[20];
-                snprintf(command, sizeof(buffer), "T,%f", compensation.temperature);
+                snprintf(command, sizeof(buffer_), "T,%f", compensation_.temperature);
                 sendCommand(command, ATLAS_DEFAULT_DELAY_COMMAND_READ);
-                state = AtlasReaderState::WaitingOnEmptyReply;
-                postReplyState = AtlasReaderState::TakeReading;
+                state_ = AtlasReaderState::WaitingOnEmptyReply;
+                postReplyState_ = AtlasReaderState::TakeReading;
                 break;
             }
             default: {
-                state = AtlasReaderState::TakeReading;
+                state_ = AtlasReaderState::TakeReading;
                 break;
             }
             }
         }
         else {
-            state = AtlasReaderState::TakeReading;
+            state_ = AtlasReaderState::TakeReading;
         }
         break;
     }
     case AtlasReaderState::TakeReading: {
         sendCommand("R", ATLAS_DEFAULT_DELAY_COMMAND_READ);
-        state = AtlasReaderState::WaitingOnReply;
-        postReplyState = AtlasReaderState::ParseReading;
+        state_ = AtlasReaderState::WaitingOnReply;
+        postReplyState_ = AtlasReaderState::ParseReading;
         break;
     }
     case AtlasReaderState::ParseReading: {
-        if (sleepAfter) {
-            state = AtlasReaderState::Sleep;
+        if (sleepAfter_) {
+            state_ = AtlasReaderState::Sleep;
         }
         else {
-            state = AtlasReaderState::Idle;
+            state_ = AtlasReaderState::Idle;
         }
         break;
     }
     case AtlasReaderState::WaitingOnEmptyReply: {
         switch (readReply(nullptr, 0 )) {
         case AtlasResponseCode::NotReady: {
-            nextCheckAt = millis() + ATLAS_DEFAULT_DELAY_NOT_READY;
+            nextCheckAt_ = millis() + ATLAS_DEFAULT_DELAY_NOT_READY;
             break;
         }
         case AtlasResponseCode::Error: {
-            if (commandAttempts == 3) {
-                state = postReplyState;
+            if (commandAttempts_ == 3) {
+                state_ = postReplyState_;
             }
             else {
-                nextCheckAt = millis() + ATLAS_DEFAULT_DELAY_NOT_READY;
-                state = retryState;
-                commandAttempts++;
+                nextCheckAt_ = millis() + ATLAS_DEFAULT_DELAY_NOT_READY;
+                state_ = retryState_;
+                commandAttempts_++;
             }
             break;
         }
         default: {
-            if (postReplyState == AtlasReaderState::ConfigureParameter) {
-                parameter++;
+            if (postReplyState_ == AtlasReaderState::ConfigureParameter) {
+                parameter_++;
             }
-            state = postReplyState;
+            state_ = postReplyState_;
             break;
         }
         }
         break;
     }
     case AtlasReaderState::WaitingOnReply: {
-        switch (readReply(buffer, sizeof(buffer))) {
+        switch (readReply(buffer_, sizeof(buffer_))) {
         case AtlasResponseCode::NotReady: {
-            nextCheckAt = millis() + ATLAS_DEFAULT_DELAY_NOT_READY;
+            nextCheckAt_ = millis() + ATLAS_DEFAULT_DELAY_NOT_READY;
             break;
         }
         case AtlasResponseCode::Error: {
-            if (commandAttempts == 3) {
-                state = postReplyState;
+            if (commandAttempts_ == 3) {
+                state_ = postReplyState_;
             }
             else {
-                nextCheckAt = millis() + ATLAS_DEFAULT_DELAY_NOT_READY;
-                state = retryState;
-                commandAttempts++;
+                nextCheckAt_ = millis() + ATLAS_DEFAULT_DELAY_NOT_READY;
+                state_ = retryState_;
+                commandAttempts_++;
             }
             break;
         }
         default: {
-            state = postReplyState;
+            state_ = postReplyState_;
             break;
         }
         }
@@ -268,21 +268,21 @@ TickSlice EzoAtlas::tick() {
 }
 
 AtlasResponseCode EzoAtlas::singleCommand(const char *command) {
-    postReplyState = AtlasReaderState::Sleep;
-    state = AtlasReaderState::WaitingOnReply;
+    postReplyState_ = AtlasReaderState::Sleep;
+    state_ = AtlasReaderState::WaitingOnReply;
     return sendCommand(command, 300);
 }
 
 AtlasResponseCode EzoAtlas::sendCommand(const char *str, uint32_t readDelay) {
-    bus->send(address, str);
+    bus_->send(address_, str);
 
-    if (retryState != state) {
-        retryState = state;
-        commandAttempts = 0;
+    if (retryState_ != state_) {
+        retryState_ = state_;
+        commandAttempts_ = 0;
     }
-    nextCheckAt  = millis() + readDelay;
+    nextCheckAt_  = millis() + readDelay;
 
-    loginfof(Log, "Atlas(0x%x, %s) <- ('%s', %lu) (ca=%d)", address, typeName(), str, readDelay, commandAttempts);
+    loginfof(Log, "Atlas(0x%x, %s) <- ('%s', %lu) (ca=%d)", address_, typeName(), str, readDelay, commandAttempts_);
 
     return AtlasResponseCode::NotReady;
 }
@@ -297,7 +297,7 @@ static AtlasSensorType getSensorType(const char *buffer) {
 }
 
 const char *EzoAtlas::typeName() {
-    switch (type) {
+    switch (type_) {
     case AtlasSensorType::Unknown: return "Unknown";
     case AtlasSensorType::Ph: return "PH";
     case AtlasSensorType::Ec: return "EC";
@@ -322,62 +322,62 @@ static bool shouldRetry(AtlasResponseCode code, char *buffer) {
 }
 
 AtlasResponseCode EzoAtlas::readReply(char *buffer, size_t length) {
-    bus->requestFrom(address, 1 + length, (uint8_t)1);
+    bus_->requestFrom(address_, 1 + length, (uint8_t)1);
 
-    auto code = static_cast<AtlasResponseCode>(bus->read());
+    auto code = static_cast<AtlasResponseCode>(bus_->read());
     if (code == AtlasResponseCode::Error) {
-        loginfof(Log, "Atlas(0x%x, %s) -> (code=0x%x) (%d/%d)", address, typeName(), code,
-                 tries, atlas_configuration.maximum_atlas_retries);
+        loginfof(Log, "Atlas(0x%x, %s) -> (code=0x%x) (%d/%d)", address_, typeName(), code,
+                 tries_, atlas_configuration.maximum_atlas_retries);
         return code;
     }
     if (shouldRetry(code, buffer)) {
-        tries++;
-        loginfof(Log, "Atlas(0x%x, %s) -> (code=0x%x) (%d/%d)", address, typeName(), code,
-                 tries, atlas_configuration.maximum_atlas_retries);
-        if (tries == atlas_configuration.maximum_atlas_retries) {
-            tries = 0;
+        tries_++;
+        loginfof(Log, "Atlas(0x%x, %s) -> (code=0x%x) (%d/%d)", address_, typeName(), code,
+                 tries_, atlas_configuration.maximum_atlas_retries);
+        if (tries_ == atlas_configuration.maximum_atlas_retries) {
+            tries_ = 0;
             return AtlasResponseCode::Error;
         }
         return AtlasResponseCode::NotReady;
     }
 
-    tries = 0;
+    tries_ = 0;
 
     size_t i = 0;
-    while (bus->available()) {
-        auto c = bus->read();
+    while (bus_->available()) {
+        auto c = bus_->read();
         if (buffer != nullptr && i < length - 1) {
             buffer[i++] = c;
         }
         if (c == 0) {
-            bus->endTransmission();
+            bus_->endTransmission();
             break;
         }
     }
 
     if (buffer != nullptr) {
         buffer[i] = 0;
-        loginfof(Log, "Atlas(0x%x, %s) -> ('%s') (code=0x%x)", address, typeName(), buffer, code);
+        loginfof(Log, "Atlas(0x%x, %s) -> ('%s') (code=0x%x)", address_, typeName(), buffer, code);
 
-        if (type == AtlasSensorType::Unknown) {
-            type = getSensorType(buffer);
+        if (type_ == AtlasSensorType::Unknown) {
+            type_ = getSensorType(buffer);
         }
 
-        if (postReplyState == AtlasReaderState::ParseReading) {
+        if (postReplyState_ == AtlasReaderState::ParseReading) {
             String line = buffer;
             int16_t position = 0;
 
-            numberOfValues = 0;
+            numberOfValues_ = 0;
 
             while (position < (int16_t)line.length()) {
                 int16_t index = line.indexOf(',', position);
                 if (index < 0) {
                     index = line.length();
                 }
-                if (numberOfValues < ATLAS_MAXIMUM_NUMBER_OF_VALUES)  {
+                if (numberOfValues_ < ATLAS_MAXIMUM_NUMBER_OF_VALUES)  {
                     if (index > position) {
                         String part = line.substring(position, index);
-                        values[numberOfValues++] = part.toFloat();
+                        values_[numberOfValues_++] = part.toFloat();
                         position = index + 1;
                     }
                 }
@@ -387,24 +387,24 @@ AtlasResponseCode EzoAtlas::readReply(char *buffer, size_t length) {
                 }
             }
 
-            if (numberOfValues == 0) {
+            if (numberOfValues_ == 0) {
                 loginfof(Log, "No values, retry?");
             }
         }
     }
     else {
-        loginfof(Log, "Atlas(0x%x, %s) -> (code=0x%x)", address, typeName(), code);
+        loginfof(Log, "Atlas(0x%x, %s) -> (code=0x%x)", address_, typeName(), code);
     }
 
     return code;
 }
 
 size_t EzoAtlas::readAll(float *values) {
-    for (size_t i = 0; i < numberOfValues; ++i) {
-        *values++ = this->values[i];
+    for (size_t i = 0; i < numberOfValues_; ++i) {
+        *values++ = this->values_[i];
     }
-    size_t number = numberOfValues;
-    numberOfValues = 0;
+    size_t number = numberOfValues_;
+    numberOfValues_ = 0;
     return number;
 }
 
