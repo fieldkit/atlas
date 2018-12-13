@@ -1,4 +1,4 @@
-#include "atlas_reader.h"
+#include "ezo_atlas.h"
 #include "debug.h"
 #include "configuration.h"
 #include "atlas_configuration.h"
@@ -7,15 +7,15 @@ namespace fk {
 
 constexpr char Log[] = "Atlas";
 
-AtlasReader::AtlasReader(TwoWireBus &bus, uint8_t theAddress)
+EzoAtlas::EzoAtlas(TwoWireBus &bus, uint8_t theAddress)
     : bus(&bus), address(theAddress) {
 }
 
-bool AtlasReader::setup() {
+bool EzoAtlas::setup() {
     return true;
 }
 
-void AtlasReader::sleep() {
+void EzoAtlas::sleep() {
     switch (state) {
     case AtlasReaderState::WantSleep: {
         state = AtlasReaderState::Sleep;
@@ -28,21 +28,21 @@ void AtlasReader::sleep() {
     }
 }
 
-bool AtlasReader::beginReading(bool sleep) {
+bool EzoAtlas::beginReading(bool sleep) {
     sleepAfter = sleep;
     state = AtlasReaderState::ApplyCompensation;
     return true;
 }
 
-size_t AtlasReader::numberOfReadingsReady() const {
+size_t EzoAtlas::numberOfReadingsReady() const {
     return numberOfValues;
 }
 
-bool AtlasReader::isIdle() const {
+bool EzoAtlas::isIdle() const {
     return state == AtlasReaderState::Idle || state == AtlasReaderState::Sleeping;
 }
 
-TickSlice AtlasReader::tick() {
+TickSlice EzoAtlas::tick() {
     if (nextCheckAt > 0) {
         if (nextCheckAt > millis()) {
             return TickSlice{};
@@ -267,13 +267,13 @@ TickSlice AtlasReader::tick() {
     return TickSlice{};
 }
 
-AtlasResponseCode AtlasReader::singleCommand(const char *command) {
+AtlasResponseCode EzoAtlas::singleCommand(const char *command) {
     postReplyState = AtlasReaderState::Sleep;
     state = AtlasReaderState::WaitingOnReply;
     return sendCommand(command, 300);
 }
 
-AtlasResponseCode AtlasReader::sendCommand(const char *str, uint32_t readDelay) {
+AtlasResponseCode EzoAtlas::sendCommand(const char *str, uint32_t readDelay) {
     bus->send(address, str);
 
     if (retryState != state) {
@@ -296,7 +296,7 @@ static AtlasSensorType getSensorType(const char *buffer) {
     return AtlasSensorType::Unknown;
 }
 
-const char *AtlasReader::typeName() {
+const char *EzoAtlas::typeName() {
     switch (type) {
     case AtlasSensorType::Unknown: return "Unknown";
     case AtlasSensorType::Ph: return "PH";
@@ -321,7 +321,7 @@ static bool shouldRetry(AtlasResponseCode code, char *buffer) {
     return false;
 }
 
-AtlasResponseCode AtlasReader::readReply(char *buffer, size_t length) {
+AtlasResponseCode EzoAtlas::readReply(char *buffer, size_t length) {
     bus->requestFrom(address, 1 + length, (uint8_t)1);
 
     auto code = static_cast<AtlasResponseCode>(bus->read());
@@ -399,7 +399,7 @@ AtlasResponseCode AtlasReader::readReply(char *buffer, size_t length) {
     return code;
 }
 
-size_t AtlasReader::readAll(float *values) {
+size_t EzoAtlas::readAll(float *values) {
     for (size_t i = 0; i < numberOfValues; ++i) {
         *values++ = this->values[i];
     }

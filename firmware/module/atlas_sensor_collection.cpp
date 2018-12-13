@@ -88,7 +88,7 @@ size_t AtlasSensorCollection::readAll(float *values) {
     return total;
 }
 
-AtlasReader *AtlasSensorCollection::getSensorByType(fk_atlas_SensorType type) {
+EzoAtlas *AtlasSensorCollection::getSensorByType(fk_atlas_SensorType type) {
     switch (type) {
     case fk_atlas_SensorType_PH: return &ph;
     case fk_atlas_SensorType_TEMP: return &temp;

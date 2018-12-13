@@ -1,13 +1,7 @@
-#ifndef ATLAS_H_INCLUDED
-#define ATLAS_H_INCLUDED
+#ifndef FK_EZO_ATLAS_H_INCLUDED
+#define FK_EZO_ATLAS_H_INCLUDED
 
-#include <Arduino.h>
-#include <Wire.h>
-
-#undef min
-#undef max
-#include <functional>
-#include "two_wire.h"
+#include "atlas_common.h"
 
 namespace fk {
 
@@ -87,7 +81,7 @@ struct TickSlice {
     }
 };
 
-class AtlasReader {
+class EzoAtlas {
 private:
     TwoWireBus *bus;
     uint8_t address { 0 };
@@ -106,7 +100,9 @@ private:
     uint8_t parameter{ 0 };
 
 public:
-    AtlasReader(TwoWireBus &bus, uint8_t theAddress);
+    EzoAtlas(TwoWireBus &bus, uint8_t theAddress);
+
+public:
     bool setup();
     TickSlice tick();
     void compensate(Compensation c) {
