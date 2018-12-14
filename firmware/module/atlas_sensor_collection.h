@@ -2,6 +2,7 @@
 #define FK_SENSOR_COLLECTION_H_INCLUDED
 
 #include <task.h>
+
 #include <fk-atlas-protocol.h>
 
 #include "sensor_power.h"
@@ -12,12 +13,16 @@
 namespace fk {
 
 constexpr size_t NumberOfSensors = 4
-    #ifdef FK_ENABLE_ATLAS_ORP
+    #if defined(FK_ENABLE_ATLAS_ORP)
     + 1
     #endif
     ;
 
+#if defined(FK_ENABLE_ATLAS_EZO)
+using AtlasSensor = EzoAtlas;
+#else
 using AtlasSensor = OemAtlas;
+#endif
 
 class AtlasSensorCollection : public Task {
 private:

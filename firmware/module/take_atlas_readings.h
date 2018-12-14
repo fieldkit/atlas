@@ -5,14 +5,17 @@
 
 namespace fk {
 
-constexpr size_t NumberOfAtlasReadings = 7
-    #ifdef FK_ENABLE_ATLAS_ORP
+constexpr size_t NumberOfAtlasReadings = 6
+    #if defined(FK_ENABLE_ATLAS_EZO)
+    + 1 // EC Has an extra value in EZO mode.
+    #endif
+    #if defined(FK_ENABLE_ATLAS_ORP)
     + 1
     #endif
     ;
 
 constexpr size_t NumberOfReadings = NumberOfAtlasReadings
-    #ifdef FK_ENABLE_MS5803
+    #if defined(FK_ENABLE_MS5803)
     + 2
     #endif
     ;

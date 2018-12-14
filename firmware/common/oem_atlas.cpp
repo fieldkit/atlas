@@ -154,6 +154,8 @@ TickSlice OemAtlas::tick() {
 
         fk_delay(100);
 
+        number_of_values_ = 0;
+
         for (auto i = 0; i < cfg.number_of_values; ++i) {
             TwoWire32 data = { 0 };
 
@@ -167,6 +169,10 @@ TickSlice OemAtlas::tick() {
             value /= cfg.divisor;
 
             Logger::info("Atlas(0x%x, %s) -> (value = %f) (raw = %lu)", address_, cfg.name, value, data.u32);
+
+            if (number_of_values_ < ATLAS_MAXIMUM_NUMBER_OF_VALUES) {
+                values_[number_of_values_++] = value;
+            }
         }
 
         if (!bus_->write(address_, cfg.reading_register, AtlasLow)) {
@@ -184,9 +190,6 @@ TickSlice OemAtlas::tick() {
         }
         else {
             transition(State::Idle);
-            transition(State::TakeReading);
-            sleep_after_ = false;
-            delay_end_ = fk_uptime() + 1000;
         }
         break;
     }
@@ -227,7 +230,6 @@ TickSlice OemAtlas::tick() {
         break;
     }
     case State::Hibernating: {
-        beginReading(false);
         break;
     }
     }
@@ -242,11 +244,16 @@ bool OemAtlas::beginReading(bool sleep) {
 }
 
 size_t OemAtlas::readAll(float *values) {
-    return 0;
+    for (size_t i = 0; i < number_of_values_; ++i) {
+        *values++ = values_[i];
+    }
+    auto number = number_of_values_;
+    number_of_values_ = 0;
+    return number;
 }
 
 size_t OemAtlas::numberOfReadingsReady() const {
-    return 0;
+    return number_of_values_;
 }
 
 bool OemAtlas::isIdle() const {

@@ -14,7 +14,7 @@ void TakeAtlasReadings::task() {
 
     static_assert(NumberOfReadings >= NumberOfAtlasReadings, "NumberOfReadings should be >= NumberOfAtlasReadings");
 
-    log("NumberOfReadingsReady: %d", atlasSensors->numberOfReadingsReady());
+    log("NumberOfReadingsReady: %d (expected %d)", atlasSensors->numberOfReadingsReady(), NumberOfAtlasReadings);
 
     if (atlasSensors->numberOfReadingsReady() == NumberOfAtlasReadings) {
         float values[atlasSensors->numberOfReadingsReady()];

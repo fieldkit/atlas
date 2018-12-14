@@ -14,6 +14,8 @@ public:
     static constexpr uint8_t ORP_DEFAULT_ADDRESS = 0x66;
 
 private:
+    static constexpr size_t ATLAS_MAXIMUM_NUMBER_OF_VALUES = 4;
+
     enum class State {
         Start,
         EcConfigureProbe,
@@ -35,6 +37,8 @@ private:
     Compensation compensation_;
     State state_{ State::Start };
     uint32_t delay_end_{ 0 };
+    float values_[ATLAS_MAXIMUM_NUMBER_OF_VALUES];
+    size_t number_of_values_{ 0 };
 
 public:
     OemAtlas(TwoWireBus &bus, uint8_t address);

@@ -44,14 +44,16 @@ void setup() {
         {"ec", "µS/cm",},
         {"tds", "°ppm",},
         {"salinity", "",},
+        #if defined(FK_ENABLE_ATLAS_EZO)
         {"sg", "",},
+        #endif
         {"ph", "",},
         {"do", "mg/L",},
-        #ifdef FK_ENABLE_ATLAS_ORP
+        #if defined(FK_ENABLE_ATLAS_ORP)
         {"orp", "mV",},
         #endif
         {"temp", "C",},
-        #ifdef FK_ENABLE_MS5803
+        #if defined(FK_ENABLE_MS5803)
         {"temp_bottom", "C",},
         {"pressure", "mbar",},
         #endif
