@@ -21,6 +21,7 @@ private:
         EcConfigureProbe,
         ApplyCompensation,
         TakeReading,
+        LedsOn,
         LedsOff,
         Hibernate,
         Wake,

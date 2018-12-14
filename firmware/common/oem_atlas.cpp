@@ -193,6 +193,15 @@ TickSlice OemAtlas::tick() {
         }
         break;
     }
+    case State::LedsOn: {
+        if (!leds(true)) {
+            transition(State::Error);
+        }
+        else {
+            transition(State::ApplyCompensation);
+        }
+        break;
+    }
     case State::LedsOff: {
         if (!leds(false)) {
             transition(State::Error);
@@ -207,7 +216,7 @@ TickSlice OemAtlas::tick() {
             transition(State::Error);
         }
         else {
-            transition(State::ApplyCompensation);
+            transition(State::LedsOn);
         }
         break;
     }
