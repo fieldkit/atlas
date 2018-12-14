@@ -248,7 +248,14 @@ TickSlice OemAtlas::tick() {
 
 bool OemAtlas::beginReading(bool sleep) {
     sleep_after_ = sleep;
-    transition(State::Wake);
+    switch (state_) {
+    case State::Idle:
+        transition(State::TakeReading);
+        break;
+    case State::Hibernating:
+        transition(State::Wake);
+        break;
+    }
     return true;
 }
 
