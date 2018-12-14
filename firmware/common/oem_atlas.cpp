@@ -144,15 +144,11 @@ TickSlice OemAtlas::tick() {
             break;
         }
 
-        fk_delay(100);
-
         if (!bus_->send(address_, cfg.value_register)) {
             Logger::info("Atlas(0x%x, %s) Error 1", address_, cfg.name);
             transition(State::Error);
             break;
         }
-
-        fk_delay(100);
 
         number_of_values_ = 0;
 
