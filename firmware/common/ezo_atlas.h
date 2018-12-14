@@ -6,6 +6,13 @@
 namespace fk {
 
 class EzoAtlas {
+public:
+    static constexpr uint8_t EC_DEFAULT_ADDRESS = 0x64;
+    static constexpr uint8_t TEMP_DEFAULT_ADDRESS = 0x68;
+    static constexpr uint8_t PH_DEFAULT_ADDRESS = 0x65;
+    static constexpr uint8_t DO_DEFAULT_ADDRESS = 0x67;
+    static constexpr uint8_t ORP_DEFAULT_ADDRESS = 0x66;
+
 private:
     static constexpr uint32_t ATLAS_DEFAULT_DELAY_COMMAND = 300;
     static constexpr uint32_t ATLAS_DEFAULT_DELAY_COMMAND_READ = 1000;
@@ -67,10 +74,12 @@ public:
 public:
     bool setup();
     TickSlice tick();
+    bool isIdle() const;
+
+public:
     bool beginReading(bool sleep);
     size_t readAll(float *values);
     size_t numberOfReadingsReady() const;
-    bool isIdle() const;
     bool singleCommand(const char *command);
     void compensate(Compensation c) {
         compensation_ = c;

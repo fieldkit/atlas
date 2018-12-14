@@ -4,6 +4,12 @@
 
 #include "debug.h"
 #include "board_definition.h"
+#include "two_wire.h"
+
+constexpr uint8_t AtlasHigh = 1;
+constexpr uint8_t AtlasLow = 0;
+
+fk::TwoWireBus bus{ Wire };
 
 #define FK_ATLAS_OEM
 
@@ -70,17 +76,15 @@ public:
 
 public:
     bool begin() override {
-        Wire.beginTransmission(address_);
-        Wire.write(0x00);
-        Wire.endTransmission();
+        fk::TwoWire16 d16;
 
-        Wire.requestFrom(address_, 2);
+        bus.send(address_, (uint8_t)0x00);
+        bus.receive(address_, d16);
 
-        type_ = Wire.read();
-        auto version = Wire.read(); // Firmware
+        type_ = d16.bytes[1];
+        auto version = d16.bytes[0];
 
-        Wire.endTransmission();
-        delay(50);
+        delay(10);
 
         auto cfg = config();
 
@@ -89,10 +93,10 @@ public:
         }
 
         auto active = get_register(cfg.active_register);
-        delay(50);
+        delay(10);
 
         auto irq = get_register(0x04);
-        delay(50);
+        delay(10);
 
         if (!wake()) {
             return false;
@@ -108,26 +112,15 @@ public:
     }
 
     uint8_t get_register(uint8_t reg) {
-        Wire.beginTransmission(address_);
-        Wire.write(reg);
-        Wire.endTransmission();
-
-        Wire.requestFrom(address_, 1);
-        auto value = Wire.read();
-        Wire.endTransmission();
-
-        return value;
+        return bus.read(address_, reg);
     }
 
     bool wake() {
         auto cfg = config();
 
-        Wire.beginTransmission(address_);
-        Wire.write(cfg.active_register);
-        Wire.write(0x01);
-        Wire.endTransmission();
+        bus.write(address_, config().active_register, AtlasHigh);
 
-        delay(100);
+        delay(10);
 
         return get_register(cfg.active_register) == 1;
     }
@@ -135,12 +128,9 @@ public:
     bool hibernate() {
         auto cfg = config();
 
-        Wire.beginTransmission(address_);
-        Wire.write(cfg.active_register);
-        Wire.write(0x00);
-        Wire.endTransmission();
+        bus.write(address_, config().active_register, AtlasLow);
 
-        delay(100);
+        delay(10);
 
         return get_register(cfg.active_register) == 0;
     }
@@ -197,9 +187,10 @@ public:
             return true;
         }
 
-        Wire.beginTransmission(address_);
-        Wire.write(cfg.value_register);
-        Wire.endTransmission();
+        if (!bus.send(address_, cfg.value_register)) {
+            loginfof("Module", "Atlas(0x%x, %s) Error 2", address_, cfg.name);
+            fk_assert(false);
+        }
 
         union data_t {
             uint8_t bytes[4];
@@ -207,13 +198,12 @@ public:
         };
 
         for (auto i = 0; i < cfg.number_of_values; ++i) {
-            data_t data;
+            fk::TwoWire32 data;
 
-            Wire.requestFrom(address_, 4);
-            for (auto i = 4; i > 0; --i) {
-                data.bytes[i - 1] = Wire.read();
+            if (!bus.receive(address_, data)) {
+                loginfof("Module", "Atlas(0x%x, %s) Error 1", address_, cfg.name);
+                fk_assert(false);
             }
-            Wire.endTransmission();
 
             float value = data.u32;
             value /= cfg.divisor;
@@ -545,9 +535,9 @@ void setup() {
                     loginfof("Atlas", "-------------------");
 
                     for (auto &board : boards) {
-                        board.ledsOn();
+                        // board.ledsOn();
                         board.reading();
-                        board.ledsOff();
+                        // board.ledsOff();
                     }
 
                     delay(1000);

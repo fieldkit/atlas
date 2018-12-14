@@ -17,7 +17,7 @@ constexpr size_t NumberOfSensors = 4
     #endif
     ;
 
-using AtlasSensor = EzoAtlas;
+using AtlasSensor = OemAtlas;
 
 class AtlasSensorCollection : public Task {
 private:
@@ -25,35 +25,27 @@ private:
 
     using WireAddress = uint8_t;
 
-    static constexpr WireAddress ATLAS_SENSOR_EC_DEFAULT_ADDRESS = 0x64;
-    static constexpr WireAddress ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS = 0x66;
-    static constexpr WireAddress ATLAS_SENSOR_PH_DEFAULT_ADDRESS = 0x63;
-    static constexpr WireAddress ATLAS_SENSOR_DO_DEFAULT_ADDRESS = 0x61;
-    static constexpr WireAddress ATLAS_SENSOR_ORP_DEFAULT_ADDRESS = 0x62;
-
     TwoWireBus sensorBus{ Wire };
-    AtlasSensor ec{sensorBus, ATLAS_SENSOR_EC_DEFAULT_ADDRESS};
-    AtlasSensor ph{sensorBus, ATLAS_SENSOR_PH_DEFAULT_ADDRESS};
-    AtlasSensor dissolvedOxygen{sensorBus, ATLAS_SENSOR_DO_DEFAULT_ADDRESS};
+    AtlasSensor temp{ sensorBus, AtlasSensor::TEMP_DEFAULT_ADDRESS };
+    AtlasSensor ec{ sensorBus, AtlasSensor::EC_DEFAULT_ADDRESS };
+    AtlasSensor ph{ sensorBus, AtlasSensor::PH_DEFAULT_ADDRESS };
+    AtlasSensor dissolvedOxygen{ sensorBus, AtlasSensor::DO_DEFAULT_ADDRESS };
     #ifdef FK_ENABLE_ATLAS_ORP
-    AtlasSensor orp{sensorBus, ATLAS_SENSOR_ORP_DEFAULT_ADDRESS};
+    AtlasSensor orp{ sensorBus, AtlasSensor::ORP_DEFAULT_ADDRESS };
     #endif
-    AtlasSensor temp{sensorBus, ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS};
     AtlasSensor *sensors[NumberOfSensors];
     const size_t numberOfSensors { NumberOfSensors };
 
 public:
-    AtlasSensorCollection(SensorPower &sensorPower) :
-        Task("ASC"),
-        sensorPower(&sensorPower),
+    AtlasSensorCollection(SensorPower &sensorPower) : Task("ASC"), sensorPower(&sensorPower),
         sensors {
+            &temp,
             &ec,
             &ph,
             &dissolvedOxygen,
             #ifdef FK_ENABLE_ATLAS_ORP
             &orp,
             #endif
-            &temp
             } {
     }
 
@@ -62,14 +54,15 @@ public:
     bool setup();
     TaskEval task() override;
 
+public:
+    bool isBusy() const;
+    bool isIdle() const;
     void compensate(Compensation compensation);
     void beginReading(bool sleep);
     size_t readAll(float *values);
-
-    bool isBusy() const;
-    bool isIdle() const;
     size_t numberOfReadingsReady() const;
 
+public:
     AtlasSensor *getSensor(size_t index) {
         return sensors[index];
     }

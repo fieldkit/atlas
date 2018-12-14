@@ -7,13 +7,13 @@
 
 namespace fk {
 
-enum class AtlasSensorType {
-    Unknown,
-    Ph,
-    Ec,
-    Orp,
-    Do,
-    Temp
+enum class AtlasSensorType : uint8_t {
+    Unknown = 0xff,
+    Ph = 1,
+    Ec = 4,
+    Orp = 2,
+    Do = 3,
+    Temp = 5
 };
 
 struct Compensation {

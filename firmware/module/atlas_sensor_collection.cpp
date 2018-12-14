@@ -4,7 +4,7 @@ namespace fk {
 
 bool AtlasSensorCollection::setup() {
     // TODO: Investigate. I would see hangs if I used a slower speed.
-    sensorBus.begin(400000);
+    // sensorBus.begin(400000);
 
     for (size_t i = 0; i < numberOfSensors; ++i) {
         sensors[i]->setup();

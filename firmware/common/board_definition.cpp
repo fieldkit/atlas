@@ -1,5 +1,6 @@
 #include "board_definition.h"
 
+#include <Wire.h>
 namespace fk {
 
 AtlasBoard::AtlasBoard(BoardConfig config) : Board(config) {
