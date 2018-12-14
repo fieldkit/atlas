@@ -44,10 +44,10 @@ private:
 public:
     AtlasSensorCollection(SensorPower &sensorPower) : Task("ASC"), sensorPower(&sensorPower),
         sensors {
-            &temp,
             &ec,
             &ph,
             &dissolvedOxygen,
+            &temp,
             #ifdef FK_ENABLE_ATLAS_ORP
             &orp,
             #endif
