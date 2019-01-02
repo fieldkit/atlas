@@ -15,10 +15,10 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L fk-atlas-rescue:ADM3260-conservify U201
+L fk-atlas-rescue:ADM3260-conservify U?
 U 1 1 5948D478
 P 4400 2900
-F 0 "U201" H 4400 2750 60  0000 C CNN
+F 0 "U?" H 4400 2750 60  0000 C CNN
 F 1 "ADM3260" H 4400 2900 60  0000 C CNN
 F 2 "conservify:SSOP20-53" H 4400 2900 60  0001 C CNN
 F 3 "" H 4400 2900 60  0001 C CNN
@@ -36,10 +36,10 @@ F 13 "584-ADM3260ARSZ" H 0   0   50  0001 C CNN "spn1"
 	1    0    0    -1  
 $EndComp
 $Comp
-L fk-atlas-rescue:CAPACITOR_CERAMIC-conservify C203
+L fk-atlas-rescue:CAPACITOR_CERAMIC-conservify C?
 U 1 1 594C2CF3
 P 5650 3800
-F 0 "C203" H 5675 3900 50  0000 L CNN
+F 0 "C?" H 5675 3900 50  0000 L CNN
 F 1 "100nF" H 5675 3700 50  0000 L CNN
 F 2 "conservify:CAP-0603" H 5688 3650 50  0001 C CNN
 F 3 "" H 5650 3800 50  0001 C CNN
@@ -58,10 +58,10 @@ F 14 "mouser" H 0   0   50  0001 C CNN "spn2"
 	0    -1   -1   0   
 $EndComp
 $Comp
-L fk-atlas-rescue:CAPACITOR_CERAMIC-conservify C204
+L fk-atlas-rescue:CAPACITOR_CERAMIC-conservify C?
 U 1 1 5948D57F
 P 5650 4100
-F 0 "C204" H 5675 4200 50  0000 L CNN
+F 0 "C?" H 5675 4200 50  0000 L CNN
 F 1 "100nF" H 5675 4000 50  0000 L CNN
 F 2 "conservify:CAP-0603" H 5688 3950 50  0001 C CNN
 F 3 "" H 5650 4100 50  0001 C CNN
@@ -80,10 +80,10 @@ F 14 "mouser" H 0   0   50  0001 C CNN "spn2"
 	0    -1   -1   0   
 $EndComp
 $Comp
-L fk-atlas-rescue:CAPACITOR_CERAMIC-conservify C205
+L fk-atlas-rescue:CAPACITOR_CERAMIC-conservify C?
 U 1 1 594C2CFE
 P 5650 4400
-F 0 "C205" H 5675 4500 50  0000 L CNN
+F 0 "C?" H 5675 4500 50  0000 L CNN
 F 1 "10uF" H 5675 4300 50  0000 L CNN
 F 2 "conservify:CAP-0603" H 5688 4250 50  0001 C CNN
 F 3 "" H 5650 4400 50  0001 C CNN
@@ -102,10 +102,10 @@ F 14 "mouser" H 0   0   50  0001 C CNN "spn2"
 	0    -1   -1   0   
 $EndComp
 $Comp
-L fk-atlas-rescue:CAPACITOR_CERAMIC-conservify C206
+L fk-atlas-rescue:CAPACITOR_CERAMIC-conservify C?
 U 1 1 594C2D01
 P 5650 4650
-F 0 "C206" H 5675 4750 50  0000 L CNN
+F 0 "C?" H 5675 4750 50  0000 L CNN
 F 1 "10uF" H 5675 4550 50  0000 L CNN
 F 2 "conservify:CAP-0603" H 5688 4500 50  0001 C CNN
 F 3 "" H 5650 4650 50  0001 C CNN
@@ -124,10 +124,10 @@ F 14 "mouser" H 0   0   50  0001 C CNN "spn2"
 	0    -1   -1   0   
 $EndComp
 $Comp
-L fk-atlas-rescue:CAPACITOR_CERAMIC-conservify C201
+L fk-atlas-rescue:CAPACITOR_CERAMIC-conservify C?
 U 1 1 594C2D06
 P 2900 3800
-F 0 "C201" H 2925 3900 50  0000 L CNN
+F 0 "C?" H 2925 3900 50  0000 L CNN
 F 1 "100nF" H 2925 3700 50  0000 L CNN
 F 2 "conservify:CAP-0603" H 2938 3650 50  0001 C CNN
 F 3 "" H 2900 3800 50  0001 C CNN
@@ -146,10 +146,10 @@ F 14 "mouser" H 0   0   50  0001 C CNN "spn2"
 	0    -1   -1   0   
 $EndComp
 $Comp
-L fk-atlas-rescue:CAPACITOR_CERAMIC-conservify C202
+L fk-atlas-rescue:CAPACITOR_CERAMIC-conservify C?
 U 1 1 594C2D08
 P 2900 4100
-F 0 "C202" H 2925 4200 50  0000 L CNN
+F 0 "C?" H 2925 4200 50  0000 L CNN
 F 1 "10uF" H 2925 4000 50  0000 L CNN
 F 2 "conservify:CAP-0603" H 2938 3950 50  0001 C CNN
 F 3 "" H 2900 4100 50  0001 C CNN
@@ -168,10 +168,10 @@ F 14 "mouser" H 0   0   50  0001 C CNN "spn2"
 	0    -1   -1   0   
 $EndComp
 $Comp
-L fk-atlas-rescue:R-conservify R201
+L fk-atlas-rescue:R-conservify R?
 U 1 1 594C2D0E
 P 5650 3300
-F 0 "R201" V 5730 3300 50  0000 C CNN
+F 0 "R?" V 5730 3300 50  0000 C CNN
 F 1 "1.5K" V 5650 3300 50  0000 C CNN
 F 2 "conservify:RES-0603" V 5580 3300 50  0001 C CNN
 F 3 "" H 5650 3300 50  0001 C CNN
@@ -190,10 +190,10 @@ F 14 "mouser" H 0   0   50  0001 C CNN "spn2"
 	0    1    1    0   
 $EndComp
 $Comp
-L fk-atlas-rescue:R-conservify R202
+L fk-atlas-rescue:R-conservify R?
 U 1 1 594C2D12
 P 6250 2700
-F 0 "R202" V 6330 2700 50  0000 C CNN
+F 0 "R?" V 6330 2700 50  0000 C CNN
 F 1 "1.5K" V 6250 2700 50  0000 C CNN
 F 2 "conservify:RES-0603" V 6180 2700 50  0001 C CNN
 F 3 "" H 6250 2700 50  0001 C CNN
@@ -212,10 +212,10 @@ F 14 "mouser" H 0   0   50  0001 C CNN "spn2"
 	0    -1   -1   0   
 $EndComp
 $Comp
-L fk-atlas-rescue:R-conservify R204
+L fk-atlas-rescue:R-conservify R?
 U 1 1 5948E389
 P 6700 2700
-F 0 "R204" V 6780 2700 50  0000 C CNN
+F 0 "R?" V 6780 2700 50  0000 C CNN
 F 1 "1.5K" V 6700 2700 50  0000 C CNN
 F 2 "conservify:RES-0603" V 6630 2700 50  0001 C CNN
 F 3 "" H 6700 2700 50  0001 C CNN
@@ -234,10 +234,10 @@ F 14 "mouser" H 0   0   50  0001 C CNN "spn2"
 	0    -1   -1   0   
 $EndComp
 $Comp
-L fk-atlas-rescue:R-conservify R203
+L fk-atlas-rescue:R-conservify R?
 U 1 1 594C2D17
 P 6300 3250
-F 0 "R203" V 6380 3250 50  0000 C CNN
+F 0 "R?" V 6380 3250 50  0000 C CNN
 F 1 "4.7K" V 6300 3250 50  0000 C CNN
 F 2 "conservify:RES-0603" V 6230 3250 50  0001 C CNN
 F 3 "" H 6300 3250 50  0001 C CNN
@@ -256,10 +256,10 @@ F 14 "mouser" H 0   0   50  0001 C CNN "spn2"
 	1    0    0    -1  
 $EndComp
 $Comp
-L fk-atlas-rescue:R-conservify R205
+L fk-atlas-rescue:R-conservify R?
 U 1 1 594C2D1E
 P 6800 3250
-F 0 "R205" V 6880 3250 50  0000 C CNN
+F 0 "R?" V 6880 3250 50  0000 C CNN
 F 1 "4.7K" V 6800 3250 50  0000 C CNN
 F 2 "conservify:RES-0603" V 6730 3250 50  0001 C CNN
 F 3 "" H 6800 3250 50  0001 C CNN
@@ -278,10 +278,10 @@ F 14 "mouser" H 0   0   50  0001 C CNN "spn2"
 	1    0    0    -1  
 $EndComp
 $Comp
-L fk-atlas-rescue:VCC-conservify #PWR057
+L fk-atlas-rescue:VCC-conservify #PWR?
 U 1 1 594C2D26
 P 2450 3750
-F 0 "#PWR057" H 2450 3600 50  0001 C CNN
+F 0 "#PWR?" H 2450 3600 50  0001 C CNN
 F 1 "VCC" H 2450 3900 50  0000 C CNN
 F 2 "" H 2450 3750 50  0001 C CNN
 F 3 "" H 2450 3750 50  0001 C CNN
@@ -289,10 +289,10 @@ F 3 "" H 2450 3750 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L fk-atlas-rescue:VCC-conservify #PWR058
+L fk-atlas-rescue:VCC-conservify #PWR?
 U 1 1 594C2D28
 P 2450 2350
-F 0 "#PWR058" H 2450 2200 50  0001 C CNN
+F 0 "#PWR?" H 2450 2200 50  0001 C CNN
 F 1 "VCC" H 2450 2500 50  0000 C CNN
 F 2 "" H 2450 2350 50  0001 C CNN
 F 3 "" H 2450 2350 50  0001 C CNN
@@ -300,10 +300,10 @@ F 3 "" H 2450 2350 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L fk-atlas-rescue:ATLAS_SENSOR-conservify U202
+L fk-atlas-rescue:ATLAS_SENSOR-conservify U?
 U 1 1 594C2D33
 P 8550 2900
-F 0 "U202" H 8150 2550 60  0000 C CNN
+F 0 "U?" H 8150 2550 60  0000 C CNN
 F 1 "ATLAS_EC" H 8600 2850 60  0000 C CNN
 F 2 "conservify:ATLAS_SENSOR_BOARD_COMBO" H 8550 2900 60  0001 C CNN
 F 3 "" H 8550 2900 60  0001 C CNN
@@ -321,10 +321,10 @@ F 13 "0" H 8100 2650 50  0001 C CNN "price"
 	1    0    0    -1  
 $EndComp
 $Comp
-L fk-atlas-rescue:CONN_01x02-conservify J201
+L fk-atlas-rescue:CONN_01x02-conservify J?
 U 1 1 59A1BC7B
 P 10050 2900
-F 0 "J201" H 10050 3050 50  0000 C CNN
+F 0 "J?" H 10050 3050 50  0000 C CNN
 F 1 "CONN_01X02" V 10150 2900 50  0000 C CNN
 F 2 "conservify:BNC" H 10050 2900 50  0001 C CNN
 F 3 "" H 10050 2900 50  0001 C CNN
@@ -342,10 +342,10 @@ F 13 "523-31-5431" H 200 -50 50  0001 C CNN "spn1"
 	1    0    0    -1  
 $EndComp
 $Comp
-L fk-atlas-rescue:ATLAS_WATER_PROBE-conservify P2
+L fk-atlas-rescue:ATLAS_WATER_PROBE-conservify P?
 U 1 1 59D297CD
 P 8800 3550
-F 0 "P2" H 8800 3550 60  0000 C CNN
+F 0 "P?" H 8800 3550 60  0000 C CNN
 F 1 "ATLAS_EC_PROBE" H 8800 3450 60  0000 C CNN
 F 2 "conservify:Dummy_Empty" H 8800 3550 60  0001 C CNN
 F 3 "" H 8800 3550 60  0001 C CNN
@@ -362,10 +362,10 @@ F 12 " " H 8800 3650 50  0001 C CNN "Supplier1"
 	1    0    0    -1  
 $EndComp
 $Comp
-L fk-atlas-rescue:PWR_FLAG-conservify #FLG0106
+L fk-atlas-rescue:PWR_FLAG-conservify #FLG?
 U 1 1 5BCC03FC
 P 7400 4900
-F 0 "#FLG0106" H 7400 4975 50  0001 C CNN
+F 0 "#FLG?" H 7400 4975 50  0001 C CNN
 F 1 "PWR_FLAG" H 7400 5050 50  0000 C CNN
 F 2 "" H 7400 4900 50  0001 C CNN
 F 3 "~" H 7400 4900 50  0001 C CNN
@@ -578,10 +578,10 @@ Connection ~ 6900 2500
 NoConn ~ 3650 3000
 NoConn ~ 5200 3000
 $Comp
-L fk-atlas-rescue:R-conservify R20
+L fk-atlas-rescue:R-conservify R?
 U 1 1 5C7EA0D7
 P 1950 2625
-F 0 "R20" V 2030 2625 50  0000 C CNN
+F 0 "R?" V 2030 2625 50  0000 C CNN
 F 1 "4.7K" V 1950 2625 50  0000 C CNN
 F 2 "conservify:RES-0603" V 1880 2625 50  0001 C CNN
 F 3 "" H 1950 2625 50  0001 C CNN
@@ -600,10 +600,10 @@ F 14 "mouser" H -4350 -625 50  0001 C CNN "spn2"
 	1    0    0    -1  
 $EndComp
 $Comp
-L fk-atlas-rescue:R-conservify R21
+L fk-atlas-rescue:R-conservify R?
 U 1 1 5C7EA1CF
 P 2125 2625
-F 0 "R21" V 2205 2625 50  0000 C CNN
+F 0 "R?" V 2205 2625 50  0000 C CNN
 F 1 "4.7K" V 2125 2625 50  0000 C CNN
 F 2 "conservify:RES-0603" V 2055 2625 50  0001 C CNN
 F 3 "" H 2125 2625 50  0001 C CNN
