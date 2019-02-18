@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -xe
+
 PORT=$1
 
 if [ -z "$PORT" ]; then
@@ -10,6 +12,6 @@ pushd build
 make -j2 && flasher --binary firmware/calibration/fk-atlas-calibration.bin --port $PORT
 popd
 
-sleep 1
+sleep 2
 
 sudo microcom -f -p $PORT -s 115200

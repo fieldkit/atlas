@@ -148,17 +148,210 @@ public:
     }
 
     bool raw(String command) override {
+        switch (type_) {
+        case OEM_TYPE_DO: {
+            if (command == "cal,clear") {
+                Wire.beginTransmission(address_);
+                Wire.write(0x08);
+                Wire.write(1);
+                Wire.endTransmission();
+
+                return true;
+            }
+            if (command == "cal") {
+                return calibrate_do(2);
+            }
+            if (command == "cal,0") {
+                return calibrate_do(3);
+            }
+            if (command == "cal,?") {
+                auto crr = get_register(0x08);
+                auto ccr = get_register(0x09);
+                loginfof("Atlas", "CRR: %d CCR: %d", crr, ccr);
+                return true;
+            }
+            break;
+        }
+        case OEM_TYPE_PH: {
+            if (command == "cal,clear") {
+                Wire.beginTransmission(address_);
+                Wire.write(0x0c);
+                Wire.write(1);
+                Wire.endTransmission();
+
+                return true;
+            }
+            if (command == "cal,4") {
+                return calibrate_ph(4.0f, 2);
+            }
+            if (command == "cal,7") {
+                return calibrate_ph(7.0f, 3);
+            }
+            if (command == "cal,10") {
+                return calibrate_ph(10.0f, 4);
+            }
+            if (command == "cal,?") {
+                auto crr = get_register(0x0c);
+                auto ccr = get_register(0x0d);
+                loginfof("Atlas", "CRR: %d CCR: %d", crr, ccr);
+                return true;
+            }
+            break;
+        }
+        case OEM_TYPE_EC: {
+            if (command == "cal,clear") {
+                Wire.beginTransmission(address_);
+                Wire.write(0x0e);
+                Wire.write(1);
+                Wire.endTransmission();
+
+                return true;
+            }
+            if (command == "k,?") {
+                Wire.beginTransmission(address_);
+                Wire.write(0x08);
+                Wire.endTransmission();
+                Wire.requestFrom(address_, 2);
+                auto msb = Wire.read();
+                auto lsb = Wire.read();
+                auto value = (msb << 8) | lsb;
+                loginfof("Atlas", "k = %f", value / 100.0f);
+                return true;
+            }
+            if (command == "k,1.0") {
+                return set_probe_type(1.0f);
+            }
+            if (command == "k,0.1") {
+                return set_probe_type(0.1f);
+            }
+            if (command == "cal,dry") {
+                return calibrate_ec(0.0f, 2);
+            }
+            if (command == "cal,84") {
+                return calibrate_ec(84.0f, 4);
+            }
+            if (command == "cal,?") {
+                auto crr = get_register(0x0e);
+                auto ccr = get_register(0x0f);
+                loginfof("Atlas", "CRR: %d CCR: %d", crr, ccr);
+                return true;
+            }
+            break;
+        }
+        }
+
+        loginfof("Atlas", "Unknown command");
+
         return false;
     }
 
+    bool calibrate_do(uint8_t kind) {
+        Wire.beginTransmission(address_);
+        Wire.write(0x08);
+        Wire.write(kind);
+        Wire.endTransmission();
+
+        while (true) {
+            auto crr = get_register(0x08);
+            auto ccr = get_register(0x09);
+            loginfof("Atlas", "CRR: %d CCR: %d", crr, ccr);
+            if (crr == 0) {
+                break;
+            }
+            delay(500);
+        }
+        return true;
+    }
+
+    bool calibrate_ec(float ec, uint8_t kind) {
+        auto scaled = (uint32_t)(ec * 100.0f);
+
+        Wire.beginTransmission(address_);
+        Wire.write(0x0a);
+        Wire.write((scaled >> 24) & 0xff);
+        Wire.write((scaled >> 16) & 0xff);
+        Wire.write((scaled >> 8) & 0xff);
+        Wire.write((scaled) & 0xff);
+        Wire.endTransmission();
+
+        loginfof("Atlas", "CValue: %x", scaled);
+        loginfof("Atlas", "CRR: %d (writing %d)", get_register(0x0e), kind);
+
+        Wire.beginTransmission(address_);
+        Wire.write(0x0e);
+        Wire.write(kind);
+        Wire.endTransmission();
+
+        while (true) {
+            auto crr = get_register(0x0e);
+            auto ccr = get_register(0x0f);
+            loginfof("Atlas", "CRR: %d CCR: %d", crr, ccr);
+            if (crr == 0) {
+                break;
+            }
+            delay(500);
+        }
+
+        return true;
+    }
+
+    bool calibrate_ph(float ph, uint8_t kind) {
+        auto scaled = (uint32_t)(ph * 1000.0f);
+
+        Wire.beginTransmission(address_);
+        Wire.write(0x08);
+        Wire.write((scaled >> 24) & 0xff);
+        Wire.write((scaled >> 16) & 0xff);
+        Wire.write((scaled >> 8) & 0xff);
+        Wire.write((scaled) & 0xff);
+        Wire.endTransmission();
+
+        loginfof("Atlas", "CValue: %x", scaled);
+        loginfof("Atlas", "CRR: %d (writing %d)", get_register(0x0c), kind);
+
+        Wire.beginTransmission(address_);
+        Wire.write(0x0c);
+        Wire.write(kind);
+        Wire.endTransmission();
+
+        while (true) {
+            auto crr = get_register(0x0c);
+            auto ccr = get_register(0x0d);
+            loginfof("Atlas", "CRR: %d CCR: %d", crr, ccr);
+            if (crr == 0) {
+                break;
+            }
+            delay(500);
+        }
+
+        return true;
+    }
+
     bool configure() override {
-        uint16_t type = (uint16_t)(0.1 * 100);
+        if (type_ == OEM_TYPE_EC) {
+            return set_probe_type(0.1f);
+        }
+
+        return true;
+    }
+
+    bool set_probe_type(float k) {
+        auto type = (uint16_t)(k * 100.0f);
 
         Wire.beginTransmission(address_);
         Wire.write(0x08);
         Wire.write((type >> 8) & 0xff);
         Wire.write((type) & 0xff);
         Wire.endTransmission();
+
+        Wire.beginTransmission(address_);
+        Wire.write(0x08);
+        Wire.endTransmission();
+        Wire.requestFrom(address_, 2);
+        auto msb = Wire.read();
+        auto lsb = Wire.read();
+        auto value = (msb << 8) | lsb;
+        loginfof("Atlas", "Configured k = %f (%f)", k, value / 100.0f);
 
         delay(100);
 
@@ -193,7 +386,7 @@ public:
             float value = data.u32;
             value /= cfg.divisor;
 
-            loginfof("Module", "%s: %f (raw=%lu)", cfg.name, value, data.u32);
+            loginfof("Module", "%s: %f (raw=%lu) (div=%f)", cfg.name, value, data.u32, cfg.divisor);
         }
 
 
