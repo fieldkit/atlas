@@ -3,10 +3,10 @@
 #include <SerialFlash.h>
 
 #include "debug.h"
+#include "board_definition.h"
+#include "two_wire.h"
 
-const uint8_t PIN_ATLAS_ENABLE = 6;
-const uint8_t PIN_PERIPH_ENABLE = 12;
-const uint8_t PIN_FLASH_CS = 5;
+#define FK_ATLAS_OEM
 
 const uint8_t ATLAS_RESPONSE_CODE_NO_DATA = 0xff;
 const uint8_t ATLAS_RESPONSE_CODE_NOT_READY = 0xfe;
@@ -409,14 +409,12 @@ public:
         //  TODO: Investigate. I would see hangs if I used a slower speed.
         // Wire.setClock(400000);
 
-        pinMode(PIN_ATLAS_ENABLE, OUTPUT);
-        digitalWrite(PIN_ATLAS_ENABLE, LOW);
+        fk::board.disable_everything();
 
-        pinMode(PIN_PERIPH_ENABLE, OUTPUT);
-        digitalWrite(PIN_PERIPH_ENABLE, LOW);
         delay(1000);
-        digitalWrite(PIN_ATLAS_ENABLE, HIGH);
-        digitalWrite(PIN_PERIPH_ENABLE, HIGH);
+
+        fk::board.enable_everything();
+
         delay(1000);
     }
 
@@ -470,7 +468,7 @@ public:
     bool flashMemory() {
         Serial.println("test: Checking flash memory...");
 
-        if (!SerialFlash.begin(PIN_FLASH_CS)) {
+        if (!SerialFlash.begin(fk::board.flash_cs())) {
             Serial.println("test: Flash memory FAILED");
             return false;
         }
@@ -620,9 +618,9 @@ void setup() {
 
         Serial.println("calibration: Done");
 
-        digitalWrite(PIN_PERIPH_ENABLE, LOW);
+        fk::board.disable_everything();
         delay(5000);
-        digitalWrite(PIN_PERIPH_ENABLE, HIGH);
+        fk::board.enable_everything();
         delay(1000);
     }
 
