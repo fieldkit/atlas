@@ -228,7 +228,10 @@ public:
                 return calibrate_ec(0.0f, 2);
             }
             if (command == "cal,84") {
-                return calibrate_ec(84.0f, 4);
+                return calibrate_ec(84.0f, 3);
+            }
+            if (command == "cal,1413") {
+                return calibrate_ec(1413.0f, 3);
             }
             if (command == "cal,?") {
                 auto crr = get_register(0x0e);
