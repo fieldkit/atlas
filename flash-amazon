@@ -1,0 +1,12 @@
+#!/bin/bash
+
+PORT=$1
+
+if [ -z "$PORT" ]; then
+  exit 2
+fi
+
+pushd build
+cmake -DFK_ENABLE_ATLAS_ORP=OFF ../
+make -j2 && flasher --binary firmware/module/fk-atlas-standard.bin --tail --port $PORT
+popd
