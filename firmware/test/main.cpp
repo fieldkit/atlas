@@ -512,6 +512,13 @@ void setup() {
         success = check.orp() || success;
         #endif
 
+        if (success) {
+            loginfof("Atlas", "test: PASSED");
+        }
+        else {
+            loginfof("Atlas", "test: FAILED");
+        }
+
         if (takeReadings && success) {
             AtlasBoardType boards[] = {
                 ATLAS_SENSOR_EC_DEFAULT_ADDRESS,

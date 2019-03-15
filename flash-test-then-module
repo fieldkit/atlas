@@ -5,15 +5,13 @@ set -e
 PORT=$1
 
 if [ -z "$PORT" ]; then
-    exit 2
+  exit 2
 fi
-
-sudo whoami
 
 PATH=~/tools/JLink_Linux_V640b_x86_64:$PATH
 BOOTLOADER=../bootloaders/build/zero/fk-bootloaders-samd21large.bin
 CORE_TEST=build/firmware/test/fk-atlas-test.bin
-CORE_MAIN=build/firmware/calibration/fk-atlas-calibration.bin
+CORE_MAIN=build/firmware/module/fk-atlas-amazon.bin
 
 pushd build
 make -j2
@@ -52,6 +50,6 @@ r
 q
 EOF
 
-echo MicroCOM...
+echo Tailing...
 
-sudo microcom -f -p $PORT -s 115200
+flasher --tail -tail-trigger-stop "ConfigureModule" --port $PORT
