@@ -691,6 +691,7 @@ public:
 class Repl {
 private:
     bool initialized{ false };
+    uint32_t timer_started{ 0 };
     AtlasBoardType boards[4] = {
         ATLAS_SENSOR_EC_DEFAULT_ADDRESS,
         ATLAS_SENSOR_TEMP_DEFAULT_ADDRESS,
@@ -740,6 +741,12 @@ public:
             return;
         }
 
+        if (c.equals("timer")) {
+            Serial.println("Timer!");
+            timer_started = millis();
+            return;
+        }
+
         if (active != nullptr) {
             if (c.equals("")) {
                 active->reading();
@@ -750,6 +757,15 @@ public:
         }
         else {
             Serial.println("No active board.");
+        }
+    }
+
+    void tick() {
+        if (timer_started > 0) {
+            if (millis() - timer_started > 2 * 60 * 1000) {
+                timer_started = 0;
+                Serial.println("DING DING DING!");
+            }
         }
     }
 
@@ -772,13 +788,13 @@ void setup() {
 
         auto success = true;
 
-        success = check.flashMemory() || success;
-        success = check.ec() || success;
-        success = check.temp() || success;
-        success = check.ph() || success;
-        success = check.dissolvedOxygen();
+        success = check.flashMemory() && success;
+        success = check.ec() && success;
+        success = check.temp() && success;
+        success = check.ph() && success;
+        success = check.dissolvedOxygen() && success;
         #ifdef FK_ENABLE_ATLAS_ORP
-        success = check.orp() || success;
+        success = check.orp() && success;
         #endif
 
         if (takeReadings && success) {
@@ -791,6 +807,8 @@ void setup() {
                 String command = "";
 
                 while (true) {
+                    repl.tick();
+
                     if (Serial.available() > 0) {
                         auto incoming = Serial.read();
 

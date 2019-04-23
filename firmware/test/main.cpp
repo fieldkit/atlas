@@ -407,11 +407,15 @@ public:
     bool test(uint8_t address, const char *name) {
         AtlasBoardType sensor(address);
         if (!sensor.begin()) {
-            loginfof("Atlas", "test: %s FAILED", name);
+            if (nullptr != name) {
+                loginfof("Atlas", "test: %s FAILED", name);
+            }
             return false;
         }
         else {
-            loginfof("Atlas", "test: %s PASSED", name);
+            if (nullptr != name) {
+                loginfof("Atlas", "test: %s PASSED", name);
+            }
         }
 
         if (!sensor.info()) {
@@ -451,6 +455,20 @@ public:
         return test(ATLAS_SENSOR_ORP_DEFAULT_ADDRESS, "ORP");
     }
 
+    bool scan_entire_bus() {
+        Serial.println("test: Scanning entire bus.");
+
+        for (uint8_t i = 128; i > 0; --i) {
+            if (test(i, nullptr)) {
+                loginfof("Atlas", "Found: %x", i);
+            }
+        }
+
+        Serial.println();
+
+        return false;
+    }
+
     bool flashMemory() {
         Serial.println("test: Checking flash memory...");
 
@@ -483,7 +501,7 @@ void setup() {
 
     fk::board.disable_everything();
 
-    while (!Serial) {
+    while (!Serial && millis() < 5000) {
         delay(100);
     }
 
@@ -503,14 +521,18 @@ void setup() {
 
         auto success = true;
 
-        success = check.flashMemory() || success;
-        success = check.ec() || success;
-        success = check.temp() || success;
-        success = check.ph() || success;
-        success = check.dissolvedOxygen();
+        success = check.flashMemory() && success;
+        success = check.ec() && success;
+        success = check.temp() && success;
+        success = check.ph() && success;
+        success = check.dissolvedOxygen() && success;
         #ifdef FK_ENABLE_ATLAS_ORP
-        success = check.orp() || success;
+        success = check.orp() && success;
         #endif
+
+        if (!success) {
+            check.scan_entire_bus();
+        }
 
         if (success) {
             loginfof("Atlas", "test: PASSED");
