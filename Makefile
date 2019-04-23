@@ -1,4 +1,4 @@
-BUILD=build
+BUILD ?= $(abspath build)
 
 default: all
 
