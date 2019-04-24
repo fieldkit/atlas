@@ -3,3 +3,4 @@
 build
 gitdeps
 dependencies.cmake
+_autosave-*
