@@ -10,8 +10,8 @@ fi
 
 PATH=~/tools/JLink_Linux_V640b_x86_64:$PATH
 BOOTLOADER=../bootloaders/build/zero/fk-bootloaders-samd21large.bin
-CORE_TEST=build/firmware/test/fk-atlas-test.bin
-CORE_MAIN=build/firmware/module/fk-atlas-amazon.bin
+TEST=build/firmware/test/fk-atlas-test.bin
+MODULE=build/firmware/module/fk-atlas-amazon.bin
 
 pushd build
 make -j2
@@ -22,21 +22,16 @@ echo Writing bootloader firmware...
 JLinkExe -if SWD -device ATSAMD21G18 -speed 4000 -autoconnect 1 <<EOF
 exitonerror 1
 connect
+r
+sleep 100
 loadfile $BOOTLOADER
+sleep 100
+loadfile $TEST,0x8000
+r
 q
 EOF
 
 sleep 1
-
-echo Writing TEST firmware...
-
-JLinkExe -if SWD -device ATSAMD21G18 -speed 4000 -autoconnect 1 <<EOF
-exitonerror 1
-connect
-loadfile $CORE_TEST,0x8000
-r
-q
-EOF
 
 echo Tailing...
 
@@ -45,11 +40,13 @@ flasher --tail -tail-trigger-stop "test: PASSED" --port $PORT
 JLinkExe -if SWD -device ATSAMD21G18 -speed 4000 -autoconnect 1 <<EOF
 exitonerror 1
 connect
-loadfile $CORE_MAIN,0x8000
+r
+sleep 100
+loadfile $MODULE,0x8000
 r
 q
 EOF
 
 echo Tailing...
 
-flasher --tail -tail-trigger-stop "ConfigureModule" --port $PORT
+flasher --tail -tail-trigger-stop "ModuleIdle" --port $PORT
